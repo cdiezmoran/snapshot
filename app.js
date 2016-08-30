@@ -6,6 +6,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 
+//setting up Mongoose and MongoDB
 mongoose.Promise = require('bluebird');
 var uri = 'mongodb://localhost/snapshotTest';
 var db = mongoose.connect(uri);
