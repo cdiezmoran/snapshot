@@ -1,0 +1,16 @@
+extends ../layout
+
+block content
+    h1.
+        #{title}
+    form#formAddPerson(name="add-person",method="post",action="/person/new")
+        p Called:
+            input#inputCalled(type="text", placeholder="ex. John Smith", name="called")
+        p Given Name:
+            input#inputGivenName(type="text", placeholder="e. John", name="givenName")
+        p Surname:
+            input#inputSurName(type="text", name="surName")
+        p DOB:
+            input#inputDob(type="date", name="dob")
+        p
+            button#btnSubmit(type="submit") submit

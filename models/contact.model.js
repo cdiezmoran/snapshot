@@ -31,7 +31,7 @@ var ContactSchema = new Schema({
   },
   mobile: {
     type: String
-  },,
+  },
   directLine: {
     type: String
   },
