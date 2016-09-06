@@ -3,8 +3,8 @@ var router = express.Router();
 var person = require('../controllers/people.ctrl')
 
 /* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('content', { title: 'SnapshotJS' });
+router.get('/', function(req, res) {
+  res.render('index', { title: 'SnapshotJS' });
 });
 
 router.get('/people', function(req, res, next) {

@@ -5,6 +5,7 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
+var pug = require('pug');
 
 //setting up Mongoose and MongoDB
 mongoose.Promise = require('bluebird');
@@ -17,8 +18,8 @@ var users = require('./routes/users');
 var app = express();
 
 // view engine setup
-app.set('views', './views');
 app.set('view engine', 'pug');
+app.set('views', 'views');
 app.locals.pretty = true
 
 // uncomment after placing your favicon in /public
@@ -29,6 +30,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.locals.basedir = path.join(__dirname, 'views');
 app.use('/', routes);
 app.use('/users', users);
 
@@ -40,28 +42,7 @@ app.use(function(req, res, next) {
 });
 
 // error handlers
-
-// development error handler
-// will print stacktrace
-if (app.get('env') === 'development') {
-  app.use(function(err, req, res, next) {
-    res.status(err.status || 500);
-    res.render('error', {
-      message: err.message,
-      error: err
-    });
-  });
-}
-
-// production error handler
-// no stacktraces leaked to user
-app.use(function(err, req, res, next) {
-  res.status(err.status || 500);
-  res.render('error', {
-    message: err.message,
-    error: {}
-  });
-});
+//need to figure out error handling
 
 
 module.exports = app;
