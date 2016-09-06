@@ -1,0 +1,10 @@
+//-using syntax from article:
+//-www.xplatform.rocks/2016/02/05/jade-up-your-angular2-markup/
+
+mixin input(slug, title, type, placeholder, model)
+  .form-group
+    label.control-label(for='#{slug}')= title
+      input.input-sm.form-control(id='#{slug}',
+        type='#{type}',
+        [(ngModel)]="#{model}",
+        placeholder='#{placeholder}')
