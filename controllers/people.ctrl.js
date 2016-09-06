@@ -40,18 +40,20 @@ module.exports = {
     //res.send(name);
 
   },
-  create: function(req, res, next) {
+  create: function(newPerson) {
     //syntax taken from online article:
     //hackhands.com/mongodb-crud-mvc-way-with-passport-authentication/
-    var person = new Person(req.body);
-    person.save(function(err) {
-      if (err) {
-        return next(err);
-      }
-      else {
-        res.json(person)
-      }
+    console.log('The create function is invoked');
+    var personInfo = newPerson
+    var personRecord = new Person({
+      called: personInfo.called,
+      givenName: personInfo.givenName,
+      surName: personInfo.surName,
+      birthDate: personInfo.birthDate
     });
+    console.log('The create function is complete');
+
+    personRecord.save();
   },
   save: function(req, res) {
 

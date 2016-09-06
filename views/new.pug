@@ -1,5 +1,11 @@
-extends layout
+//- mixin input(slug, title, type, placeholder, model)
+//- input(type=type, name=title, id=slug, placeholder=placeholder, [(ngModel)]=model)
 
 include mixins/forms.pug
-+input('called', 'Called:', 'text', 'John', 'person.called')
-+input('surName', 'Surname:', 'text', 'Smith', 'person.surName')
+h1 this is a person create form
+form(action='./create', method='post')
+  +input('Called:', 'called', 'text', 'John', 'person.called')
+  +input('Given name:', 'givenName', 'text', 'Jonathan', 'person.givenName')
+  +input('Surname:', 'surName', 'text', 'Smith', 'person.surName')
+  +input('Birth Day:', 'birthDate', 'text', 'DD/MM/YYYY', 'person.birthDate')
+  input(type='submit', value='Submit')
