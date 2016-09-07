@@ -1,24 +1,29 @@
 {
-	"name": "snapshotjs",
-	"version": "0.0.0",
-	"scripts": {
-		"start": "node ./bin/www"
-	},
-	"dependencies": {
-		"async": "^2.0.1",
-		"bluebird": "^3.4.3",
-		"body-parser": "~1.15.1",
-		"cookie-parser": "~1.4.3",
-		"debug": "~2.2.0",
-		"ejs": "~2.4.1",
-		"express": "~4.13.4",
-		"markdown": "^0.5.0",
-		"mongoose": "^4.5.10",
-		"morgan": "~1.7.0",
-		"pug": "^2.0.0-beta6",
-		"serve-favicon": "~2.3.0",
-		"stylus": "^0.54.5",
-		"swig": "^1.4.2"
-	},
-	"private": true
+  "name": "snapshotjs",
+  "version": "0.0.0",
+  "scripts": {
+    "start": "node ./bin/www"
+  },
+  "dependencies": {
+    "async": "^2.0.1",
+    "bluebird": "^3.4.3",
+    "body-parser": "~1.15.1",
+    "cookie-parser": "~1.4.3",
+    "debug": "~2.2.0",
+    "ejs": "~2.4.1",
+    "express": "~4.13.4",
+    "markdown": "^0.5.0",
+    "mongoose": "^4.5.10",
+    "morgan": "~1.7.0",
+    "passport-local": "^1.0.0",
+    "pug": "^2.0.0-beta6",
+    "serve-favicon": "~2.3.0",
+    "stylus": "^0.54.5",
+    "swig": "^1.4.2",
+    "validator": "^5.6.0"
+  },
+  "private": true,
+  "devDependencies": {
+    "should": "^11.1.0"
+  }
 }

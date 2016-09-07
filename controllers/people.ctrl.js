@@ -1,32 +1,64 @@
-//this is an example of a controller I found in an article.
-//I liked the convention.  I haven't made it work yet.
+//controller sytnax from Express.js Blueprints by packt publishing
 
 var path = require('path'),
     Person = require('../models/person.model')
 
 module.exports = {
-  index: function(req, res) {
-    //syntax taken from online article:
-    //hackhands.com/mongodb-crud-mvc-way-with-passport-authentication/
-    Person.find({}, function(err, people) {
-      if(err) {
-        return next(err);
-      }
-      else {
-        res.json(people);
-      }
+  getAll: function(req, res, next) {
+    Person.find(function(err, people) {
+      if (err) return res.status(400).json(err);
+
+      res.status(200).json(people);
     });
   },
-  list: function(req, res, next) {
-    //syntax taken from online article:
-    //hackhands.com/mongodb-crud-mvc-way-with-passport-authentication/
-    Person.find({}, function(err, people) {
-      if(err) {
-        return next(err);
-      }
-      else {
-        res.json(people);
-      }
+  createOne: function(req, res, next) {
+  Person.create(req.body, function(err, person) {
+    if (err) return res.status(400).json(err);
+
+    res.status(201).json(person);
+  });
+},
+  getOne: function(req, res, next) {
+    Person.findOne({ id: req.params.id })
+    .populate('contacts')
+    .exec(function(err, person) {
+      if (err) return res.status(400).json(err);
+      if (!person) return res.status(404).json();
+
+      res.status(200).json(person);
+    });
+  },
+  updateOne: function(req, res, next) {
+    Person.findOneAndUpdate({ id: req.params.id }, req.body, function(err, person) {
+      if (err) return res.status(400).json(err);
+      if (!person) return res.status(404).json();
+
+      res.status(200).json(person);
+    });
+  },
+  deleteOne: function(req, res, next) {
+    Person.findOneAndRemove({ id: req.params.id }, function(err) {
+      if (err) return res.status(400).json(err);
+
+      res.status(204).json();
+    });
+  },
+  addMovie: function(req, res, next) {
+    Person.findOne({ id: req.params.id }, function(err, person) {
+      if (err) return res.status(400).json(err);
+      if (!person) return res.status(404).json();
+
+      Movie.findOne({ id: req.body.id }, function(err, contact) {
+        if (err) return res.status(400).json(err);
+        if (!contact) return res.status(404).json();
+
+        person.contacts.push(contact);
+        person.save(function(err) {
+          if (err) return res.status(500).json(err);
+
+          res.status(201).json(person);
+        });
+      })
     });
   },
   match: function(req, res) {
@@ -51,9 +83,8 @@ module.exports = {
       surName: personInfo.surName,
       birthDate: personInfo.birthDate
     });
-    console.log('The create function is complete');
-
     personRecord.save();
+    console.log('The create function is complete');
   },
   save: function(req, res) {
 
