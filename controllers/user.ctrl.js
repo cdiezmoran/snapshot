@@ -1,5 +1,7 @@
 // controllers/user.ctrl.js
-var User = require('mongoose').model('User');
+var User = require('../models/user.model')
+var passport = require('../config/passport')
+
 
 module.exports.showRegistrationForm = function(req, res, next) {
   res.render('register');
@@ -18,8 +20,9 @@ module.exports.createUser = function(req, res, next) {
 module.exports.showLoginForm = function(req, res, next) {
   res.render('login');
 };
-
+/*
 module.exports.createSession = passport.authenticate('local', {
   successRedirect: '/',
   failureRedirect: '/login'
 });
+*/

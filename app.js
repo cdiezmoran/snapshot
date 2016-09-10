@@ -6,11 +6,17 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var pug = require('pug');
-
-require('.config/parser')(app);
-require('.config/db')(app);
-
+var passport = require('passport');
 var app = express();
+
+require('./config/parser')(app);
+require('./config/db')(app);
+
+// setting up user sessions
+//var expressSession = require('express-session');
+//app.use(expressSession({secret: 'mySecretKey'}));
+
+
 
 // view engine setup
 app.set('view engine', 'pug');
@@ -31,7 +37,7 @@ var people = require('./routes/person.routes')
 
 app.use('/', routes);
 app.use('/users', users);
-app.use('/users', people);
+//app.use('/users', people);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

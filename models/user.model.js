@@ -36,6 +36,9 @@ userSchema.pre('save', function(next) {
  next();
 });
 
+var User = mongoose.model('User', userSchema);
+module.exports = User;
+
 User.schema.path('email').validate(function(email) {
  return validator.isEmail(email);
 });
@@ -43,6 +46,3 @@ User.schema.path('email').validate(function(email) {
 User.schema.path('password').validate(function(password) {
  return validator.isLength(password, 6);
 });
-
-var User = mongoose.model('User', userSchema);
-module.exports = User;

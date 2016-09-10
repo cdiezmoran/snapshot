@@ -1,6 +1,6 @@
 var mongoose = require('mongoose');
 mongoose.Promise = require('bluebird');
-var mongoUrl = process.env.MONGO_URL || 'mongodb://localhost/movies';
+var mongoUrl = process.env.MONGO_URL || 'mongodb://localhost/snapshotTest';
 
 module.exports = function(app) {
   mongoose.connect(mongoUrl, {

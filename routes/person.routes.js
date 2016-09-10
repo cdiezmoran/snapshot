@@ -2,6 +2,7 @@
 
 var express = require('express');
 var app = express();
+var person = require('../controllers/people.ctrl')
 
 app.route('/people')
 .get(person.getAll)

@@ -94,5 +94,8 @@ module.exports = {
   },
   review: function(req, res) {
 
+  },
+  addContact: function(req, res) {
+
   }
 }
