@@ -14,6 +14,6 @@ module.exports = function(app) {
   });
 
   // mongoose.set('debug', true);
-
+  console.log("Mongoose connected.");
   return mongoose;
 };

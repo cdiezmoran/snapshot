@@ -34,4 +34,12 @@ var PersonSchema = new Schema({
   }
 });
 
+PersonSchema.virtual('fullName').get(function() {
+    return this.called + ' '  + this.surName;
+}).set(function(fullName) {
+    var parts = fullName.split(' ');
+    this.called = parts[0];
+    this.surName = parts[1];
+});
+
 module.exports = mongoose.model('Person', PersonSchema);
