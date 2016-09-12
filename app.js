@@ -6,6 +6,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var pug = require('pug');
+var bcrypt = require('bcryptjs');
 var passport = require('passport');
 var app = express();
 

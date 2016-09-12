@@ -18,6 +18,9 @@ var PersonSchema = new Schema({
   birthDate: {
     type: Date
   },
+  gender: {
+    type: String
+  },
   currentOrganization: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Organization'

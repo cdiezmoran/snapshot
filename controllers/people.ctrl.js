@@ -22,8 +22,12 @@ module.exports = {
     Person.findOne({ id: req.params.id })
     .populate('contacts')
     .exec(function(err, person) {
-      if (err) return res.status(400).json(err);
-      if (!person) return res.status(404).json();
+      if (err) return res.status(500).json({
+        message: 'Error getting the person'
+      });
+      if (!person) return res.status(404).json({
+        message: 'No such person in the database'
+      });
 
       res.status(200).json(person);
     });
