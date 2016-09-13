@@ -16,8 +16,18 @@ require('./config/db')(app);
 // setting up user sessions
 //var expressSession = require('express-session');
 //app.use(expressSession({secret: 'mySecretKey'}));
+/* trying to figure out creating and maintaining sessions.
+model code handling sessions found at 
+https://www.airpair.com/express/posts/expressjs-and-passportjs-sessions-deep-dive
+var sessionOpts = {
+  saveUninitialized: true, // saved new sessions
+  resave: false, // do not automatically write to the session store
+  store: sessionStore,
+  secret: config.session.secret,
+  cookie : { httpOnly: true, maxAge: 2419200000 } // configure when sessions expires
+}
 
-
+*/
 
 // view engine setup
 app.set('view engine', 'pug');
