@@ -11,10 +11,6 @@ var PersonSchema = new Schema({
   surName: {
     type: String
   },
-  fullName: {
-    type: String,
-    index: true
-  },
   birthDate: {
     type: Date
   },
