@@ -1,7 +1,6 @@
 var express = require('express');
 var router = express.Router();
 var person = require('../controllers/people.ctrl')
-var app = express();
 
 /* GET home page. */
 router.get('/', function(req, res) {

@@ -30,6 +30,7 @@ app.locals.basedir = path.join(__dirname, 'views');
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(cookieParser());
+app.use(passport.initialize());
 
 
 var routes = require('./routes/index');
@@ -40,9 +41,11 @@ app.use('/', routes);
 app.use('/users', users);
 //app.use('/users', people);
 
+require('./config/passport');
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
-  var err = new Error('Not Found');
+  var err = new Error('Route Not Found');
   err.status = 404;
   next(err);
 });
