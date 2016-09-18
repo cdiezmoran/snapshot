@@ -1,0 +1,7 @@
+COPY MANAGEMENT
+Users will have their own choices in how to explain and present various objects
+within the app.
+For example, each user may have their own description of the Market Category of
+"Teacher Productivity Tools"
+Therefore, developers need to figure out how to allow versioned and versions
+of text copy for descriptions.

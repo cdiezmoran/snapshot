@@ -33,6 +33,10 @@ var OrganizationSchema = new Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Person'
   }],
+  inMarketCategories: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'MarketCategory'
+  }],
 });
 
 module.exports = mongoose.model('Organization', OrganizationSchema);

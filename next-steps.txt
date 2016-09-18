@@ -1,0 +1,8 @@
+
+
+SNAPSHOT.SAVE
+Users will try to input DataPoints into a Snapshot, and the actual numbers and
+data needs to be saved somehow.
+For example, a user will want to save a Snapshot for an Organization, and wants
+to include 6 DataPoints.  For all six DataPoints, there will be a quantity, such
+as $1,000,000 in Trailing Twelve Month's Revenue
