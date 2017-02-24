@@ -1,7 +1,11 @@
 // passport.js
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
+var GitHubStrategy = require('passport-github').Strategy;
+var TwitterStrategy = require('passport-twitter').Strategy;
+var GoogleStrategy = require('passport-google-oauth20').Strategy;
 var User = require('mongoose').model('User');
+var accounts = require("./accounts");
 
 passport.serializeUser(function(user, done) {
   done(null, user.id);
@@ -20,7 +24,7 @@ passport.use(new LocalStrategy({
     passwordField: 'password'
   },
   function (email, password, done) {
-    console.log(email, password);
+    console.log("Login",email, password);
     User.findOne({
       email: email
     }, function(err, user) {
@@ -58,5 +62,43 @@ passport.exposeUser = function() {
   };
 };
 
-module.exports = passport;
+passport.use(new TwitterStrategy({
+    consumerKey: accounts.twitter.consumerKey,
+    consumerSecret: accounts.twitter.consumerSecret,
+    callbackURL: accounts.twitter.callbackURL
+  },
+  function(token, tokenSecret, profile, cb) {
+    User.findOrCreate({ twitterId: profile.id }, function (err, user) {
+      return cb(err, user);
+    });
+  }
+));
 
+
+
+passport.use(new GoogleStrategy({
+    clientID: accounts.google.clientID,
+    clientSecret: accounts.google.clientSecret,
+    callbackURL: accounts.google.callbackURL
+  },
+  function(accessToken, refreshToken, profile, cb) {
+    User.findOrCreate({ googleId: profile.id }, function (err, user) {
+      return cb(err, user);
+    });
+  }
+));
+
+passport.use(new GitHubStrategy({
+    clientID: accounts.github.clientID,
+    clientSecret: accounts.github.clientSecret,
+    callbackURL: accounts.github.callbackURL
+  },
+  function(accessToken, refreshToken, profile, cb) {
+    User.findOrCreate({ githubId: profile.id }, function (err, user) {
+      return cb(err, user);
+    });
+  }
+));
+
+
+module.exports = passport;

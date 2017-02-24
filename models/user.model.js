@@ -17,9 +17,9 @@ var userSchema = new Schema({
    type: Date,
    default: Date.now
  },
- twitter: String,
- google: String,
- github: String,
+ twitterId: String,
+ googleId: String,
+ githubId: String,
  profile: {
   name: { type: String, default: '' },
   gender: { type: String, default: '' },

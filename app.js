@@ -17,7 +17,7 @@ require('./config/db')(app);
 //var expressSession = require('express-session');
 //app.use(expressSession({secret: 'mySecretKey'}));
 /* trying to figure out creating and maintaining sessions.
-model code handling sessions found at 
+model code handling sessions found at
 https://www.airpair.com/express/posts/expressjs-and-passportjs-sessions-deep-dive
 var sessionOpts = {
   saveUninitialized: true, // saved new sessions
@@ -45,10 +45,12 @@ app.use(passport.initialize());
 
 var routes = require('./routes/index');
 var users = require('./routes/user.routes');
-var people = require('./routes/person.routes')
+var people = require('./routes/person.routes');
+var auth = require('./routes/auth.routes');
 
 app.use('/', routes);
 app.use('/users', users);
+app.use('/auth', auth);
 //app.use('/users', people);
 
 require('./config/passport');
