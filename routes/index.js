@@ -7,9 +7,7 @@ router.get('/', function(req, res) {
   res.render('index', { title: 'SnapshotJS' });
 });
 
-router.get('/person/new', function(req, res) {
-  res.render('new');
-});
+
 
 router.get('/people', function(req, res, next) {
   res.render('people', { people: people.getAll(), test: "hello" });

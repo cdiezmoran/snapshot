@@ -7,9 +7,9 @@ module.exports = {
     callbackURL: 'http://127.0.0.1:3000/auth/twitter/callback'
   },
   google: {
-    clientID: process.env.GOOGLE_ID || '627474771522-uskkhdsevat3rn15kgrqt62bdft15cpu.apps.googleusercontent.com',
-    clientSecret: process.env.GOOGLE_SECRET || 'FwVkn76DKx_0BBaIAmRb6mjB',
-    callbackURL: 'http://127.0.0.1:3000/auth/google/callback'
+    clientID: process.env.GOOGLE_ID || '516679941362-g95u38vp6kacsmrmh1ncm8k454ca3gej.apps.googleusercontent.com',
+    clientSecret: process.env.GOOGLE_SECRET || 'Ux-FGm070bXbEugze115Vfts',
+    callbackURL: 'http://localhost:3300/auth/google/callback'
   },
   github: {
     clientID: process.env.GITHUB_ID || '81b233b3394179bfe2bc',

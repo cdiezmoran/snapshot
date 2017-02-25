@@ -12,6 +12,7 @@ var app = express();
 
 require('./config/parser')(app);
 require('./config/db')(app);
+//require('./routes')(app);
 
 // setting up user sessions
 //var expressSession = require('express-session');
@@ -51,7 +52,8 @@ var auth = require('./routes/auth.routes');
 app.use('/', routes);
 app.use('/users', users);
 app.use('/auth', auth);
-//app.use('/users', people);
+app.use('/person', people);
+app.use('/people', people);
 
 require('./config/passport');
 

@@ -1,7 +1,8 @@
 //controller sytnax from Express.js Blueprints by packt publishing
 
-var path = require('path'),
-    Person = require('../models/person.model')
+var path = require('path')
+var Person = require('../models/person.model')
+
 
 module.exports = {
   getAll: function(req, res, next) {
@@ -10,6 +11,9 @@ module.exports = {
 
       res.status(200).json(people);
     });
+  },
+  showCreatePersonForm: function(req, res, next) {
+    res.render('new');
   },
   createOne: function(req, res, next) {
   Person.create(req.body, function(err, person) {
@@ -103,3 +107,4 @@ module.exports = {
 
   }
 }
+
