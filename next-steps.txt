@@ -1,5 +1,21 @@
 
 
+Strategy:
+
+1. When a User signs up, they will be creating their User account as well as a Person object in the Persons/People collection.  
+
+2. Users will need the ability to add a person with an associated organization (autocomplete or create new) and contact (create new), and each contact will have an associated location (autocomplete or create new).  
+
+3. Users will need the ability to add an Organization with associated People, Contacts and Locations.
+
+4. Users will need to add Interactions of type from enum with People and/or Organizations, and may add a location.  
+
+Options:
+
+1. How do we get off Mongoose and Mongo and try Postgres or Arango?  
+
+
+
 SNAPSHOT.SAVE
 Users will try to input DataPoints into a Snapshot, and the actual numbers and
 data needs to be saved somehow.
