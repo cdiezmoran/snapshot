@@ -16,7 +16,7 @@ router.post('/register', userCtrl.createUser);
 
 router.get('/login', userCtrl.showLoginForm);
 router.post('/login', passport.authenticate('local', {
-    successRedirect: '/',
+    successRedirect: '/person/',
     failureRedirect: '/users/login'
 }));
 

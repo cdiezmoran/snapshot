@@ -15,6 +15,9 @@ module.exports = {
   showCreatePersonForm: function(req, res, next) {
     res.render('new');
   },
+  listPersonView: function(req, res, next) {
+    res.render('people');
+  },
   createOne: function(req, res, next) {
   Person.create(req.body, function(err, person) {
     if (err) return res.status(400).json(err);
@@ -107,4 +110,3 @@ module.exports = {
 
   }
 }
-

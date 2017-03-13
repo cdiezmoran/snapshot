@@ -34,7 +34,7 @@ var sessionOpts = {
 app.set('view engine', 'pug');
 app.set('views', 'views');
 app.locals.pretty = true
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'build')));
 app.locals.basedir = path.join(__dirname, 'views');
 
 // uncomment after placing your favicon in /public
@@ -53,7 +53,6 @@ app.use('/', routes);
 app.use('/users', users);
 app.use('/auth', auth);
 app.use('/person', people);
-app.use('/people', people);
 
 require('./config/passport');
 
