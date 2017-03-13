@@ -1,0 +1,18 @@
+//-extends ../layout
+
+block content
+    h1.
+        #{title}
+    form#formAddOrganization(name="add-organization",method="post",action="/organization/new")
+        p Called:
+            input#inputCalled(type="text", placeholder="ex. AltSchool", name="called")
+        p Long or Legal Name:
+            input#inputLongName(type="text", placeholder="e. The Impressive School Corporation", name="longName")
+        p URL:
+            input#inputURL(type="text", name="url")
+        p Email Suffix:
+            input#inputEmailSuffix(type="date", name="emailSuffix")
+        p Description:
+            input#inputDescription(type="date", name="description")
+        p
+            button#btnSubmit(type="submit") submit

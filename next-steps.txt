@@ -14,6 +14,12 @@ Options:
 
 1. How do we get off Mongoose and Mongo and try Postgres or Arango?  
 
+DevOps:
+
+1. Do we need the createServer and tearDownServer functions like in Thinkful?  
+
+2. Tests need to be created for all controllers, particularly Person, Organization, Contact, Location, and Interaction.  
+
 
 
 SNAPSHOT.SAVE
