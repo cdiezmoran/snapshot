@@ -18,7 +18,9 @@ DevOps:
 
 1. Do we need the createServer and tearDownServer functions like in Thinkful?  
 
-2. Tests need to be created for all controllers, particularly Person, Organization, Contact, Location, and Interaction.  
+2. Test data needs to be created for Person, Organization, Contact, Location, and Interaction.  
+
+3. Tests need to be created for all controllers, particularly Person, Organization, Contact, Location, and Interaction.  
 
 
 
