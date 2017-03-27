@@ -3,10 +3,10 @@ var router = express.Router();
 var people = require('../controllers/people.ctrl')
 
 /* GET home page. */
-router.get('/', function(req, res) {
+/*router.get('/', function(req, res) {
   res.render('index', { title: 'SnapshotJS' });
 });
-
+*/
 
 
 router.get('/people', function(req, res, next) {
