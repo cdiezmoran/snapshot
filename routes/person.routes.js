@@ -8,6 +8,8 @@ var peopleCtrl = require('../controllers/people.ctrl');
 
 
 router.get('/', peopleCtrl.listPersonView);
+router.get('/getAll', peopleCtrl.getAll);
+
 router.get('/new', peopleCtrl.showCreatePersonForm);
 router.post('/new', peopleCtrl.createOne);
 
