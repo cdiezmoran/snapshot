@@ -2,7 +2,7 @@ import React from 'react';
 import {connect} from 'react-redux'
 import { loadPerson, loadPersonApi } from '../actions/person.action';
 
-export class WelcomeComponent extends React.Component{
+export class PersonComponent extends React.Component{
   
   constructor(props){
     super(props);
@@ -22,7 +22,7 @@ export class WelcomeComponent extends React.Component{
 
     return(
       <div>
-        <h1>Welcome</h1>
+        <h1>Person</h1>
         <ul>
           {listContacts}
           </ul>
@@ -37,4 +37,4 @@ let mapStateToProps = (state, props) => {
     }
 };
 
-export default connect(mapStateToProps)(WelcomeComponent);
+export default connect(mapStateToProps)(PersonComponent);

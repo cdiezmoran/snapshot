@@ -1,4 +1,4 @@
-import {LOAD_PERSON,LOAD_PERSON_SUCCESS} from '../actions/person.action'
+import {LOAD_PERSON,LOAD_PERSON_ORGANIZATION} from '../actions/person.action'
 import { handle } from 'redux-pack';
 
 const initialState = {
@@ -11,12 +11,15 @@ function personReducer(state = initialState, action) {
     switch (action.type) {
         case LOAD_PERSON:
             return handle(state, action, {
-                failure: prevState => ({ ...prevState, error: payload }),
-                success: prevState => ({ ...prevState, contacts: payload }),
+                failure: prevState => ({ ...prevState, error: action.payload }),
+                success: prevState => ({ ...prevState, contacts: action.payload }),
             });
 
-        case LOAD_PERSON_SUCCESS:
-            return {...state, contacts: action.contacts }
+        case LOAD_PERSON_ORGANIZATION:
+            return handle(state, action, {
+                failure: prevState => ({ ...prevState, error: action.payload }),
+                success: prevState => ({ ...prevState, contactsOrganization: action.payload }),
+            });
     }
     return state;
 }

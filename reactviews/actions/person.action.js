@@ -6,26 +6,14 @@ export const LOAD_PERSON = 'LOAD_PERSON';
 export function loadPerson() {
   return {
     type: LOAD_PERSON,
-    promise: fetch('/person/getAll')
+    promise: fetch('/person/getAll').then(response => { return  response.json() })
   };
 }
 
-export function loadPersonApi() {
-    return dispatch => {
-        fetch('/person/getAll')
-        .then(response => {
-            return response.json()
-        })
-        .then(contactsList=>{
-            dispatch( loadPersonSuccess(contactsList) )
-        });
-    }
-}
-
-export const LOAD_PERSON_SUCCESS = 'LOAD_PERSON_SUCCESS';
-export function loadPersonSuccess(contacts) {
+export const LOAD_PERSON_ORGANIZATION = 'LOAD_PERSON_ORGANIZATION';
+export function loadPersonOrganization(organization) {
   return {
-    type: LOAD_PERSON_SUCCESS,
-    contacts: contacts
+    type: LOAD_LOAD_PERSON_ORGANIZATIONPERSON,
+    promise: fetch('/person/organization/:organization').then(response => { return  response.json() })
   };
 }

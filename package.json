@@ -22,7 +22,7 @@
     "watch:js:minified": "npm run build:js:minified && webpack --watch --minify",
     "clean:js:minified": "rm -f build/$npm_package_name.$npm_package_version.min.js build/$npm_package_name.$npm_package_version.min.js.map",
     "build-css": "node-sass --include-path views/scss views/scss/main.scss  build/main.css",
-    "watch-css": "npm run build-css && chokidar scss/main.scss -c 'npm run build-css'"
+    "watch-css": "npm run build-css && chokidar views/scss/main.scss -c 'npm run build-css'"
   },
   "dependencies": {
     "async": "^2.0.1",
@@ -36,6 +36,7 @@
     "express": "~4.13.4",
     "isomorphic-fetch": "^2.2.1",
     "markdown": "^0.5.0",
+    "material-ui": "^0.17.4",
     "moment": "^2.17.1",
     "mongoose": "^4.5.10",
     "morgan": "~1.7.0",
@@ -49,7 +50,9 @@
     "react-dom": "^15.3.2",
     "react-redux": "^4.4.5",
     "react-router": "^2.8.1",
+    "react-tap-event-plugin": "^2.0.1",
     "redux": "^3.6.0",
+    "redux-logger": "^3.0.1",
     "redux-pack": "^0.1.5",
     "serve-favicon": "~2.3.0",
     "stylus": "^0.54.5",
