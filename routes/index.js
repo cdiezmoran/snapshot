@@ -15,12 +15,13 @@ router.get('/people', function(req, res, next) {
 
 //syntax below taken from article
 //hackhands.com/mongodb-crud-mvc-way-with-passport-authentication
+/*
 router.post('/person/create', function(req, res, next) {
   console.log(req.body);
   var newPerson = req.body;
   console.log(newPerson);
   person.create(newPerson);
   res.redirect('/');
-});
+});*/
 
 module.exports = router;
