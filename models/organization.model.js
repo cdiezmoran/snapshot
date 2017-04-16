@@ -1,6 +1,8 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
+//need to implement organization type like venture, buyout, investment banker, lp
+
 var OrganizationSchema = new Schema({
   called: {
     type: String

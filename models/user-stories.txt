@@ -1,0 +1,10 @@
+
+User Story for NetGas examples.  
+
+Michael would create an organization called Netgas. I would add url, emailSuffix, description, 
+
+Michael and Mario get in touch.  Michael then creates a Person object, linked to the organization NetGas, and fills out information about Mario after their meeting.  
+
+When creating Mario's Person object, I would also create your Contact object.  
+
+Michael chooses to invest in NetGas. 
