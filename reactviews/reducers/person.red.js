@@ -12,13 +12,13 @@ function personReducer(state = initialState, action) {
         case LOAD_PERSON:
             return handle(state, action, {
                 failure: prevState => ({ ...prevState, error: action.payload }),
-                success: prevState => ({ ...prevState, contacts: action.payload }),
+                success: prevState => ({ ...prevState, people: action.payload }),
             });
 
         case LOAD_PERSON_ORGANIZATION:
             return handle(state, action, {
                 failure: prevState => ({ ...prevState, error: action.payload }),
-                success: prevState => ({ ...prevState, contactsOrganization: action.payload }),
+                success: prevState => ({ ...prevState, peopleOrganization: action.payload }),
             });
     }
     return state;

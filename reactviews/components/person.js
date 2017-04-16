@@ -1,12 +1,12 @@
 import React from 'react';
 import {connect} from 'react-redux'
-import { loadPerson, loadPersonApi } from '../actions/person.action';
+import { loadPerson } from '../actions/person.action';
 
 export class PersonComponent extends React.Component{
   
   constructor(props){
     super(props);
-    this.props.dispatch(loadPersonApi());
+    this.props.dispatch(loadPerson());
   }
 
   render(){
