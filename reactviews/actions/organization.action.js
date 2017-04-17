@@ -19,7 +19,24 @@ export function saveOrganization(data) {
   return {
     type: SAVE_ORGANIZATION,
     promise: fetch('/organization/:id',{
-      method: 'POST', body: data
+      method: 'POST', 
+      body: data
+    })
+    .then(response => { return  response.json() })
+  };
+}
+
+export const CREATE_ORGANIZATION = 'CREATE_ORGANIZATION';
+export function createOrganization(data) {
+  return {
+    type: CREATE_ORGANIZATION,
+    promise: fetch('/organization/new',{
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      method: 'POST', 
+      body: JSON.stringify( data )
     })
     .then(response => { return  response.json() })
   };

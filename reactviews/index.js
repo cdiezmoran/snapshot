@@ -4,7 +4,7 @@ import { Provider } from 'react-redux';
 import { Router, Route, IndexRoute, hashHistory} from 'react-router';
 import { SnapshotApp } from './components/app';
 import  WelcomeComponent  from './components/welcome';
-import  OrganizationComponent  from './components/organization';
+import  OrganizationsComponent  from './components/organizations';
 import  PersonComponent  from './components/person';
 
 import store from "./store";
@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
       <Router history={hashHistory}>
         <Route path="/" component={SnapshotApp}>
           <IndexRoute component={WelcomeComponent} />
-          <Route path="organization" component={OrganizationComponent}>
+          <Route path="organization" component={OrganizationsComponent}>
             <Route path=":id"></Route>
           </Route>
           <Route path="person" component={PersonComponent}>
