@@ -71,8 +71,8 @@ export class OrganizationComponent extends React.Component{
       rowsInteractions = this.props.peopleOrganization.map( (c,index) =>{
         return 
           (<TableRow key={index}>
-            <TableRowColumn>{c.givenName}</TableRowColumn>
-            <TableRowColumn>{c.givenName}</TableRowColumn>
+            <TableRowColumn>{c.called}</TableRowColumn>
+            <TableRowColumn>{c.url}</TableRowColumn>
             <TableRowColumn>
 
               <FontIcon
