@@ -21,7 +21,7 @@ module.exports = {
     });
   },
   getOne: function (req, res, next) {
-    Organization.findOne({ id: req.params.id })
+    Organization.findById(req.params.organization)
       .populate('contacts')
       .exec(function (err, organization) {
         if (err) return res.status(500).json({
@@ -35,7 +35,7 @@ module.exports = {
       });
   },
   updateOne: function (req, res, next) {
-    Organization.findOneAndUpdate({ id: req.params.id }, req.body, function (err, organization) {
+    Organization.findOneAndUpdate({ _id: req.params.organization }, req.body, function (err, organization) {
       if (err) return res.status(400).json(err);
       if (!organization) return res.status(404).json();
 
@@ -43,7 +43,7 @@ module.exports = {
     });
   },
   deleteOne: function (req, res, next) {
-    Organization.findOneAndRemove({ id: req.params.id }, function (err) {
+    Organization.findOneAndRemove({ _id: req.params.organization }, function (err) {
       if (err) return res.status(400).json(err);
 
       res.status(204).json();

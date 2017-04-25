@@ -37,7 +37,7 @@ export class OrganizationsComponent extends React.Component{
             <TableRowColumn>{c.longName}</TableRowColumn>
             <TableRowColumn>{c.url}</TableRowColumn>
             <TableRowColumn>
-              <FontIcon className="material-icons" >edit</FontIcon>
+              <FontIcon onTouchTap={this.loadOrganization.bind(this,c._id)} className="material-icons" >edit</FontIcon>
             </TableRowColumn>
           </TableRow>);
           return row;
@@ -47,7 +47,7 @@ export class OrganizationsComponent extends React.Component{
     let tabs;
     if(this.props.organization){
       tabs=
-        (<OrganizationComponent />)
+        (<OrganizationComponent organization={this.props.organization} />)
     }
 
 

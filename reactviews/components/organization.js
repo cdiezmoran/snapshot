@@ -1,6 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux'
-import { saveOrganization,createOrganization,
+import { saveOrganization,createOrganization,changeOrganization,
   loadOrganizations,loadOrganization, addOrganization } from '../actions/organization.action';
 import {Tabs, Tab} from 'material-ui/Tabs';
 import FontIcon from 'material-ui/FontIcon';
@@ -23,14 +23,16 @@ export class OrganizationComponent extends React.Component{
     }
   }
 
+  onChangeFunction(key, component, value){
+    this.props.dispatch(changeOrganization(key,value));
+  }
 
   saveOrganization(){
-
-    this.props.organization.longName = this.refs.longName.getValue();
-    this.props.organization.url = this.refs.url.getValue();
     if(this.props.organization._id)
       this.props.dispatch(saveOrganization(this.props.organization));
     else this.props.dispatch(createOrganization(this.props.organization));
+
+    this.props.dispatch(loadOrganizations());
   }
 
 
@@ -70,6 +72,7 @@ export class OrganizationComponent extends React.Component{
       });
     }
 
+   console.log(this.props.organization,this.props.organization.longName);
    
     return(
       <div>
@@ -80,14 +83,14 @@ export class OrganizationComponent extends React.Component{
                 All the general info about the organization
               </p>
               <TextField
-                ref="longName"
-                defaultValue={this.props.organization.longName}
+                onChange={this.onChangeFunction.bind(this, "longName")}
+                value={this.props.organization.longName}
                 floatingLabelText="Long name"
               />
 
               <TextField
-                ref="url"
-                defaultValue={this.props.organization.url}
+                onChange={this.onChangeFunction.bind(this, "url")}
+                value={this.props.organization.url}
                 floatingLabelText="URL"
               />
 
@@ -142,4 +145,4 @@ let mapStateToProps = (state, props) => {
     }
 };
 
-export default connect(mapStateToProps)(OrganizationComponent);
+export default connect()(OrganizationComponent);

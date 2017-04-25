@@ -10,7 +10,7 @@ router.get('/getAll', organizationCtrl.getAll);
 router.post('/new', organizationCtrl.createOne);
 router.get('/:organization',organizationCtrl.getOne);
 router.put('/:organization',organizationCtrl.updateOne);
-router.delete('/:id',organizationCtrl.deleteOne);
+router.delete('/:organization',organizationCtrl.deleteOne);
 
 
 module.exports = router;
