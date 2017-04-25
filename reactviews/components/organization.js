@@ -83,9 +83,19 @@ export class OrganizationComponent extends React.Component{
                 All the general info about the organization
               </p>
               <TextField
+                onChange={this.onChangeFunction.bind(this, "called")}
+                value={this.props.organization.called}
+                floatingLabelText="Called"
+              />
+              <TextField
                 onChange={this.onChangeFunction.bind(this, "longName")}
                 value={this.props.organization.longName}
                 floatingLabelText="Long name"
+              />
+              <TextField
+                onChange={this.onChangeFunction.bind(this, "emailSuffix")}
+                value={this.props.organization.emailSuffix}
+                floatingLabelText="Email Suffix"
               />
 
               <TextField

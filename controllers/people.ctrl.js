@@ -27,7 +27,7 @@ module.exports = {
 },
   getOne: function(req, res, next) {
     Person.findOne({ id: req.params.id })
-    .populate('contacts')
+    //leave this out for now: .populate('contacts')
     .exec(function(err, person) {
       if (err) return res.status(500).json({
         message: 'Error getting the person'
