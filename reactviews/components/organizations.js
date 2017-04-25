@@ -35,7 +35,7 @@ export class OrganizationsComponent extends React.Component{
         return 
           (<TableRow key={index}>
             <TableRowColumn>{c.givenName}</TableRowColumn>
-            <TableRowColumn>{c.givenName}</TableRowColumn>
+            <TableRowColumn>{c.url}</TableRowColumn>
             <TableRowColumn>
               <FontIcon className="material-icons" >edit</FontIcon>
             </TableRowColumn>
