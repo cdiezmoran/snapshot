@@ -1,6 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux'
-import { saveOrganization,loadOrganizations,loadOrganization, addOrganization } from '../actions/organization.action';
+import { saveOrganization,createOrganization,
+  loadOrganizations,loadOrganization, addOrganization } from '../actions/organization.action';
 import {Tabs, Tab} from 'material-ui/Tabs';
 import FontIcon from 'material-ui/FontIcon';
 import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn} from 'material-ui/Table';
@@ -8,12 +9,12 @@ import Slider from 'material-ui/Slider';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
 import TextField from 'material-ui/TextField';
+import RaisedButton from 'material-ui/RaisedButton';
 
 export class OrganizationComponent extends React.Component{
   
   constructor(props){
     super(props);
-    this.props.dispatch(loadOrganizations());
   }
 
   handleActive(tab) {
@@ -22,34 +23,20 @@ export class OrganizationComponent extends React.Component{
     }
   }
 
-  addOrganization(){
-    this.props.dispatch(addOrganization());
-  }
 
   saveOrganization(){
-    this.props.dispatch(saveOrganization(this.props.organization));
+
+    this.props.organization.longName = this.refs.longName.getValue();
+    this.props.organization.url = this.refs.url.getValue();
+    if(this.props.organization._id)
+      this.props.dispatch(saveOrganization(this.props.organization));
+    else this.props.dispatch(createOrganization(this.props.organization));
   }
 
-  loadOrganization(id){
-    this.props.dispatch(loadOrganization(id));
-  }
 
   render(){
 
     let rows,rowsPeople,rowsInteractions;
-
-    if(this.props.organizations){
-      rows = this.props.organizations.map( (c,index) =>{
-        return 
-          (<TableRow key={index}>
-            <TableRowColumn>{c.givenName}</TableRowColumn>
-            <TableRowColumn>{c.givenName}</TableRowColumn>
-            <TableRowColumn>
-              <FontIcon className="material-icons" >edit</FontIcon>
-            </TableRowColumn>
-          </TableRow>);
-      });
-    }
 
     if(this.props.peopleOrganization){
       rowsPeople = this.props.peopleOrganization.map( (c,index) =>{
@@ -83,19 +70,29 @@ export class OrganizationComponent extends React.Component{
       });
     }
 
-    let tabs;
-    if(this.props.organization){
-      tabs=
-        (<Tabs>
+   
+    return(
+      <div>
+       <Tabs>
           <Tab label="Info" >
             <div>
               <p>
                 All the general info about the organization
               </p>
               <TextField
-                defaultValue="Default Value"
-                floatingLabelText="Floating Label Text"
+                ref="longName"
+                defaultValue={this.props.organization.longName}
+                floatingLabelText="Long name"
               />
+
+              <TextField
+                ref="url"
+                defaultValue={this.props.organization.url}
+                floatingLabelText="URL"
+              />
+
+               <RaisedButton label="Save" 
+               onTouchTap={this.saveOrganization.bind(this)} />
             </div>
           </Tab>
           <Tab label="People" >
@@ -133,32 +130,6 @@ export class OrganizationComponent extends React.Component{
             </div>
           </Tab>
         </Tabs>
-      )
-    }
-
-    return(
-      <div>
-        <h1>Organization 
-
-          <FloatingActionButton onTouchTap={this.addOrganization.bind(this)}>
-            <ContentAdd />
-          </FloatingActionButton>
-
-        </h1>
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHeaderColumn>Name</TableHeaderColumn>
-                <TableHeaderColumn>Status</TableHeaderColumn>
-                <TableHeaderColumn>Actions</TableHeaderColumn>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {rows}
-            </TableBody>
-          </Table>
-
-        {tabs}
 
       </div>
     )
@@ -167,7 +138,6 @@ export class OrganizationComponent extends React.Component{
 
 let mapStateToProps = (state, props) => {
     return {
-      organizations: state.organizationReducer.organizations,
       organization: state.organizationReducer.organization
     }
 };

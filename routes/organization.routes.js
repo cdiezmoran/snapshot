@@ -3,25 +3,14 @@
 var express = require('express');
 var router = express.Router();
 var passport = require('passport');
-var person = require('../controllers/people.ctrl');
-var peopleCtrl = require('../controllers/people.ctrl');
+var organizationCtrl = require('../controllers/organization.ctrl');
 
 
-router.get('/', peopleCtrl.listPersonView);
-router.get('/getAll', peopleCtrl.getAll);
-
-router.get('/new', peopleCtrl.showCreatePersonForm);
-router.post('/new', peopleCtrl.createOne);
-
-// I was using some convention I don't remember how to use.
-router.get('/people',person.getAll);
-router.post('/people',person.createOne);
-
-router.get('/person/:id',person.getOne);
-router.put('/person/:id',person.updateOne);
-router.delete('/person/:id',person.deleteOne);
-
-router.post('/person/:id/contact', person.addContact);
+router.get('/getAll', organizationCtrl.getAll);
+router.post('/new', organizationCtrl.createOne);
+router.get('/:organization',organizationCtrl.getOne);
+router.put('/:organization',organizationCtrl.updateOne);
+router.delete('/:id',organizationCtrl.deleteOne);
 
 
 module.exports = router;

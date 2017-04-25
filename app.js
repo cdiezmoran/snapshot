@@ -48,11 +48,13 @@ var routes = require('./routes/index');
 var users = require('./routes/user.routes');
 var people = require('./routes/person.routes');
 var auth = require('./routes/auth.routes');
+var organization = require('./routes/organization.routes');
 
 app.use('/', routes);
 app.use('/users', users);
 app.use('/auth', auth);
 app.use('/person', people);
+app.use('/organization', organization);
 
 require('./config/passport');
 
