@@ -32,14 +32,15 @@ export class OrganizationsComponent extends React.Component{
 
     if(this.props.organizations){
       rows = this.props.organizations.map( (c,index) =>{
-        return 
+        var row= 
           (<TableRow key={index}>
-            <TableRowColumn>{c.givenName}</TableRowColumn>
-            <TableRowColumn>{c.givenName}</TableRowColumn>
+            <TableRowColumn>{c.longName}</TableRowColumn>
+            <TableRowColumn>{c.url}</TableRowColumn>
             <TableRowColumn>
               <FontIcon className="material-icons" >edit</FontIcon>
             </TableRowColumn>
           </TableRow>);
+          return row;
       });
     }
 
