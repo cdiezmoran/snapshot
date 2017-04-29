@@ -1,4 +1,15 @@
 
+Refactoring:
+
+Implement the API using the Node filesystem rather than a database.  
+
+Use the Object Prototype to create objects consistently.  
+
+Create an API app and seperate it from the React app.  
+
+Implement a testing system and get to 100% test coverage on the API.
+
+
 
 Strategy:
 
@@ -7,6 +18,7 @@ Strategy:
 2. Users will need the ability to add a person with an associated organization (autocomplete or create new) and contact (create new), and each contact will have an associated location (autocomplete or create new).  
 
 3. Users will need the ability to add an Organization with associated People, Contacts and Locations.
+3.a When users enter a location, it should ping the Google Maps API to populate the database with the latitude, longitude, the placeID, and other longer forms of data.
 
 4. Users will need to add Interactions of type from enum with People and/or Organizations, and may add a location.  
 

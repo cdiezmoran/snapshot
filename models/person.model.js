@@ -1,6 +1,18 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
+/*
+People and Persons and a Person are objects representing the static information related to 
+a person. The information about their role needs to be stored in the Contacts collection, 
+as Admins will want to be able to track persons across roles and organizations and 
+contact information.  
+
+User Accounts will be created linked to the Person data.  A User should be able to edit their 
+Person data, as well as add and manage their Contacts. 
+
+Persons that are "Team Members" will be Administrators with Administrative permissions from their User Account. 
+*/
+
 var PersonSchema = new Schema({
   called: {
     type: String

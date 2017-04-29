@@ -1,7 +1,17 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
-//need to implement organization type like venture, buyout, investment banker, lp
+/*
+Organizations are the central data object around much of the other objects in the schema. 
+Admins will need to be able to create organizations and add data around them,
+much of it going to other collections such as Person, Location, Interaction, Snapshot, etc.
+
+Eventually, Admins need to be able to create forms for Organizations, where Users can update
+Organization information, as well as record Snapshots. 
+
+It could be possible that the "description" should come from a more 
+abstract cell system for managing versions of copy management.  
+*/
 
 var OrganizationSchema = new Schema({
   called: {
