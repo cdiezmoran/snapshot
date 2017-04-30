@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
           <Route path="organization" component={OrganizationsComponent}>
             <Route path=":id"></Route>
           </Route>
-          <Route path="persons" component={PersonsComponent}>
+          <Route path="person" component={PersonsComponent}>
             <Route path=":id"></Route>
           </Route>
         </Route>

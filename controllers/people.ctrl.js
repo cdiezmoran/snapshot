@@ -89,8 +89,8 @@ module.exports = {
   createFromOrganization: function(req, res, next) {
     Organization.findById(req.body.organization).exec(function (err, organization) {
       if (err) {return res.status(300)};
-      function()
-      var personInfo = newGlobalPerson
+      // function()
+      var personInfo = newPerson
       var personRecord = new Person({
         called: personInfo.called,
         givenName: personInfo.givenName,
@@ -115,7 +115,6 @@ module.exports = {
       birthDate: personInfo.birthDate
     });
     personRecord.save();
-    newGlobalPerson = personRecord
     console.log('The create function is complete');
   },
   save: function(req, res) {
