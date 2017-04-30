@@ -1,7 +1,3 @@
-//require('es6-promise').polyfill();
-//require('isomorphic-fetch');
- 
-
 export const LOAD_PERSONS = 'LOAD_PERSONS';
 export function loadPersons() {
 	return {

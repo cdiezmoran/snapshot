@@ -14,7 +14,7 @@ function personReducer(state = initialState, action) {
         case LOAD_PERSONS:
             return handle(state, action, {
                 failure: prevState => ({ ...prevState, error: action.payload }),
-                success: prevState => ({ ...prevState, person: action.payload }),
+                success: prevState => ({ ...prevState, people: action.payload }),
             });
 
         case LOAD_PERSON:
@@ -26,13 +26,13 @@ function personReducer(state = initialState, action) {
         case SAVE_PERSON:
             return handle(state, action, {
                 failure: prevState => ({ ...prevState, error: action.payload }),
-                success: prevState => ({ ...prevState, people: action.payload }),
+                success: prevState => ({ ...prevState, person: action.payload }),
             });
 
         case CREATE_PERSON:
             return handle(state, action, {
                 failure: prevState => ({ ...prevState, error: action.payload }),
-                success: prevState => ({ ...prevState, people: action.payload }),
+                success: prevState => ({ ...prevState, person: action.payload }),
             });
 
         case ADD_PERSON:

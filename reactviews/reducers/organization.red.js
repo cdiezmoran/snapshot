@@ -1,5 +1,6 @@
 import {LOAD_ORGANIZATIONS,LOAD_ORGANIZATION, CHANGE_ORGANIZATION,
-        ADD_ORGANIZATION, SAVE_ORGANIZATION, CREATE_ORGANIZATION} from '../actions/organization.action'
+        ADD_ORGANIZATION, SAVE_ORGANIZATION, CREATE_ORGANIZATION,
+        FIND_ORGANIZATIONS} from '../actions/organization.action'
 import { handle } from 'redux-pack';
 
 const initialState = {
@@ -14,6 +15,12 @@ function organizationReducer(state = initialState, action) {
             return handle(state, action, {
                 failure: prevState => ({ ...prevState, error: action.payload }),
                 success: prevState => ({ ...prevState, organization: null, organizations: action.payload }),
+            });
+        
+        case FIND_ORGANIZATIONS:
+            return handle(state, action, {
+                failure: prevState => ({ ...prevState, error: action.payload }),
+                success: prevState => ({ ...prevState, findOrganizations: action.payload }),
             });
 
         case LOAD_ORGANIZATION:

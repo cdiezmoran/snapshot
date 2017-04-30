@@ -34,6 +34,15 @@ module.exports = {
         res.status(200).json(organization);
       });
   },
+  find: function (req, res, next) {
+    let query={};
+    if(req.param.name) query.name= req.param.name;
+    Organization.find(query,function (err, organization) {
+      if (err) return res.status(400).json(err);
+
+      res.status(200).json(organization);
+    });
+  },
   updateOne: function (req, res, next) {
     Organization.findOneAndUpdate({ _id: req.params.organization }, req.body, function (err, organization) {
       if (err) return res.status(400).json(err);

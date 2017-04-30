@@ -1,6 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux'
 import { savePerson,createPerson,changePerson,loadPersons,loadPerson, addPerson } from '../actions/person.action';
+import { findOrganizations } from '../actions/organization.action.js';
 import {Tabs, Tab} from 'material-ui/Tabs';
 import FontIcon from 'material-ui/FontIcon';
 import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn} from 'material-ui/Table';
@@ -9,6 +10,7 @@ import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
+import AutoComplete from 'material-ui/AutoComplete';
 
 export class PersonComponent extends React.Component{
   
@@ -35,14 +37,14 @@ export class PersonComponent extends React.Component{
     this.props.dispatch(loadPersons());
   }
 
+  handleUpdateInput(value){
+    if(!value) return;
+    this.props.dispatch(findOrganizations(value));
+  }
+
   render(){
 
     let rows;
-
-
-// return(<div><h1>hello</h1></div>)
-
-
     return(
       <div>
        <Tabs>
@@ -78,6 +80,7 @@ export class PersonComponent extends React.Component{
                 floatingLabelText="Birthday"
               />
 
+
                <RaisedButton label="Save" 
                onTouchTap={this.savePerson.bind(this)} />
             </div>
@@ -88,9 +91,16 @@ export class PersonComponent extends React.Component{
    }
 }
 
+/*
+              <AutoComplete
+                hintText="Organization"
+                dataSource={this.props.findOrganizations}
+                onUpdateInput={this.handleUpdateInput}
+              />*/
 let mapStateToProps = (state, props) => {
     return {
-      person: state.personReducer.person
+      person: state.personReducer.person,
+      findOrganizations: state.organizationReducer.findOrganizations
     }
 };
 

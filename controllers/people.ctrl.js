@@ -22,14 +22,14 @@ module.exports = {
     res.render('people');
   },
   createOne: function(req, res, next) {
-  Person.create(req.body, function(err, person) {
-    if (err) return res.status(400).json(err);
+    Person.create(req.body, function(err, person) {
+      if (err) return res.status(400).json(err);
 
-    res.status(201).json(person);
-  });
-},
+      res.status(201).json(person);
+    });
+  },
   getOne: function(req, res, next) {
-    Person.findOne({ id: req.params.id })
+    Person.findOne({ _id: req.params.id })
     //leave this out for now: .populate('contacts')
     .exec(function(err, person) {
       if (err) return res.status(500).json({
@@ -43,7 +43,7 @@ module.exports = {
     });
   },
   updateOne: function(req, res, next) {
-    Person.findOneAndUpdate({ id: req.params.id }, req.body, function(err, person) {
+    Person.findOneAndUpdate({ _id: req.params.id }, req.body, function(err, person) {
       if (err) return res.status(400).json(err);
       if (!person) return res.status(404).json();
 
@@ -51,18 +51,18 @@ module.exports = {
     });
   },
   deleteOne: function(req, res, next) {
-    Person.findOneAndRemove({ id: req.params.id }, function(err) {
+    Person.findOneAndRemove({ _id: req.params.id }, function(err) {
       if (err) return res.status(400).json(err);
 
       res.status(204).json();
     });
   },
-  addMovie: function(req, res, next) {
-    Person.findOne({ id: req.params.id }, function(err, person) {
+  addPerson: function(req, res, next) {
+    Person.findOne({ _id: req.params.id }, function(err, person) {
       if (err) return res.status(400).json(err);
       if (!person) return res.status(404).json();
 
-      Movie.findOne({ id: req.body.id }, function(err, contact) {
+      Contact.findOne({ _id: req.body.id }, function(err, contact) {
         if (err) return res.status(400).json(err);
         if (!contact) return res.status(404).json();
 
@@ -102,20 +102,6 @@ module.exports = {
       organization.People.push(personRecord)
       organization.save()
     })
-  },
-  create: function(newPerson) {
-    //syntax taken from online article:
-    //hackhands.com/mongodb-crud-mvc-way-with-passport-authentication/
-    console.log('The create function is invoked');
-    var personInfo = newPerson
-    var personRecord = new Person({
-      called: personInfo.called,
-      givenName: personInfo.givenName,
-      surName: personInfo.surName,
-      birthDate: personInfo.birthDate
-    });
-    personRecord.save();
-    console.log('The create function is complete');
   },
   save: function(req, res) {
 
