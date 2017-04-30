@@ -1,12 +1,12 @@
-require('es6-promise').polyfill();
-require('isomorphic-fetch');
+//require('es6-promise').polyfill();
+//require('isomorphic-fetch');
  
 
 export const LOAD_PERSONS = 'LOAD_PERSONS';
 export function loadPersons() {
 	return {
 		type: LOAD_PERSONS,
-		promise: fetch('/persons/getAll').then(response => { return  response.json() })
+		promise: fetch('/person/getAll').then(response => { return  response.json() })
 	};
 }
 

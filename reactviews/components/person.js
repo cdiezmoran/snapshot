@@ -40,50 +40,21 @@ export class PersonComponent extends React.Component{
     let rows;
 
 
+// return(<div><h1>hello</h1></div>)
+
 
     return(
       <div>
        <Tabs>
           <Tab label="Info" >
             <div>
-              <p>
-                All the general info about the person
-              </p>
-              <TextField
-                onChange={this.onChangeFunction.bind(this, "called")}
-                value={this.props.person.called}
-                floatingLabelText="Called"
-              />
-              <TextField
-                onChange={this.onChangeFunction.bind(this, "givenName")}
-                value={this.props.person.givenName}
-                floatingLabelText="Given Name"
-              />
-              <TextField
-                onChange={this.onChangeFunction.bind(this, "surName")}
-                value={this.props.person.surName}
-                floatingLabelText="Email Suffix"
-              />
-              <TextField
-                onChange={this.onChangeFunction.bind(this, "gender")}
-                value={this.props.person.gender}
-                floatingLabelText="Gender"
-              />
-
-              <TextField
-                onChange={this.onChangeFunction.bind(this, "birthday")}
-                value={this.props.person.birthday}
-                floatingLabelText="Birthday"
-              />
-
-               <RaisedButton label="Save" 
-               onTouchTap={this.savePerson.bind(this)} />
+            
             </div>
           </Tab>
         </Tabs>
       </div>
-    )
-  }
+     )
+   }
 }
 
 let mapStateToProps = (state, props) => {

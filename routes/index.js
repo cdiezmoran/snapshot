@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
-var people = require('../controllers/people.ctrl')
+//var people = require('../controllers/people.ctrl')
+//var person = require('../controllers/people.ctrl')
 
 /* GET home page. */
 /*router.get('/', function(req, res) {
@@ -9,9 +10,9 @@ var people = require('../controllers/people.ctrl')
 */
 
 
-router.get('/people', function(req, res, next) {
-  res.render('people', { people: people.getAll(), test: "hello" });
-});
+// router.get('/people', function(req, res, next) {
+//   res.render('people', { people: people.getAll(), test: "hello" });
+// });
 
 //syntax below taken from article
 //hackhands.com/mongodb-crud-mvc-way-with-passport-authentication

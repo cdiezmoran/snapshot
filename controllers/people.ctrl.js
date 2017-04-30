@@ -2,10 +2,12 @@
 
 var path = require('path')
 var Person = require('../models/person.model')
-
+var newGlobalPerson = null
 
 module.exports = {
+
   getAll: function(req, res, next) {
+    console.log("People called of null error");
     Person.find(function(err, people) {
       if (err) return res.status(400).json(err);
 
@@ -13,7 +15,8 @@ module.exports = {
     });
   },
   showCreatePersonForm: function(req, res, next) {
-    res.render('new');
+    // res.render('new');
+    console.log('hit show form')
   },
   listPersonView: function(req, res, next) {
     res.render('people');
@@ -83,6 +86,23 @@ module.exports = {
     //res.send(name);
 
   },
+  createFromOrganization: function(req, res, next) {
+    Organization.findById(req.body.organization).exec(function (err, organization) {
+      if (err) {return res.status(300)};
+      function()
+      var personInfo = newPerson
+      var personRecord = new Person({
+        called: personInfo.called,
+        givenName: personInfo.givenName,
+        surName: personInfo.surName,
+        birthDate: personInfo.birthDate,
+        currentOrganization: organization
+      });
+      personRecord.save()
+      organization.People.push(personRecord)
+      organization.save()
+    })
+  }
   create: function(newPerson) {
     //syntax taken from online article:
     //hackhands.com/mongodb-crud-mvc-way-with-passport-authentication/

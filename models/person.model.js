@@ -32,14 +32,14 @@ var PersonSchema = new Schema({
   gender: {
     type: String
   },
-  currentOrganization: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Organization'
-  },
-  currentContact: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Contact'
-  },
+  // currentOrganization: {
+  //   type: mongoose.Schema.Types.ObjectId,
+  //   ref: 'Organization'
+  // },
+  // currentContact: {
+  //   type: mongoose.Schema.Types.ObjectId,
+  //   ref: 'Contact'
+  // },
   hasUserAccount: {
     type: Boolean
   },
