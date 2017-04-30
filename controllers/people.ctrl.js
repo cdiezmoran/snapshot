@@ -89,7 +89,7 @@ module.exports = {
   createFromOrganization: function(req, res, next) {
     Organization.findById(req.body.organization).exec(function (err, organization) {
       if (err) {return res.status(300)};
-      function()
+      // function()
       var personInfo = newPerson
       var personRecord = new Person({
         called: personInfo.called,
@@ -102,7 +102,7 @@ module.exports = {
       organization.People.push(personRecord)
       organization.save()
     })
-  }
+  },
   create: function(newPerson) {
     //syntax taken from online article:
     //hackhands.com/mongodb-crud-mvc-way-with-passport-authentication/
