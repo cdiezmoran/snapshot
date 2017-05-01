@@ -16,14 +16,13 @@ module.exports = {
   createOne: function(req, res, next) {
     Contact.create(req.body, function(err, contact) {
       if (err) return res.status(400).json(err);
-
       res.status(201).json(contact);
     });
   },
 
 
   getOne: function(req, res, next) {
-    Contact.findOne({ id: req.params.id })
+    Contact.findOne({ _id: req.params.id })
     .populate('people')
     .exec(function(err, contact) {
       if (err) return res.status(400).json(err);
@@ -35,7 +34,7 @@ module.exports = {
 
 
   updateOne: function(req, res, next) {
-    Contact.findOneAndUpdate({ id: req.params.id }, req.body, function(err, contact) {
+    Contact.findOneAndUpdate({ _id: req.params.id }, req.body, function(err, contact) {
       if (err) return res.status(400).json(err);
       if (!contact) return res.status(404).json();
 
@@ -45,7 +44,7 @@ module.exports = {
 
 
   deleteOne: function(req, res, next) {
-    Contact.findOneAndRemove({ id: req.params.id }, function(err) {
+    Contact.findOneAndRemove({ _id: req.params.id }, function(err) {
       if (err) return res.status(400).json(err);
 
       res.status(204).json();
@@ -54,11 +53,11 @@ module.exports = {
 
 
   addPerson: function(req, res, next) {
-    Contact.findOne({ id: req.params.id }, function(err, contact) {
+    Contact.findOne({ _id: req.params.id }, function(err, contact) {
       if (err) return res.status(400).json(err);
       if (!contact) return res.status(404).json();
 
-      Person.findOne({ id: req.body.id }, function(err, person) {
+      Person.findOne({ _id: req.body.id }, function(err, person) {
         if (err) return res.status(400).json(err);
         if (!person) return res.status(404).json();
 
@@ -74,7 +73,7 @@ module.exports = {
 
 
   deletePerson: function(req, res, next) {
-    Contact.findOne({ id: req.params.id }, function(err, contact) {
+    Contact.findOne({ _id: req.params.id }, function(err, contact) {
       if (err) return res.status(400).json(err);
       if (!contact) return res.status(404).json();
 

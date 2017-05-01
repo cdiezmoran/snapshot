@@ -3,8 +3,10 @@ import {connect} from 'react-redux'
 import { saveOrganization,loadOrganizations,loadOrganization, addOrganization } from '../actions/organization.action';
 import {Tabs, Tab} from 'material-ui/Tabs';
 import FontIcon from 'material-ui/FontIcon';
+import RaisedButton from 'material-ui/RaisedButton';
 import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn} from 'material-ui/Table';
 import Slider from 'material-ui/Slider';
+import IconButton from 'material-ui/IconButton';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
 import TextField from 'material-ui/TextField';
@@ -34,10 +36,14 @@ export class OrganizationsComponent extends React.Component{
       rows = this.props.organizations.map( (c,index) =>{
         var row= 
           (<TableRow key={index}>
+            <TableRowColumn>{c.called}</TableRowColumn>
             <TableRowColumn>{c.longName}</TableRowColumn>
-            <TableRowColumn>{c.url}</TableRowColumn>
+            <TableRowColumn>{c.emailSuffix}</TableRowColumn>
+            <TableRowColumn>{c.url}</TableRowColumn>            
             <TableRowColumn>
-              <FontIcon onTouchTap={this.loadOrganization.bind(this,c._id)} className="material-icons" >edit</FontIcon>
+              <RaisedButton label="Edit" onTouchTap={this.loadOrganization.bind(this,c._id)}  />
+              <IconButton iconClassName="material-icons-edit"
+						 onTouchTap={this.loadOrganization.bind(this,c._id)}  />
             </TableRowColumn>
           </TableRow>);
           return row;
@@ -62,20 +68,22 @@ export class OrganizationsComponent extends React.Component{
           </FloatingActionButton>
 
         </h1>
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHeaderColumn>Name</TableHeaderColumn>
-                <TableHeaderColumn>Status</TableHeaderColumn>
-                <TableHeaderColumn>Actions</TableHeaderColumn>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {rows}
-            </TableBody>
-          </Table>
+        <Table>
+          <TableHeader>
+            <TableRow>
+              <TableHeaderColumn>Called</TableHeaderColumn>
+              <TableHeaderColumn>Long Name</TableHeaderColumn>
+              <TableHeaderColumn>Email Suffix</TableHeaderColumn> 
+              <TableHeaderColumn>URL</TableHeaderColumn>
+              <TableHeaderColumn>Actions</TableHeaderColumn>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {rows}
+          </TableBody>
+        </Table>
 
-       {tabs}
+        {tabs}
 
       </div>
     )

@@ -5,7 +5,7 @@ import { Router, Route, IndexRoute, hashHistory} from 'react-router';
 import { SnapshotApp } from './components/app';
 import  WelcomeComponent  from './components/welcome';
 import  OrganizationsComponent  from './components/organizations';
-import  PersonComponent  from './components/person';
+import  PersonsComponent  from './components/persons';
 
 import store from "./store";
 
@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
           <Route path="organization" component={OrganizationsComponent}>
             <Route path=":id"></Route>
           </Route>
-          <Route path="person" component={PersonComponent}>
+          <Route path="person" component={PersonsComponent}>
             <Route path=":id"></Route>
           </Route>
         </Route>

@@ -6,6 +6,14 @@ export function loadOrganizations() {
   };
 }
 
+export const FIND_ORGANIZATIONS = 'FIND_ORGANIZATIONS';
+export function findOrganizations(name="") {
+  return {
+    type: FIND_ORGANIZATIONS,
+    promise: fetch(`/organization/find?name=${name}`).then(response => { return  response.json() })
+  };
+}
+
 export const LOAD_ORGANIZATION = 'LOAD_ORGANIZATION';
 export function loadOrganization(id) {
   return {
