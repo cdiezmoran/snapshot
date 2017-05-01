@@ -68,3 +68,20 @@ export function loadPersonOrganization(organization) {
     promise: fetch('/person/organization/:organization').then(response => { return  response.json() })
   };
 }
+
+
+export const ADD_ORGANIZATION_FROM_PERSON = 'ADD_ORGANIZATION_FROM_PERSON';
+export function addOrganizationFromPerson(organization) {
+	return {
+		type: ADD_ORGANIZATION_FROM_PERSON,
+		organization: organization
+	};
+}
+
+export const REMOVE_ORGANIZATION_FROM_PERSON = 'REMOVE_ORGANIZATION_FROM_PERSON';
+export function removeOrganizationFromPerson(organization) {
+	return {
+		type: REMOVE_ORGANIZATION_FROM_PERSON,
+		organization: organization
+	};
+}

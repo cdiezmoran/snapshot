@@ -29,7 +29,7 @@ module.exports = {
     });
   },
   getOne: function(req, res, next) {
-    Person.findOne({ _id: req.params.id })
+    Person.findOne({ _id: req.params.id }).populate('currentOrganizations')
     //leave this out for now: .populate('contacts')
     .exec(function(err, person) {
       if (err) return res.status(500).json({

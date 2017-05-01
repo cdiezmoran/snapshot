@@ -1,4 +1,6 @@
-import {LOAD_PERSON, LOAD_PERSONS, SAVE_PERSON, CREATE_PERSON, ADD_PERSON, CHANGE_PERSON, LOAD_PERSON_ORGANIZATION, } from '../actions/person.action'
+import {LOAD_PERSON, LOAD_PERSONS, SAVE_PERSON, CREATE_PERSON, ADD_PERSON, 
+        CHANGE_PERSON, LOAD_PERSON_ORGANIZATION,
+        ADD_ORGANIZATION_FROM_PERSON,REMOVE_ORGANIZATION_FROM_PERSON} from '../actions/person.action'
 import { handle } from 'redux-pack';
 
 const initialState = {
@@ -26,13 +28,13 @@ function personReducer(state = initialState, action) {
         case SAVE_PERSON:
             return handle(state, action, {
                 failure: prevState => ({ ...prevState, error: action.payload }),
-                success: prevState => ({ ...prevState, person: action.payload }),
+                success: prevState => ({ ...prevState, person: null }),
             });
 
         case CREATE_PERSON:
             return handle(state, action, {
                 failure: prevState => ({ ...prevState, error: action.payload }),
-                success: prevState => ({ ...prevState, person: action.payload }),
+                success: prevState => ({ ...prevState, person: null }),
             });
 
         case ADD_PERSON:
@@ -52,6 +54,18 @@ function personReducer(state = initialState, action) {
             let personObj = state.person;
             personObj[action.key]=action.value
             return {...state, person: {...personObj}}
+
+        case ADD_ORGANIZATION_FROM_PERSON:
+            let personAdd = {...state.person};
+            personAdd.currentOrganizations.push(action.organization);
+            return {...state, person: personAdd };
+
+        case REMOVE_ORGANIZATION_FROM_PERSON:
+            let person = {...state.person};
+            person.currentOrganizations = person.currentOrganizations.filter(o=> {
+                return o._id !== action.organization._id
+            });
+            return {...state, person: person };
     }
     return state;
 }

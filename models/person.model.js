@@ -32,10 +32,6 @@ var PersonSchema = new Schema({
   gender: {
     type: String
   },
-  // currentOrganization: {
-  //   type: mongoose.Schema.Types.ObjectId,
-  //   ref: 'Organization'
-  // },
   // currentContact: {
   //   type: mongoose.Schema.Types.ObjectId,
   //   ref: 'Contact'
@@ -45,7 +41,14 @@ var PersonSchema = new Schema({
   },
   isTeamMember: {
     type: Boolean
-  }
+  },
+  currentOrganizations: [
+    { type: mongoose.Schema.Types.ObjectId, 
+      ref: 'Organization',
+      unique: true, 
+      required: [true,'No Organization id found']
+    }
+  ],
 });
 
 PersonSchema.virtual('fullName').get(function() {

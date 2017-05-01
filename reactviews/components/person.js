@@ -1,6 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux'
-import { savePerson,createPerson,changePerson,loadPersons,loadPerson, addPerson } from '../actions/person.action';
+import { savePerson,createPerson,changePerson,loadPersons
+        ,loadPerson, addPerson, addOrganizationFromPerson, removeOrganizationFromPerson } from '../actions/person.action';
 import { findOrganizations } from '../actions/organization.action.js';
 import {Tabs, Tab} from 'material-ui/Tabs';
 import FontIcon from 'material-ui/FontIcon';
@@ -11,13 +12,13 @@ import ContentAdd from 'material-ui/svg-icons/content/add';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import AutoComplete from 'material-ui/AutoComplete';
+import Chip from 'material-ui/Chip';
 
 export class PersonComponent extends React.Component{
   
 
   constructor(props){
     super(props);
-    //this.props.dispatch(loadPerson());
     this.dataSourceConfig = {
       text: 'longName',
       value: '_id',
@@ -35,6 +36,9 @@ export class PersonComponent extends React.Component{
   }
 
   savePerson(){
+    this.props.person.currentOrganizations = this.props.person.currentOrganizations.map(c=>{
+      return c._id
+    })
     if(this.props.person._id)
       this.props.dispatch(savePerson(this.props.person));
     else this.props.dispatch(createPerson(this.props.person));
@@ -47,9 +51,26 @@ export class PersonComponent extends React.Component{
     this.props.dispatch(findOrganizations(value));
   }
 
+  addOrganization(org){
+    this.props.dispatch(addOrganizationFromPerson(org));
+  }
+
+  removeOrganization(org){
+    console.log(org)
+    this.props.dispatch(removeOrganizationFromPerson(org));
+  }
+
   render(){
-    console.log(this.props.findOrganizations);
-    let rows;
+
+    let organizations;
+    if(this.props.person.currentOrganizations){
+      organizations= this.props.person.currentOrganizations.map((org,i)=>{
+        return (<Chip key={i} onRequestDelete={this.removeOrganization.bind(this, org)}>
+            {org.longName}
+          </Chip>);
+      })
+    }
+  
     return(
       <div>
        <Tabs>
@@ -90,7 +111,11 @@ export class PersonComponent extends React.Component{
                 dataSource={this.props.findOrganizations}
                 dataSourceConfig={this.dataSourceConfig}
                 onUpdateInput={this.handleUpdateInput.bind(this)}
+                onNewRequest={this.addOrganization.bind(this)}
               />
+               <div >
+                {organizations}
+                </div>
 
                <RaisedButton label="Save" 
                onTouchTap={this.savePerson.bind(this)} />
