@@ -5,6 +5,7 @@ import { handle } from 'redux-pack';
 
 const initialState = {
     organizations: [],
+    findOrganizations: [],
     organization: null,
     error: null
 }

@@ -14,9 +14,14 @@ import AutoComplete from 'material-ui/AutoComplete';
 
 export class PersonComponent extends React.Component{
   
+
   constructor(props){
     super(props);
-    this.props.dispatch(loadPerson());
+    //this.props.dispatch(loadPerson());
+    this.dataSourceConfig = {
+      text: 'longName',
+      value: '_id',
+    };
   }
 
   handleActive(tab) {
@@ -43,7 +48,7 @@ export class PersonComponent extends React.Component{
   }
 
   render(){
-
+    console.log(this.props.findOrganizations);
     let rows;
     return(
       <div>
@@ -80,6 +85,12 @@ export class PersonComponent extends React.Component{
                 floatingLabelText="Birthday"
               />
 
+              <AutoComplete
+                hintText="Organization"
+                dataSource={this.props.findOrganizations}
+                dataSourceConfig={this.dataSourceConfig}
+                onUpdateInput={this.handleUpdateInput.bind(this)}
+              />
 
                <RaisedButton label="Save" 
                onTouchTap={this.savePerson.bind(this)} />
@@ -91,12 +102,6 @@ export class PersonComponent extends React.Component{
    }
 }
 
-/*
-              <AutoComplete
-                hintText="Organization"
-                dataSource={this.props.findOrganizations}
-                onUpdateInput={this.handleUpdateInput}
-              />*/
 let mapStateToProps = (state, props) => {
     return {
       person: state.personReducer.person,

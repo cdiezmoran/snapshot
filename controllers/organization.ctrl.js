@@ -36,7 +36,10 @@ module.exports = {
   },
   find: function (req, res, next) {
     let query={};
-    if(req.param.name) query.name= req.param.name;
+    if(req.query.name) {
+        query.longName= { $regex: `.*${req.query.name}.*`};
+    }
+    console.log(query);
     Organization.find(query,function (err, organization) {
       if (err) return res.status(400).json(err);
 
