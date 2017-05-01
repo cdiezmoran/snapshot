@@ -60,9 +60,9 @@ export class PersonsComponent extends React.Component{
 		return(
 			<div>
 				<h1> Person
-					<FloatingActionButton onTouchMap={this.addPerson.bind(this)}>
-						<ContentAdd/>
-					</FloatingActionButton>
+				
+					 <RaisedButton label="Add" 
+               onTouchTap={this.addPerson.bind(this)} />
 				</h1>
 				
 				<Table>
