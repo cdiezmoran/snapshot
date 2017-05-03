@@ -45,8 +45,7 @@ var PersonSchema = new Schema({
   currentOrganizations: [
     { type: mongoose.Schema.Types.ObjectId, 
       ref: 'Organization',
-      unique: true, 
-      required: [true,'No Organization id found']
+      unique: true
     }
   ],
 });

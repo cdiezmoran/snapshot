@@ -51,7 +51,7 @@ export class PersonComponent extends React.Component{
     this.props.dispatch(findOrganizations(value));
   }
 
-  addOrganization(org){
+  addOrganizationFromPerson(org){
     this.props.dispatch(addOrganizationFromPerson(org));
   }
 
@@ -92,7 +92,7 @@ export class PersonComponent extends React.Component{
               <TextField
                 onChange={this.onChangeFunction.bind(this, "surName")}
                 value={this.props.person.surName}
-                floatingLabelText="Email Suffix"
+                floatingLabelText="Surname"
               />
               <TextField
                 onChange={this.onChangeFunction.bind(this, "gender")}
@@ -101,8 +101,8 @@ export class PersonComponent extends React.Component{
               />
 
               <TextField
-                onChange={this.onChangeFunction.bind(this, "birthday")}
-                value={this.props.person.birthday}
+                onChange={this.onChangeFunction.bind(this, "birthDate")}
+                value={this.props.person.birthDate}
                 floatingLabelText="Birthday"
               />
 
@@ -111,7 +111,7 @@ export class PersonComponent extends React.Component{
                 dataSource={this.props.findOrganizations}
                 dataSourceConfig={this.dataSourceConfig}
                 onUpdateInput={this.handleUpdateInput.bind(this)}
-                onNewRequest={this.addOrganization.bind(this)}
+                onNewRequest={this.addOrganizationFromPerson.bind(this)}
               />
                <div >
                 {organizations}

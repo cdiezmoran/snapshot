@@ -40,7 +40,7 @@ export class PersonsComponent extends React.Component{
 					<TableRowColumn>{c.givenName}</TableRowColumn>
 					<TableRowColumn>{c.surName}</TableRowColumn>
 					<TableRowColumn>{c.gender}</TableRowColumn>
-					<TableRowColumn>{c.birthday}</TableRowColumn>
+					<TableRowColumn>{c.birthDate}</TableRowColumn>
 					<TableRowColumn>
 						<RaisedButton label="Edit" onTouchTap={this.loadPerson.bind(this,c._id)}  />
 						 <IconButton iconClassName="muidocs-icon-action-home"
@@ -72,8 +72,8 @@ export class PersonsComponent extends React.Component{
 							<TableHeaderColumn>Given Name</TableHeaderColumn>
 							<TableHeaderColumn>Surname</TableHeaderColumn>
 							<TableHeaderColumn>Gender</TableHeaderColumn>
-							<TableHeaderColumn>Birthday</TableHeaderColumn>
-							<TableHeaderColumn>Actions</TableHeaderColumn>
+							<TableHeaderColumn>Birthdate</TableHeaderColumn>
+							<TableHeaderColumn>Organization</TableHeaderColumn>
 						</TableRow>
 					</TableHeader>
 					<TableBody>
