@@ -40,12 +40,12 @@ export class PersonsComponent extends React.Component{
 					<TableRowColumn>{c.givenName}</TableRowColumn>
 					<TableRowColumn>{c.surName}</TableRowColumn>
 					<TableRowColumn>{c.gender}</TableRowColumn>
-					<TableRowColumn>{c.birthDate}</TableRowColumn>
+					<TableRowColumn>{c.birthDate.toString().substring(0, 10)}</TableRowColumn>
 					<TableRowColumn>
 						<RaisedButton label="Edit" onTouchTap={this.loadPerson.bind(this,c._id)}  />
 						 <IconButton iconClassName="muidocs-icon-action-home"
 						 onTouchTap={this.loadPerson.bind(this,c._id)}  />
-					</TableRowColumn>				
+					</TableRowColumn>
 				</TableRow>);
 				return row;
 			});
@@ -60,11 +60,11 @@ export class PersonsComponent extends React.Component{
 		return(
 			<div>
 				<h1> Person
-				
-					 <RaisedButton label="Add" 
+
+					 <RaisedButton label="Add"
                onTouchTap={this.addPerson.bind(this)} />
 				</h1>
-				
+
 				<Table>
 					<TableHeader>
 						<TableRow>
@@ -79,11 +79,11 @@ export class PersonsComponent extends React.Component{
 					<TableBody>
 						{rows}
 					</TableBody>
-				</Table>	
+				</Table>
 				{tabs}
 			</div>
 		)
-	}						
+	}
 }
 
 let mapStateToProps = (state, props) => {
