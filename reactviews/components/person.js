@@ -15,7 +15,7 @@ import AutoComplete from 'material-ui/AutoComplete';
 import Chip from 'material-ui/Chip';
 
 export class PersonComponent extends React.Component{
-  
+
 
   constructor(props){
     super(props);
@@ -32,6 +32,18 @@ export class PersonComponent extends React.Component{
   }
 
   onChangeFunction(key, component, value){
+    if (key === "birthDate" && value.length != 8) {
+      return;
+    }
+    else if (key === "birthDate" && value.length == 8) {
+      let year = parseInt(value.substring(0, 4));
+      let month = parseInt(value.substring(4, 6)) - 1;
+      let day = parseInt(value.substring(6, 8));
+      let date = new Date(year, month, day);
+      this.props.dispatch(changePerson(key, date));
+      return;
+    }
+
     this.props.dispatch(changePerson(key,value));
   }
 
@@ -79,7 +91,7 @@ export class PersonComponent extends React.Component{
           </Chip>);
       })
     }
-  
+
     return(
       <div>
        <Tabs>
@@ -126,7 +138,7 @@ export class PersonComponent extends React.Component{
                 {organizations}
                 </div>
 
-               <RaisedButton label="Save" 
+               <RaisedButton label="Save"
                onTouchTap={this.savePerson.bind(this)} />
             </div>
           </Tab>
