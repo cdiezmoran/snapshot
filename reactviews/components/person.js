@@ -35,6 +35,15 @@ export class PersonComponent extends React.Component{
     this.props.dispatch(changePerson(key,value));
   }
 
+  onDateBlurFunction(key, component, value){
+    console.log(component);
+    let year = value.substring(0, 3);
+    let month = value.substring(4, 5);
+    let day = value.substring(5, 6);
+    let date = new Date(year, month, day);
+    this.props.dispatch(changePerson(key,date));
+  }
+
   savePerson(){
     this.props.person.currentOrganizations = this.props.person.currentOrganizations.map(c=>{
       return c._id
@@ -101,8 +110,8 @@ export class PersonComponent extends React.Component{
               />
 
               <TextField
-                onChange={this.onChangeFunction.bind(this, "birthDate")}
-                value={this.props.person.birthDate}
+                onBlur={this.onDateBlurFunction.bind(this, "birthDate")}
+                
                 floatingLabelText="Birthday"
               />
 
