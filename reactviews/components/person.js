@@ -32,7 +32,7 @@ export class PersonComponent extends React.Component{
   }
 
   onChangeFunction(key, component, value){
-    if (key === "birthDate" && value.length != 8) {
+    if (key === "birthDate" && value.length != 8 || value == !undefined) {
       return;
     }
     else if (key === "birthDate" && value.length == 8) {
