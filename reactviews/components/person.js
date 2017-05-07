@@ -23,6 +23,10 @@ export class PersonComponent extends React.Component{
       text: 'longName',
       value: '_id',
     };
+
+    this.state = {
+      currentBirthDate: null
+    }
   }
 
   handleActive(tab) {
@@ -39,21 +43,30 @@ export class PersonComponent extends React.Component{
       let year = parseInt(value.substring(0, 4));
       let month = parseInt(value.substring(4, 6)) - 1;
       let day = parseInt(value.substring(6, 8));
+
       let date = new Date(year, month, day);
+
       this.props.dispatch(changePerson(key, date));
+      this.setState({ currentBirthDate: date });
       return;
     }
 
     this.props.dispatch(changePerson(key,value));
   }
 
-  onDateBlurFunction(key, component, value){
-    console.log(component);
-    let year = value.substring(0, 3);
-    let month = value.substring(4, 5);
-    let day = value.substring(5, 6);
-    let date = new Date(year, month, day);
-    this.props.dispatch(changePerson(key,date));
+  /**
+   * When a user presses backspace on birthDate field and date is set we remove
+   * the date from state and reset the text field's value
+   * @param {Object} e - Event object for onKeyDown.
+   */
+  onDateKeyDown(e) {
+    if (this.state.currentBirthDate != null) {
+      // Check if keycode is backspace (Code 8) or delete (Code 46)
+      if (e.keyCode === 8 || e.keyCode === 46) {
+        e.target.value = "";
+        this.setState({ currentBirthDate: null });
+      }
+    }
   }
 
   savePerson(){
@@ -121,11 +134,24 @@ export class PersonComponent extends React.Component{
                 floatingLabelText="Gender"
               />
 
-              <TextField
-                onBlur={this.onDateBlurFunction.bind(this, "birthDate")}
-                
-                floatingLabelText="Birthday"
-              />
+              {/* Conditional statement in react saying if currentBirthDate exists
+                * render the component after the && operator.
+                */}
+              {this.state.currentBirthDate &&
+                <TextField
+                  onChange={this.onChangeFunction.bind(this, "birthDate")}
+                  value={this.state.currentBirthDate.toString().substring(0, 15)}
+                  onKeyDown={this.onDateKeyDown.bind(this)} // When key is pressed
+                  floatingLabelText="Birthday"
+                />
+              }
+              {!this.state.currentBirthDate && 
+                <TextField
+                  onChange={this.onChangeFunction.bind(this, "birthDate")}
+                  floatingLabelText="Birthday"
+                />
+              }
+
 
               <AutoComplete
                 hintText="Organization"
