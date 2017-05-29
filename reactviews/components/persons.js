@@ -34,13 +34,17 @@ export class PersonsComponent extends React.Component{
 
 		if(this.props.people){
 			rows = this.props.people.map( (c, index) => {
+				var birthDate
+				if (c.birthDate) {
+					birthDate = c.birthDate.toString().substring(0, 10)
+				}
 				var row=
 				(<TableRow key={index}>
 					<TableRowColumn>{c.called}</TableRowColumn>
 					<TableRowColumn>{c.givenName}</TableRowColumn>
 					<TableRowColumn>{c.surName}</TableRowColumn>
 					<TableRowColumn>{c.gender}</TableRowColumn>
-					<TableRowColumn>{c.birthDate.toString().substring(0, 10)}</TableRowColumn>
+					<TableRowColumn>{birthDate}</TableRowColumn>
 					<TableRowColumn>
 						<RaisedButton label="Edit" onTouchTap={this.loadPerson.bind(this,c._id)}  />
 						 <IconButton iconClassName="muidocs-icon-action-home"
