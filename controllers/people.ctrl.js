@@ -2,7 +2,9 @@
 
 var path = require('path')
 var Person = require('../models/person.model')
-var newGlobalPerson = null
+var Contact = require('../models/contact.model')
+var newGlobalPerson = null;
+var mongoose = require('mongoose');
 
 module.exports = {
 
@@ -43,12 +45,44 @@ module.exports = {
     });
   },
   updateOne: function(req, res, next) {
-    Person.findOneAndUpdate({ _id: req.params.id }, req.body, function(err, person) {
-      if (err) return res.status(400).json(err);
+    Person.findOneAndUpdate({ _id: req.params.id }, req.body)
+    .then(function( person) {
       if (!person) return res.status(404).json();
+    
+      return Contact.find({forPerson: mongoose.Types.ObjectId(req.params.id)})
+    })
+    .then((contacts)=>{
+      if(!contacts) contacts=[];
+      console.log(contacts)
+      //Removing contacts
+      contacts.forEach(contactObj=>{
+        var found = req.body.currentOrganizations.find(currentOrg=>{ 
+          return currentOrg == contactObj.atOrganization.toString() 
+        });
+        if(!found){
+          contactObj.endDate = new Date();
+          contactObj.save();
+        }
+      });
 
-      res.status(200).json(person);
-    });
+      //Adding new Orgs
+      req.body.currentOrganizations.forEach(currentOrg=>{
+        var found = contacts.find(contactObj=>{
+          return contactObj.atOrganization.toString() == currentOrg;
+        });
+        if(!found){
+          var newContact = {
+            forPerson: req.params.id,
+            atOrganization: currentOrg,
+            startDate: new Date()
+          }
+          Contact.create(newContact);
+        }
+      })
+      res.sendStatus(200);
+    }).catch(e=>{
+      if (e) return res.status(400).json(e);
+    })
   },
   deleteOne: function(req, res, next) {
     Person.findOneAndRemove({ _id: req.params.id }, function(err) {

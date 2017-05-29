@@ -99,6 +99,7 @@ export class PersonComponent extends React.Component{
     let organizations;
     if(this.props.person.currentOrganizations){
       organizations= this.props.person.currentOrganizations.map((org,i)=>{
+        if(!org) return;
         return (<Chip key={i} onRequestDelete={this.removeOrganization.bind(this, org)}>
             {org.longName}
           </Chip>);
