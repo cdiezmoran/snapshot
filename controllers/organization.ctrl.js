@@ -2,7 +2,7 @@
 
 var path = require('path')
 var Organization = require('../models/organization.model')
-
+var Contact = require('../models/contact.model')
 
 module.exports = {
   getAll: function (req, res, next) {
@@ -21,17 +21,24 @@ module.exports = {
     });
   },
   getOne: function (req, res, next) {
+    let org;
     Organization.findById(req.params.organization)
       .populate('contacts')
-      .exec(function (err, organization) {
-        if (err) return res.status(500).json({
-          message: 'Error getting the organization'
-        });
-        if (!organization) return res.status(404).json({
+      .then(organization=>{
+        org=organization;
+        return Contact.find({atOrganization: organization._id.toString()}).populate("forPerson");
+      })
+      .then(contacts=>{
+        if (!org) return res.status(404).json({
           message: 'No such organization in the database'
         });
-
-        res.status(200).json(organization);
+        res.status(200).json({organization: org, contacts: contacts});
+      })
+      .catch(err=>{
+        console.log(err);
+         if (err) return res.status(500).json({
+          message: 'Error getting the organization'
+        });
       });
   },
   find: function (req, res, next) {
