@@ -5,3 +5,11 @@ export const fetchContacts = (bool) => {
     fetching: bool
   }
 }
+
+export const LOAD_CONTACT = 'LOAD_CONTACT';
+export function loadContact(id) {
+  return {
+    type: LOAD_CONTACT,
+    promise: fetch(`/contact/${id}`).then(response => { return  response.json() })
+  };
+}

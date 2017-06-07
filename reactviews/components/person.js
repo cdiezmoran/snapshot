@@ -13,6 +13,7 @@ import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import AutoComplete from 'material-ui/AutoComplete';
 import Chip from 'material-ui/Chip';
+import ContactsComponent from './'
 
 export class PersonComponent extends React.Component{
 
@@ -168,6 +169,22 @@ export class PersonComponent extends React.Component{
                <RaisedButton label="Save"
                onTouchTap={this.savePerson.bind(this)} />
             </div>
+          </Tab>
+          <Tab label="Contacts">
+            <input id="cTitle" type="text" placeholder="title"/>
+            <input id="cEmail" type="text" placeholder="email"/>
+            <input id="cMobile" type="text" placeholder="mobile"/>
+
+            <AutoComplete
+                hintText="Organization"
+                dataSource={this.props.findOrganizations}
+                dataSourceConfig={this.dataSourceConfig}
+                onUpdateInput={this.handleUpdateInput.bind(this)}
+                onNewRequest={this.addOrganizationFromPerson.bind(this)}
+              />
+
+                {/*Missing onTouchTap listener*/}
+                <RaisedButton label="Create" />
           </Tab>
         </Tabs>
       </div>

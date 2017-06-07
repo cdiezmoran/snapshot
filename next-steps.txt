@@ -1,4 +1,11 @@
 
+Goals for June 7, Pair Programming with Carlos Diez:
+1. Load People associated with an Organization in the People Tab.
+2. Add People associate with an Organization from the People Tab.
+
+3. Load a Contacts tab assocaited with a Person from the People Page
+
+
 Refactoring:
 
 Implement the API using the Node filesystem rather than a database.  
