@@ -13,7 +13,7 @@ import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import AutoComplete from 'material-ui/AutoComplete';
 import Chip from 'material-ui/Chip';
-import ContactsComponent from './'
+import ContactsComponent from './contacts';
 
 export class PersonComponent extends React.Component{
 
@@ -40,12 +40,8 @@ export class PersonComponent extends React.Component{
     if (key === "birthDate" && value.length != 8 || value == !undefined) {
       return;
     }
-    else if (key === "birthDate" && value.length == 8) {
-      let year = parseInt(value.substring(0, 4));
-      let month = parseInt(value.substring(4, 6)) - 1;
-      let day = parseInt(value.substring(6, 8));
-
-      let date = new Date(year, month, day);
+    else if (key === "birthDate" && value.length === 8) {
+      let date = getDateFromString(value);
 
       this.props.dispatch(changePerson(key, date));
       this.setState({ currentBirthDate: date });
@@ -53,6 +49,14 @@ export class PersonComponent extends React.Component{
     }
 
     this.props.dispatch(changePerson(key,value));
+  }
+
+  getDateFromString(string) {
+    let year = parseInt(string.substring(0, 4));
+    let month = parseInt(string.substring(4, 6)) - 1;
+    let day = parseInt(string.substring(6, 8));
+
+    return new Date(year, month, day);
   }
 
   /**
@@ -81,6 +85,37 @@ export class PersonComponent extends React.Component{
     this.props.dispatch(loadPersons());
   }
 
+  saveContact() {
+    // ES6 object destructuring on props
+    const { person, dispatch } = this.props;
+
+    // Get values from inputs
+    const title = document.getElementById('cTitle').value;
+    const email = document.getElementById('cEmail').value;
+    const mobile = document.getElementById('cMobile').value;
+    const directLine = document.getElementById('cDirectLine').value;
+    const officeLine = document.getElementById('cOfficeLine').value;
+    const roleDescription = document.getElementById('cRoleDescription').value;
+
+    const personId = person._id;
+
+    let organizationId;
+    if (person.currentOrganizations && person.currentOrganizations.length !== 0) {
+      organizationId = person.currentOrganizations[0];
+    }
+    const organizationId = person.currentOrganizations;
+
+    const contact = {
+      forPerson: personId,
+      atOrganization: organizationId,
+      title,
+      email,
+      mobile
+    }
+
+    // dispatch save contact
+  }
+
   handleUpdateInput(value){
     if(!value) return;
     this.props.dispatch(findOrganizations(value));
@@ -96,7 +131,6 @@ export class PersonComponent extends React.Component{
   }
 
   render(){
-
     let organizations;
     if(this.props.person.currentOrganizations){
       organizations= this.props.person.currentOrganizations.map((org,i)=>{
@@ -147,7 +181,7 @@ export class PersonComponent extends React.Component{
                   floatingLabelText="Birthday"
                 />
               }
-              {!this.state.currentBirthDate && 
+              {!this.state.currentBirthDate &&
                 <TextField
                   onChange={this.onChangeFunction.bind(this, "birthDate")}
                   floatingLabelText="Birthday"
@@ -171,9 +205,15 @@ export class PersonComponent extends React.Component{
             </div>
           </Tab>
           <Tab label="Contacts">
-            <input id="cTitle" type="text" placeholder="title"/>
-            <input id="cEmail" type="text" placeholder="email"/>
-            <input id="cMobile" type="text" placeholder="mobile"/>
+            {/* Switch to material-ui TextField these are for getting it to work first*/}
+            <input id="cTitle" type="text" placeholder="Title"/>
+            <input id="cEmail" type="text" placeholder="Email"/>
+            <input id="cMobile" type="text" placeholder="Mobile"/>
+            <input id="cStartDate" type="text" placeholder="Start Date"/>
+            <input id="cEndDate" type="text" placeholder="End Date"/>
+            <input id="cDirectLine" type="text" placeholder="Direct Line"/>
+            <input id="cOfficeLine" type="text" placeholder="Office Line"/>
+            <input id="cRoleDescription" type="text" placeholder="Role Description"/>
 
             <AutoComplete
                 hintText="Organization"
@@ -181,10 +221,14 @@ export class PersonComponent extends React.Component{
                 dataSourceConfig={this.dataSourceConfig}
                 onUpdateInput={this.handleUpdateInput.bind(this)}
                 onNewRequest={this.addOrganizationFromPerson.bind(this)}
-              />
+            />
+            <div >
+              {organizations}
+            </div>
 
-                {/*Missing onTouchTap listener*/}
-                <RaisedButton label="Create" />
+            {/*Missing onTouchTap listener*/}
+            <RaisedButton label="Create" />
+            <Contacts contacts={this.props.person.contacts}/>
           </Tab>
         </Tabs>
       </div>
