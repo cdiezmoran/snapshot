@@ -90,22 +90,22 @@ export class PersonComponent extends React.Component{
     const { person, dispatch } = this.props;
 
     // Get values from inputs
-    const title = document.getElementById('cTitle').value;
-    const email = document.getElementById('cEmail').value;
-    const mobile = document.getElementById('cMobile').value;
-    const directLine = document.getElementById('cDirectLine').value;
-    const officeLine = document.getElementById('cOfficeLine').value;
-    const roleDescription = document.getElementById('cRoleDescription').value;
+    var title = document.getElementById('cTitle').value;
+    var email = document.getElementById('cEmail').value;
+    var mobile = document.getElementById('cMobile').value;
+    var directLine = document.getElementById('cDirectLine').value;
+    var officeLine = document.getElementById('cOfficeLine').value;
+    var roleDescription = document.getElementById('cRoleDescription').value;
 
-    const personId = person._id;
+    var personId = person._id;
 
     let organizationId;
     if (person.currentOrganizations && person.currentOrganizations.length !== 0) {
       organizationId = person.currentOrganizations[0];
     }
-    const organizationId = person.currentOrganizations;
+    var organizationId = person.currentOrganizations;
 
-    const contact = {
+    var contact = {
       forPerson: personId,
       atOrganization: organizationId,
       title,
@@ -206,6 +206,11 @@ export class PersonComponent extends React.Component{
           </Tab>
           <Tab label="Contacts">
             {/* Switch to material-ui TextField these are for getting it to work first*/}
+              <TextField
+                onChange={this.onChangeFunction.bind(this, "title")}
+                value={this.props.contact.title}
+                floatingLabelText="Title"
+              />
             <input id="cTitle" type="text" placeholder="Title"/>
             <input id="cEmail" type="text" placeholder="Email"/>
             <input id="cMobile" type="text" placeholder="Mobile"/>
