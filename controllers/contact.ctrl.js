@@ -1,6 +1,6 @@
 //CRUD pattern taken from Express.js Blueprints
-var Contact = require('../models/contact');
-var Person = require('../models/person');
+var Contact = require('../models/contact.model');
+var Person = require('../models/person.model');
 
 module.exports = {
 

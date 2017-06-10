@@ -12,8 +12,10 @@ import ContentAdd from 'material-ui/svg-icons/content/add';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import AutoComplete from 'material-ui/AutoComplete';
+
 import Chip from 'material-ui/Chip';
-import ContactsComponent from './contacts';
+import Contacts from './contacts';
+import Contact from './contact';
 
 export class PersonComponent extends React.Component{
 
@@ -26,8 +28,11 @@ export class PersonComponent extends React.Component{
     };
 
     this.state = {
-      currentBirthDate: null
+      currentBirthDate: null,
+      tab: null
     }
+
+    this.changeTab=this.changeTab.bind(this);
   }
 
   handleActive(tab) {
@@ -116,6 +121,7 @@ export class PersonComponent extends React.Component{
     // dispatch save contact
   }
 
+
   handleUpdateInput(value){
     if(!value) return;
     this.props.dispatch(findOrganizations(value));
@@ -130,6 +136,10 @@ export class PersonComponent extends React.Component{
     this.props.dispatch(removeOrganizationFromPerson(org));
   }
 
+  changeTab(e){
+    console.log(e);
+  }
+
   render(){
     let organizations;
     if(this.props.person.currentOrganizations){
@@ -141,12 +151,30 @@ export class PersonComponent extends React.Component{
       })
     }
 
+    let birth;
+    if(this.state.currentBirthDate){
+      birth=( <TextField
+        onChange={this.onChangeFunction.bind(this, "birthDate")}
+        value={this.state.currentBirthDate.toString().substring(0, 15)}
+        onKeyDown={this.onDateKeyDown.bind(this)} // When key is pressed
+        floatingLabelText="Birthday" />);        
+    }else {
+      birth=(<TextField
+          onChange={this.onChangeFunction.bind(this, "birthDate")}
+          floatingLabelText="Birthday"
+        />);
+    }
+
+  
+
+
+
     return(
       <div>
-       <Tabs>
-          <Tab label="Info" >
+       <Tabs onChange={this.changeTab} value={this.state.tab}>
+          <Tab label="Info" value="info" >
             <div>
-            <p>
+              <p>
                 All the general info about the person
               </p>
               <TextField
@@ -169,26 +197,9 @@ export class PersonComponent extends React.Component{
                 value={this.props.person.gender}
                 floatingLabelText="Gender"
               />
-
-              {/* Conditional statement in react saying if currentBirthDate exists
-                * render the component after the && operator.
-                */}
-              {this.state.currentBirthDate &&
-                <TextField
-                  onChange={this.onChangeFunction.bind(this, "birthDate")}
-                  value={this.state.currentBirthDate.toString().substring(0, 15)}
-                  onKeyDown={this.onDateKeyDown.bind(this)} // When key is pressed
-                  floatingLabelText="Birthday"
-                />
-              }
-              {!this.state.currentBirthDate &&
-                <TextField
-                  onChange={this.onChangeFunction.bind(this, "birthDate")}
-                  floatingLabelText="Birthday"
-                />
-              }
-
-
+           
+              {birth}
+           
               <AutoComplete
                 hintText="Organization"
                 dataSource={this.props.findOrganizations}
@@ -204,36 +215,15 @@ export class PersonComponent extends React.Component{
                onTouchTap={this.savePerson.bind(this)} />
             </div>
           </Tab>
-          <Tab label="Contacts">
-            {/* Switch to material-ui TextField these are for getting it to work first*/}
-              <TextField
-                onChange={this.onChangeFunction.bind(this, "title")}
-                value={this.props.contact.title}
-                floatingLabelText="Title"
-              />
-            <input id="cTitle" type="text" placeholder="Title"/>
-            <input id="cEmail" type="text" placeholder="Email"/>
-            <input id="cMobile" type="text" placeholder="Mobile"/>
-            <input id="cStartDate" type="text" placeholder="Start Date"/>
-            <input id="cEndDate" type="text" placeholder="End Date"/>
-            <input id="cDirectLine" type="text" placeholder="Direct Line"/>
-            <input id="cOfficeLine" type="text" placeholder="Office Line"/>
-            <input id="cRoleDescription" type="text" placeholder="Role Description"/>
 
-            <AutoComplete
-                hintText="Organization"
-                dataSource={this.props.findOrganizations}
-                dataSourceConfig={this.dataSourceConfig}
-                onUpdateInput={this.handleUpdateInput.bind(this)}
-                onNewRequest={this.addOrganizationFromPerson.bind(this)}
-            />
-            <div >
-              {organizations}
-            </div>
 
-            {/*Missing onTouchTap listener*/}
-            <RaisedButton label="Create" />
-            <Contacts contacts={this.props.person.contacts}/>
+
+          <Tab label="Contacts" value="contact">
+           
+            <Contact />
+
+
+            <Contacts contacts={this.props.contacts}/>
           </Tab>
         </Tabs>
       </div>

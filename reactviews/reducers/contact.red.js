@@ -13,6 +13,21 @@ function contactReducer(state = initialState, action) {
                 success: prevState => ({ ...prevState, contact: action.payload.contact }),
             });
 
+        case contactAction.ADD_CONTACT:
+            return {...state, contact: {}};
+
+        case contactAction.SAVE_CONTACT:
+            return handle(state, action, {
+                failure: prevState => ({ ...prevState, error: action.payload }),
+                success: prevState => ({ ...prevState, contacts: action.payload.contacts }),
+            });
+
+        case contactAction.REMOVE_CONTACT:
+            return handle(state, action, {
+                failure: prevState => ({ ...prevState, error: action.payload }),
+                success: prevState => ({ ...prevState, contacts: action.payload.contacts }),
+            });
+
     }
     return state;
 }

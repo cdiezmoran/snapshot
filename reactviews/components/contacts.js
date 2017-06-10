@@ -10,15 +10,15 @@ import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
 import TextField from 'material-ui/TextField';
 
-export class Contacts extends Component{
+export default class Contacts extends Component{
 
   loadContact(id){
     this.props.dispatch(loadContact(id));
   }
 
-    render(){
-        let rows;
-        if(this.props.contacts){
+render(){
+    let rows;
+    if(this.props.contacts){
         rows = this.props.contacts.map( (c,index) =>{
             var row= 
             (<TableRow key={index}>
@@ -36,7 +36,8 @@ export class Contacts extends Component{
             </TableRow>);
             return row;
         });
-        }
     }
+    return (<div>{rows}</div>)
+}
 
 }
