@@ -103,7 +103,7 @@ export class PersonComponent extends React.Component{
     if (person.currentOrganizations && person.currentOrganizations.length !== 0) {
       organizationId = person.currentOrganizations[0];
     }
-    var organizationId = person.currentOrganizations;
+    organizationId = person.currentOrganizations;
 
     var contact = {
       forPerson: personId,
