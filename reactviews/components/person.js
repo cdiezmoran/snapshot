@@ -13,9 +13,11 @@ import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import AutoComplete from 'material-ui/AutoComplete';
 import Chip from 'material-ui/Chip';
+import Contacts from './contacts';
+import Contact from './contact';
 
 export class PersonComponent extends React.Component{
-  
+
 
   constructor(props){
     super(props);
@@ -23,6 +25,13 @@ export class PersonComponent extends React.Component{
       text: 'longName',
       value: '_id',
     };
+
+    this.state = {
+      currentBirthDate: null,
+      tab: null
+    }
+    
+    this.changeTab=this.changeTab.bind(this);
   }
 
   handleActive(tab) {
@@ -32,7 +41,41 @@ export class PersonComponent extends React.Component{
   }
 
   onChangeFunction(key, component, value){
+    if (key === "birthDate" && value.length != 8 || value == !undefined) {
+      return;
+    }
+    else if (key === "birthDate" && value.length === 8) {
+      let date = getDateFromString(value);
+
+      this.props.dispatch(changePerson(key, date));
+      this.setState({ currentBirthDate: date });
+      return;
+    }
+
     this.props.dispatch(changePerson(key,value));
+  }
+
+  getDateFromString(string) {
+    let year = parseInt(string.substring(0, 4));
+    let month = parseInt(string.substring(4, 6)) - 1;
+    let day = parseInt(string.substring(6, 8));
+
+    return new Date(year, month, day);
+  }
+
+  /**
+   * When a user presses backspace on birthDate field and date is set we remove
+   * the date from state and reset the text field's value
+   * @param {Object} e - Event object for onKeyDown.
+   */
+  onDateKeyDown(e) {
+    if (this.state.currentBirthDate != null) {
+      // Check if keycode is backspace (Code 8) or delete (Code 46)
+      if (e.keyCode === 8 || e.keyCode === 46) {
+        e.target.value = "";
+        this.setState({ currentBirthDate: null });
+      }
+    }
   }
 
   savePerson(){
@@ -46,12 +89,44 @@ export class PersonComponent extends React.Component{
     this.props.dispatch(loadPersons());
   }
 
+  saveContact() {
+    // ES6 object destructuring on props
+    const { person, dispatch } = this.props;
+
+    // Get values from inputs
+    var title = document.getElementById('cTitle').value;
+    var email = document.getElementById('cEmail').value;
+    var mobile = document.getElementById('cMobile').value;
+    var directLine = document.getElementById('cDirectLine').value;
+    var officeLine = document.getElementById('cOfficeLine').value;
+    var roleDescription = document.getElementById('cRoleDescription').value;
+
+    var personId = person._id;
+
+    let organizationId;
+    if (person.currentOrganizations && person.currentOrganizations.length !== 0) {
+      organizationId = person.currentOrganizations[0];
+    }
+    organizationId = person.currentOrganizations;
+
+    var contact = {
+      forPerson: personId,
+      atOrganization: organizationId,
+      title,
+      email,
+      mobile
+    }
+
+    // dispatch save contact
+  }
+
+
   handleUpdateInput(value){
     if(!value) return;
     this.props.dispatch(findOrganizations(value));
   }
 
-  addOrganization(org){
+  addOrganizationFromPerson(org){
     this.props.dispatch(addOrganizationFromPerson(org));
   }
 
@@ -60,23 +135,45 @@ export class PersonComponent extends React.Component{
     this.props.dispatch(removeOrganizationFromPerson(org));
   }
 
-  render(){
+  changeTab(e){
+    console.log(e);
+  }
 
+  render(){
     let organizations;
     if(this.props.person.currentOrganizations){
       organizations= this.props.person.currentOrganizations.map((org,i)=>{
+        if(!org) return;
         return (<Chip key={i} onRequestDelete={this.removeOrganization.bind(this, org)}>
             {org.longName}
           </Chip>);
       })
     }
+
+    let birth;
+    if(this.state.currentBirthDate){
+      birth=( <TextField
+        onChange={this.onChangeFunction.bind(this, "birthDate")}
+        value={this.state.currentBirthDate.toString().substring(0, 15)}
+        onKeyDown={this.onDateKeyDown.bind(this)} // When key is pressed
+        floatingLabelText="Birthday" />);        
+    }else {
+      birth=(<TextField
+          onChange={this.onChangeFunction.bind(this, "birthDate")}
+          floatingLabelText="Birthday"
+        />);
+    }
+
   
+
+
+
     return(
       <div>
-       <Tabs>
-          <Tab label="Info" >
+       <Tabs onChange={this.changeTab} value={this.state.tab}>
+          <Tab label="Info" value="info" >
             <div>
-            <p>
+              <p>
                 All the general info about the person
               </p>
               <TextField
@@ -92,34 +189,39 @@ export class PersonComponent extends React.Component{
               <TextField
                 onChange={this.onChangeFunction.bind(this, "surName")}
                 value={this.props.person.surName}
-                floatingLabelText="Email Suffix"
+                floatingLabelText="Surname"
               />
               <TextField
                 onChange={this.onChangeFunction.bind(this, "gender")}
                 value={this.props.person.gender}
                 floatingLabelText="Gender"
               />
-
-              <TextField
-                onChange={this.onChangeFunction.bind(this, "birthday")}
-                value={this.props.person.birthday}
-                floatingLabelText="Birthday"
-              />
-
+           
+              {birth}
+           
               <AutoComplete
                 hintText="Organization"
                 dataSource={this.props.findOrganizations}
                 dataSourceConfig={this.dataSourceConfig}
                 onUpdateInput={this.handleUpdateInput.bind(this)}
-                onNewRequest={this.addOrganization.bind(this)}
+                onNewRequest={this.addOrganizationFromPerson.bind(this)}
               />
                <div >
                 {organizations}
                 </div>
 
-               <RaisedButton label="Save" 
+               <RaisedButton label="Save"
                onTouchTap={this.savePerson.bind(this)} />
             </div>
+          </Tab>
+
+
+
+          <Tab label="Contacts" value="contact">
+           
+            <Contact person={this.props.person} />
+
+            <Contacts  contacts={this.props.contacts}/>
           </Tab>
         </Tabs>
       </div>
@@ -130,6 +232,7 @@ export class PersonComponent extends React.Component{
 let mapStateToProps = (state, props) => {
     return {
       person: state.personReducer.person,
+      contacts: state.contactReducer.contacts,
       findOrganizations: state.organizationReducer.findOrganizations
     }
 };

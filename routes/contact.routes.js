@@ -4,11 +4,15 @@ var app = express();
 
 var contact = require('../controllers/contact.ctrl');
 
-app.route('/contact')
+app.route('/')
 .get(contact.getAll)
 .post(contact.createOne);
 
-app.route('/contact/:id')
+// /contact/person/123
+app.route('/person/:id')
+.get(contact.getAllByPerson)
+
+app.route('/:id')
 .get(contact.getOne)
 .put(contact.updateOne)
 .delete(contact.deleteOne);

@@ -5,7 +5,7 @@ import userReducer from './user.red'
 import organizationReducer from './organization.red';
 
 const snapshotApp = combineReducers({
-    //contactReducer,
+    contactReducer,
     userReducer,
     personReducer,
     organizationReducer

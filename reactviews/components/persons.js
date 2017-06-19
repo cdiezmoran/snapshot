@@ -11,6 +11,7 @@ import IconButton from 'material-ui/IconButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
 import TextField from 'material-ui/TextField';
 import PersonComponent from './person';
+import { fetchContactsByPerson } from '../actions/contact.action';
 
 export class PersonsComponent extends React.Component{
 
@@ -26,6 +27,7 @@ export class PersonsComponent extends React.Component{
 	loadPerson(id){
 		console.log(id);
 		this.props.dispatch(loadPerson(id));
+		this.props.dispatch(fetchContactsByPerson(id));
 	}
 
 	render (){
@@ -34,18 +36,22 @@ export class PersonsComponent extends React.Component{
 
 		if(this.props.people){
 			rows = this.props.people.map( (c, index) => {
+				var birthDate
+				if (c.birthDate) {
+					birthDate = c.birthDate.toString().substring(0, 10)
+				}
 				var row=
 				(<TableRow key={index}>
 					<TableRowColumn>{c.called}</TableRowColumn>
 					<TableRowColumn>{c.givenName}</TableRowColumn>
 					<TableRowColumn>{c.surName}</TableRowColumn>
 					<TableRowColumn>{c.gender}</TableRowColumn>
-					<TableRowColumn>{c.birthday}</TableRowColumn>
+					<TableRowColumn>{birthDate}</TableRowColumn>
 					<TableRowColumn>
 						<RaisedButton label="Edit" onTouchTap={this.loadPerson.bind(this,c._id)}  />
 						 <IconButton iconClassName="muidocs-icon-action-home"
 						 onTouchTap={this.loadPerson.bind(this,c._id)}  />
-					</TableRowColumn>				
+					</TableRowColumn>
 				</TableRow>);
 				return row;
 			});
@@ -60,11 +66,11 @@ export class PersonsComponent extends React.Component{
 		return(
 			<div>
 				<h1> Person
-					<FloatingActionButton onTouchMap={this.addPerson.bind(this)}>
-						<ContentAdd/>
-					</FloatingActionButton>
+
+					 <RaisedButton label="Add"
+               onTouchTap={this.addPerson.bind(this)} />
 				</h1>
-				
+
 				<Table>
 					<TableHeader>
 						<TableRow>
@@ -72,18 +78,18 @@ export class PersonsComponent extends React.Component{
 							<TableHeaderColumn>Given Name</TableHeaderColumn>
 							<TableHeaderColumn>Surname</TableHeaderColumn>
 							<TableHeaderColumn>Gender</TableHeaderColumn>
-							<TableHeaderColumn>Birthday</TableHeaderColumn>
-							<TableHeaderColumn>Actions</TableHeaderColumn>
+							<TableHeaderColumn>Birthdate</TableHeaderColumn>
+							<TableHeaderColumn>Organization</TableHeaderColumn>
 						</TableRow>
 					</TableHeader>
 					<TableBody>
 						{rows}
 					</TableBody>
-				</Table>	
+				</Table>
 				{tabs}
 			</div>
 		)
-	}						
+	}
 }
 
 let mapStateToProps = (state, props) => {

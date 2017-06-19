@@ -40,8 +40,7 @@ function personReducer(state = initialState, action) {
         case ADD_PERSON:
             let newPerson={};
             return {...state, 
-                    organization: newPerson, 
-                    organizations: state.organizations.concat(newPerson) 
+                    person: newPerson 
                 };                                    
 
         case LOAD_PERSON_ORGANIZATION:
@@ -57,6 +56,9 @@ function personReducer(state = initialState, action) {
 
         case ADD_ORGANIZATION_FROM_PERSON:
             let personAdd = {...state.person};
+            if (personAdd.currentOrganizations == undefined) {
+                personAdd.currentOrganizations = []
+            };
             personAdd.currentOrganizations.push(action.organization);
             return {...state, person: personAdd };
 

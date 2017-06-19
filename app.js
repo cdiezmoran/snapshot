@@ -50,12 +50,14 @@ var users = require('./routes/user.routes');
 var person = require('./routes/person.routes');
 var auth = require('./routes/auth.routes');
 var organization = require('./routes/organization.routes');
+var contact = require('./routes/contact.routes');
 
 app.use('/', routes);
 app.use('/users', users);
 app.use('/auth', auth);
 app.use('/person', person);
 app.use('/organization', organization);
+app.use('/contact', contact);
 
 require('./config/passport');
 

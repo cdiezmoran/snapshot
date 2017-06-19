@@ -40,12 +40,12 @@ export class OrganizationComponent extends React.Component{
 
     let rows,rowsPeople,rowsInteractions;
 
-    if(this.props.peopleOrganization){
-      rowsPeople = this.props.peopleOrganization.map( (c,index) =>{
-        return 
-          (<TableRow key={index}>
-            <TableRowColumn>{c.givenName}</TableRowColumn>
-            <TableRowColumn>{c.givenName}</TableRowColumn>
+    if(this.props.contacts){
+      rowsPeople = this.props.contacts.map( (c,index) =>{
+        return  (<TableRow key={index}>
+            <TableRowColumn>{c.forPerson.givenName}</TableRowColumn>
+            <TableRowColumn>{c.startDate}</TableRowColumn>
+            <TableRowColumn>{c.endDate}</TableRowColumn>
             <TableRowColumn>
 
               <FontIcon
@@ -58,8 +58,7 @@ export class OrganizationComponent extends React.Component{
 
     if(this.props.peopleOrganization){
       rowsInteractions = this.props.peopleOrganization.map( (c,index) =>{
-        return 
-          (<TableRow key={index}>
+        return  (<TableRow key={index}>
             <TableRowColumn>{c.called}</TableRowColumn>
             <TableRowColumn>{c.url}</TableRowColumn>
             <TableRowColumn>
@@ -151,8 +150,9 @@ export class OrganizationComponent extends React.Component{
 
 let mapStateToProps = (state, props) => {
     return {
-      organization: state.organizationReducer.organization
+      organization: state.organizationReducer.organization,
+      contacts: state.organizationReducer.contacts
     }
 };
 
-export default connect()(OrganizationComponent);
+export default connect(mapStateToProps)(OrganizationComponent);

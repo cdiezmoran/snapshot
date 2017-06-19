@@ -1,6 +1,6 @@
 //CRUD pattern taken from Express.js Blueprints
-var Contact = require('../models/contact');
-var Person = require('../models/person');
+var Contact = require('../models/contact.model');
+var Person = require('../models/person.model');
 
 module.exports = {
 
@@ -11,7 +11,12 @@ module.exports = {
       res.status(200).json(contacts);
     });
   },
-
+  getAllByPerson: function(req, res, next) {
+    Contact.find({forPerson: req.params.id},function(err, contacts) {
+      if (err) return res.status(400).json(err);
+      res.status(200).json(contacts);
+    });
+  },
 
   createOne: function(req, res, next) {
     Contact.create(req.body, function(err, contact) {
@@ -34,7 +39,7 @@ module.exports = {
 
 
   updateOne: function(req, res, next) {
-    Contact.findOneAndUpdate({ _id: req.params.id }, req.body, function(err, contact) {
+    Contact.findOneAndUpdate({ _id: req.params.id }, req.body, {new: true}, function(err, contact) {
       if (err) return res.status(400).json(err);
       if (!contact) return res.status(404).json();
 
