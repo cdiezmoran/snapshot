@@ -12,7 +12,6 @@ import ContentAdd from 'material-ui/svg-icons/content/add';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import AutoComplete from 'material-ui/AutoComplete';
-
 import Chip from 'material-ui/Chip';
 import Contacts from './contacts';
 import Contact from './contact';
@@ -31,7 +30,7 @@ export class PersonComponent extends React.Component{
       currentBirthDate: null,
       tab: null
     }
-
+    
     this.changeTab=this.changeTab.bind(this);
   }
 
@@ -220,10 +219,9 @@ export class PersonComponent extends React.Component{
 
           <Tab label="Contacts" value="contact">
            
-            <Contact />
+            <Contact person={this.props.person} />
 
-
-            <Contacts contacts={this.props.contacts}/>
+            <Contacts  contacts={this.props.contacts}/>
           </Tab>
         </Tabs>
       </div>
@@ -234,6 +232,7 @@ export class PersonComponent extends React.Component{
 let mapStateToProps = (state, props) => {
     return {
       person: state.personReducer.person,
+      contacts: state.contactReducer.contacts,
       findOrganizations: state.organizationReducer.findOrganizations
     }
 };

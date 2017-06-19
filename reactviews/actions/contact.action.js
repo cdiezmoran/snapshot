@@ -1,8 +1,11 @@
-export const FETCH_CONTACTS = 'FETCH_CONTACTS'
-export const fetchContacts = (bool) => {
+export const FETCH_CONTACTS_BY_PERSON = 'FETCH_CONTACTS_BY_PERSON'
+export const fetchContactsByPerson = (id) => {
   return {
-    type: FETCHING,
-    fetching: bool
+    type: FETCH_CONTACTS_BY_PERSON,
+    promise: fetch(`/contact/person/${id}`)
+    .then(response => { 
+      return  response.json() 
+    })
   }
 }
 
@@ -59,6 +62,6 @@ export const REMOVE_CONTACT = 'REMOVE_CONTACT';
 export function removeContact(id) {
   return {
     type: REMOVE_CONTACT,
-    promise: fetch(`/contact/${id}`,{method: 'REMOVE'}).then(response => { return  response.json() })
+    promise: fetch(`/contact/${id}`,{method: 'DELETE'}).then(response => { return  response.json() })
   };
 }

@@ -11,6 +11,7 @@ import IconButton from 'material-ui/IconButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
 import TextField from 'material-ui/TextField';
 import PersonComponent from './person';
+import { fetchContactsByPerson } from '../actions/contact.action';
 
 export class PersonsComponent extends React.Component{
 
@@ -26,6 +27,7 @@ export class PersonsComponent extends React.Component{
 	loadPerson(id){
 		console.log(id);
 		this.props.dispatch(loadPerson(id));
+		this.props.dispatch(fetchContactsByPerson(id));
 	}
 
 	render (){

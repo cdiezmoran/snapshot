@@ -10,7 +10,8 @@ import IconButton from 'material-ui/IconButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
 import TextField from 'material-ui/TextField';
 import PersonComponent from './person';
-import { saveContact, createContact, removeContact, addContact } from '../actions/contact.action.js';
+import { saveContact, createContact, removeContact, 
+          addContact,fetchContactsByPerson } from '../actions/contact.action.js';
 import AutoComplete from 'material-ui/AutoComplete';
 import { findOrganizations } from '../actions/organization.action.js';
 
@@ -29,13 +30,11 @@ constructor(props){
 
   saveContact(){
       if(this.props.contact._id){
-
         this.props.dispatch(saveContact(this.props.contact));
       }else{
-
         this.props.dispatch(createContact(this.props.contact));
-          
       }
+      this.props.dispatch(fetchContactsByPerson(this.props.person._id));
   }
 
   removeContact(){
@@ -51,7 +50,7 @@ constructor(props){
     this.props.contact[key]=input.target.value;
   }
 
-    addOrganizationFromPerson(org){
+  addOrganizationFromPerson(org){
     this.props.contact.atOrganization=org;
   }
 
@@ -124,6 +123,7 @@ render(){
             <FloatingActionButton onTouchTap={this.addContact.bind(this)} >
              <ContentAdd />
              </FloatingActionButton>
+             
              {contact}
            
         </div>);
