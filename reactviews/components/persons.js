@@ -41,7 +41,7 @@ export class PersonsComponent extends React.Component{
 					birthDate = c.birthDate.toString().substring(0, 10)
 				}
 				var row=
-				(<TableRow key={index}>
+				(<TableRow key={index} onTouchTap={this.loadPerson.bind(this,c._id)} >
 					<TableRowColumn>{c.called}</TableRowColumn>
 					<TableRowColumn>{c.givenName}</TableRowColumn>
 					<TableRowColumn>{c.surName}</TableRowColumn>

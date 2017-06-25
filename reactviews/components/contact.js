@@ -25,7 +25,7 @@ constructor(props){
     };
 }
   addContact(){
-    this.props.dispatch(addContact());
+    this.props.dispatch(addContact(this.props.person._id));
   }
 
   saveContact(){

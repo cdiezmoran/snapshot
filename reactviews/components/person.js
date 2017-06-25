@@ -1,6 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux'
-import { savePerson,createPerson,changePerson,loadPersons
+import { savePerson,createPerson, setTabForPerson, changePerson,loadPersons
         ,loadPerson, addPerson, addOrganizationFromPerson, removeOrganizationFromPerson } from '../actions/person.action';
 import { findOrganizations } from '../actions/organization.action.js';
 import {Tabs, Tab} from 'material-ui/Tabs';
@@ -21,6 +21,7 @@ export class PersonComponent extends React.Component{
 
   constructor(props){
     super(props);
+    console.log(props);
     this.dataSourceConfig = {
       text: 'longName',
       value: '_id',
@@ -32,6 +33,10 @@ export class PersonComponent extends React.Component{
     }
     
     this.changeTab=this.changeTab.bind(this);
+  }
+
+  componentWillUpdate() {
+    console.log(this.props)
   }
 
   handleActive(tab) {
@@ -63,7 +68,7 @@ export class PersonComponent extends React.Component{
     return new Date(year, month, day);
   }
 
-  /**
+  /*
    * When a user presses backspace on birthDate field and date is set we remove
    * the date from state and reset the text field's value
    * @param {Object} e - Event object for onKeyDown.
@@ -131,12 +136,13 @@ export class PersonComponent extends React.Component{
   }
 
   removeOrganization(org){
-    console.log(org)
+    console.log(org);
     this.props.dispatch(removeOrganizationFromPerson(org));
   }
 
-  changeTab(e){
-    console.log(e);
+  changeTab(tab){
+    console.log(tab);
+    this.props.dispatch(setTabForPerson(tab));
   }
 
   render(){
@@ -170,9 +176,9 @@ export class PersonComponent extends React.Component{
 
     return(
       <div>
-       <Tabs onChange={this.changeTab} value={this.state.tab}>
+       <Tabs onChange={this.changeTab} value={this.props.tab}>
           <Tab label="Info" value="info" >
-            <div>
+            <form ref="form">
               <p>
                 All the general info about the person
               </p>
@@ -212,7 +218,7 @@ export class PersonComponent extends React.Component{
 
                <RaisedButton label="Save"
                onTouchTap={this.savePerson.bind(this)} />
-            </div>
+            </form>
           </Tab>
 
 
@@ -233,6 +239,7 @@ let mapStateToProps = (state, props) => {
     return {
       person: state.personReducer.person,
       contacts: state.contactReducer.contacts,
+      tab: state.personReducer.tab,
       findOrganizations: state.organizationReducer.findOrganizations
     }
 };

@@ -21,7 +21,9 @@ function contactReducer(state = initialState, action) {
             });
 
         case contactAction.ADD_CONTACT:
-            return {...state, contact: {}};
+            return {...state, contact: {
+                forPerson: action.person
+            }};
 
         case contactAction.SAVE_CONTACT:
         case contactAction.CREATE_CONTACT:

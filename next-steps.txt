@@ -1,3 +1,9 @@
+Tasks on June 25, 2017
+Relate checkboxes in People view to the contact/info on display in bottom dynamically
+Handle start and end date for contacts with the date handler
+Debug birthdate for Create Person
+Load Organization into Contact view component via the OrganizationID
+
 
 Goals for June 7, Pair Programming with Carlos Diez:
 1. Load People associated with an Organization in the People Tab.

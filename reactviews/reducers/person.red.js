@@ -1,4 +1,4 @@
-import {LOAD_PERSON, LOAD_PERSONS, SAVE_PERSON, CREATE_PERSON, ADD_PERSON, 
+import {LOAD_PERSON, LOAD_PERSONS, SET_TAB_FOR_PERSON, SAVE_PERSON, CREATE_PERSON, ADD_PERSON, 
         CHANGE_PERSON, LOAD_PERSON_ORGANIZATION,
         ADD_ORGANIZATION_FROM_PERSON,REMOVE_ORGANIZATION_FROM_PERSON} from '../actions/person.action'
 import { handle } from 'redux-pack';
@@ -6,6 +6,7 @@ import { handle } from 'redux-pack';
 const initialState = {
     persons: [],
     person: null,
+    tab: 'info',
     error: null
 }
 
@@ -20,10 +21,14 @@ function personReducer(state = initialState, action) {
             });
 
         case LOAD_PERSON:
+            if (action.payload && !action.payload.birthDate) action.payload.birthDate = ""
             return handle(state, action, {
                 failure: prevState => ({ ...prevState, error: action.payload }),
                 success: prevState => ({ ...prevState, person: action.payload }),
             });
+
+        case SET_TAB_FOR_PERSON:
+            return {...state, tab: action.tab};
 
         case SAVE_PERSON:
             return handle(state, action, {

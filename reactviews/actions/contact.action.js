@@ -18,9 +18,10 @@ export function loadContact(id) {
 }
 
 export const ADD_CONTACT = 'ADD_CONTACT';
-export function addContact() {
+export function addContact(person) {
   return {
-    type: ADD_CONTACT
+    type: ADD_CONTACT, 
+    person
   };
 }
 

@@ -53,6 +53,14 @@ export function addPerson() {
   };
 }
 
+export const SET_TAB_FOR_PERSON = 'SET_TAB_FOR_PERSON';
+export function setTabForPerson(tab) {
+  return {
+    type: SET_TAB_FOR_PERSON,
+    tab
+  };
+}
+
 export const CHANGE_PERSON = 'CHANGE_PERSON';
 export function changePerson(key,value) {
   return {
