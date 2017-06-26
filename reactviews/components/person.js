@@ -15,6 +15,7 @@ import AutoComplete from 'material-ui/AutoComplete';
 import Chip from 'material-ui/Chip';
 import Contacts from './contacts';
 import Contact from './contact';
+import moment from 'moment';
 
 export class PersonComponent extends React.Component{
 
@@ -31,12 +32,17 @@ export class PersonComponent extends React.Component{
       currentBirthDate: null,
       tab: null
     }
-    
+    this.getDateFromString=this.getDateFromString.bind(this);
     this.changeTab=this.changeTab.bind(this);
   }
 
+
   componentWillUpdate() {
-    console.log(this.props)
+    console.log(this.props);
+    if(this.props.person){
+      if(!this.props.person.birthDate)this.props.person.birthDate='';
+    }
+    // document.querySelector('#personForm').reset();
   }
 
   handleActive(tab) {
@@ -46,17 +52,6 @@ export class PersonComponent extends React.Component{
   }
 
   onChangeFunction(key, component, value){
-    if (key === "birthDate" && value.length != 8 || value == !undefined) {
-      return;
-    }
-    else if (key === "birthDate" && value.length === 8) {
-      let date = getDateFromString(value);
-
-      this.props.dispatch(changePerson(key, date));
-      this.setState({ currentBirthDate: date });
-      return;
-    }
-
     this.props.dispatch(changePerson(key,value));
   }
 
@@ -102,6 +97,8 @@ export class PersonComponent extends React.Component{
     var title = document.getElementById('cTitle').value;
     var email = document.getElementById('cEmail').value;
     var mobile = document.getElementById('cMobile').value;
+    if(mobile) mobile=getDateFromString(mobile);
+
     var directLine = document.getElementById('cDirectLine').value;
     var officeLine = document.getElementById('cOfficeLine').value;
     var roleDescription = document.getElementById('cRoleDescription').value;
@@ -156,29 +153,18 @@ export class PersonComponent extends React.Component{
       })
     }
 
-    let birth;
-    if(this.state.currentBirthDate){
-      birth=( <TextField
-        onChange={this.onChangeFunction.bind(this, "birthDate")}
-        value={this.state.currentBirthDate.toString().substring(0, 15)}
-        onKeyDown={this.onDateKeyDown.bind(this)} // When key is pressed
-        floatingLabelText="Birthday" />);        
-    }else {
-      birth=(<TextField
-          onChange={this.onChangeFunction.bind(this, "birthDate")}
-          floatingLabelText="Birthday"
-        />);
-    }
-
-  
-
+    
+    if(this.props.person.birthDate && this.props.person.birthDate.length>10){
+      let d = new Date(this.props.person.birthDate);
+      this.currentBirthDate = moment(d).format('YYYY/MM/DD');
+    }else this.currentBirthDate=this.props.person.birthDate;
 
 
     return(
       <div>
        <Tabs onChange={this.changeTab} value={this.props.tab}>
           <Tab label="Info" value="info" >
-            <form ref="form">
+            <form ref="form" id="personForm">
               <p>
                 All the general info about the person
               </p>
@@ -203,7 +189,10 @@ export class PersonComponent extends React.Component{
                 floatingLabelText="Gender"
               />
            
-              {birth}
+              <TextField
+              value={this.currentBirthDate}
+              onChange={this.onChangeFunction.bind(this, "birthDate")}
+              floatingLabelText="Birthday" />
            
               <AutoComplete
                 hintText="Organization"
