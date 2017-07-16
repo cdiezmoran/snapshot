@@ -16,47 +16,17 @@ request({
 */
 
 var LocationSchema = new Schema({
-  areaName: {
+  name: {
     type: String
   },
-  googleMapsApiUrl: {
-    type: String
-  },
-  googleMapsApiPlaceId: {
-    type: String
-  },
-  gps: {
-    type: String
-  },
-  locationName: {
-    type: String
-  },
-  buildingName: {
-    type: String
-  },
-  streetAddressNumber: {
-    type: String
-  },
-  streetName: {
-    type:String
-  }
-  cityName: {
-    type: String
-  },
-  stateName: {
-    type: String
-  },
-  stateCode: {
-    type: String
-  },
-  postCode: {
-    type: String
-  },
-  postCodeSuffix: {
-    type: String
-  },
-  countryName: {
-    type: String
+  /*
+  "formattedAddress": "R. Santa Catarina, 123 - Centro, Belo Horizonte - MG, 30170-080, Brazil",
+  "latitude": -19.921538200000000529,
+  "longitude": -43.943432100000002549,
+  "administrativeLevels": { "level2long": "Belo Horizonte", "level1long": "Minas Gerais"}
+  */
+  googleAddress: { 
+    type: Object
   },
   officeLine: {
     type: String

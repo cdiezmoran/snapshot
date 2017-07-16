@@ -37,7 +37,7 @@ var OrganizationSchema = new Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Organization'
   }],
-  Locations: [{
+  locations: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Location'
   }],

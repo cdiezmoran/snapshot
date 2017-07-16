@@ -10,6 +10,7 @@ import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
+import LocationsComponent from './locations';
 
 export class OrganizationComponent extends React.Component{
   
@@ -38,12 +39,15 @@ export class OrganizationComponent extends React.Component{
 
   render(){
 
-    let rows,rowsPeople,rowsInteractions;
+    let rows,rowsPeople,rowsInteractions,rowsLocations;
 
     if(this.props.contacts){
       rowsPeople = this.props.contacts.map( (c,index) =>{
+        let givenName;
+        if(c.forPerson) givenName=c.forPerson.givenName;
+
         return  (<TableRow key={index}>
-            <TableRowColumn>{c.forPerson.givenName}</TableRowColumn>
+            <TableRowColumn>{givenName}</TableRowColumn>
             <TableRowColumn>{c.startDate}</TableRowColumn>
             <TableRowColumn>{c.endDate}</TableRowColumn>
             <TableRowColumn>
@@ -71,9 +75,31 @@ export class OrganizationComponent extends React.Component{
       });
     }
 
-   console.log(this.props.organization,this.props.organization.longName);
-   
+    if(this.props.locations){
+      rowsLocations = this.props.locations.map( (c,index) =>{
+        let formattedAddress;
+        if(c.googleAddress) formattedAddress = c.googleAddress.formattedAddress;
+        return  (<TableRow key={index}>
+            <TableRowColumn>{c.name}</TableRowColumn>
+            <TableRowColumn>{formattedAddress}</TableRowColumn>
+            <TableRowColumn>
+
+              <FontIcon
+                  className="muidocs-icon-edit"
+                />
+            </TableRowColumn>
+          </TableRow>);
+      });
+    }
+
+
+    
+
+    if(!this.props.organization) return;
+
     return(
+
+      
       <div>
        <Tabs>
           <Tab label="Info" >
@@ -123,6 +149,15 @@ export class OrganizationComponent extends React.Component{
               </Table>
             </div>
           </Tab>
+
+
+          <Tab label="Locations" >
+            <div>
+              <LocationsComponent />
+            </div>
+          </Tab>
+
+
           <Tab
             label="Interactions"
             onActive={this.handleActive.bind(this)}>

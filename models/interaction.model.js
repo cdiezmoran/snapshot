@@ -2,7 +2,7 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var InteractionSchema = new Schema({
-  indcludedPeopele: [{
+  includedPeople: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Persons'
   }],
@@ -11,13 +11,33 @@ var InteractionSchema = new Schema({
     ref: 'Location'
   },
   interactionType: {
-    type: String
+    type: String,
+    enum: ['Call','Meeting','Ran Into','Meal']
   },
   startTime: {
-    type: String
+    type: Date
   },
   endTime: {
-    type: String
+    type: Date
   },
+  interactionData: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'InteractionData'
+  }]
 });
-module.exports = mongoose.model('Interaction', InteractionSchema);
+
+
+
+var InteractionDataSchema = new Schema({
+  note: {type: String}, //free text
+  link: {type: String}, //external files
+  file: {type: String},  //path to the file in the server
+  attachedDate: {
+    type: Date
+  },
+})
+
+let Interaction = mongoose.model('Interaction', InteractionSchema);
+let InteractionData = mongoose.model('InteractionData', InteractionDataSchema);
+
+module.exports = {Interaction, InteractionData}
