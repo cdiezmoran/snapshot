@@ -25,6 +25,7 @@ export class Contacts extends Component{
                 (<TableRow key={index}>
                 <TableRowColumn>{c.forPerson.givenName}</TableRowColumn>
                 <TableRowColumn>{c.title}</TableRowColumn>
+                <TableRowColumn>{c.atOrganization.called}</TableRowColumn>
                 <TableRowColumn>{c.email}</TableRowColumn>
                 <TableRowColumn>{c.startDate}</TableRowColumn>
                 <TableRowColumn>{c.mobile}</TableRowColumn>

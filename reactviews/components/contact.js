@@ -11,7 +11,7 @@ import ContentAdd from 'material-ui/svg-icons/content/add';
 import TextField from 'material-ui/TextField';
 import PersonComponent from './person';
 import { saveContact, createContact, removeContact, 
-          addContact,fetchContactsByPerson } from '../actions/contact.action.js';
+          addContact,fetchContactsByPerson, addOrganizationFromContact } from '../actions/contact.action.js';
 import AutoComplete from 'material-ui/AutoComplete';
 import { findOrganizations } from '../actions/organization.action.js';
 
@@ -108,7 +108,7 @@ render(){
                 dataSource={this.props.findOrganizations}
                 dataSourceConfig={this.dataSourceConfig}
                 onUpdateInput={this.handleUpdateInput.bind(this)}
-                onNewRequest={this.addOrganizationFromPerson.bind(this)}
+                onNewRequest={this.addOrganizationFromContact.bind(this)}
             />
             
             <RaisedButton label="Save" onTouchTap={this.saveContact.bind(this)} />

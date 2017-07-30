@@ -66,3 +66,11 @@ export function removeContact(id) {
     promise: fetch(`/contact/${id}`,{method: 'DELETE'}).then(response => { return  response.json() })
   };
 }
+
+export const ADD_ORGANIZATION_FROM_CONTACT = 'ADD_ORGANIZATION_FROM_CONTACT';
+export function addOrganizationFromContact(organization) {
+	return {
+		type: ADD_ORGANIZATION_FROM_CONTACT,
+		organization: organization
+	};
+}
