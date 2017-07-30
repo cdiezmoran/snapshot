@@ -23,21 +23,21 @@ export class LocationComponent extends React.Component{
   constructor(props){
     super(props);
     this.state = { address: '' }
-    this.onChange = (address) => this.setState({ address })
+    this.onChange = (address) => this.setState({address})
   }
 
   saveLocation() {
     // ES6 object destructuring on props
-    const { location, dispatch } = this.props;
-
-    // Get values from inputs
-    var title = document.getElementById('cTitle').value;
-    var email = document.getElementById('cEmail').value;
-    // dispatch save contact
+    let location = {...this.props.location, address: this.state.address, organization_id: this.props.organization._id}
+    if (location._id) {
+    this.props.dispatch(saveLocation(location));      
+    } else {
+    this.props.dispatch(createLocation(location));
+    }
   }
 
-  onChangeFunction(key, component, value){
-    this.props.dispatch(changeLocation(key,value));
+  onChangeFunction(key, input){
+    this.props.dispatch(changeLocation(key,input.target.value));
   }
 
 
@@ -58,7 +58,7 @@ export class LocationComponent extends React.Component{
               </p>
               <TextField
                 onChange={this.onChangeFunction.bind(this, "called")}
-                value={this.props.location.name}
+                value={this.props.location.called}
                 floatingLabelText="Name"
               />
 
@@ -75,7 +75,8 @@ export class LocationComponent extends React.Component{
 let mapStateToProps = (state, props) => {
     return {
       location: state.locationReducer.location,
-      locations: state.locationReducer.locations
+      locations: state.locationReducer.locations,
+      organization: state.organizationReducer.organization
     }
 };
 

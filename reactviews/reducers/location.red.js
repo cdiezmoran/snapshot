@@ -1,5 +1,5 @@
 import {LOAD_LOCATION, LOAD_LOCATIONS, SAVE_LOCATION, CHANGE_PERSON, 
-        CREATE_LOCATION, ADD_LOCATION} from '../actions/location.action'
+        CREATE_LOCATION, ADD_LOCATION, CHANGE_LOCATION} from '../actions/location.action'
 import { handle } from 'redux-pack';
 
 const initialState = {
@@ -42,6 +42,13 @@ function locationReducer(state = initialState, action) {
                 failure: prevState => ({ ...prevState, error: action.payload }),
                 success: prevState => ({ ...prevState, location: null }),
             });
+
+        case CHANGE_LOCATION:
+            state.location[action.key] = action.value
+            return {...state, 
+                location: {...state.location} 
+            };
+    
 
         case ADD_LOCATION:
             let newLocation={};

@@ -16,7 +16,7 @@ request({
 */
 
 var LocationSchema = new Schema({
-  name: {
+  called: {
     type: String
   },
   /*
@@ -25,7 +25,7 @@ var LocationSchema = new Schema({
   "longitude": -43.943432100000002549,
   "administrativeLevels": { "level2long": "Belo Horizonte", "level1long": "Minas Gerais"}
   */
-  googleAddress: { 
+  address: { 
     type: Object
   },
   officeLine: {

@@ -4,6 +4,7 @@ var path = require('path')
 var Location = require('../models/location.model')
 var newGlobalPerson = null;
 var mongoose = require('mongoose');
+var Organization = require('../models/organization.model')
 
 module.exports = {
 
@@ -16,10 +17,14 @@ module.exports = {
     });
   },
   createOne: function(req, res, next) {
+    console.log(req.body)
     Location.create(req.body, function(err, location) {
       if (err) return res.status(400).json(err);
-
-      res.status(201).json(location);
+      Organization.findOneAndUpdate({_id: req.body.organization_id}, {
+        $push: {locations: location._id}
+      }).then (function() {
+        res.status(201).json(location);
+      })
     });
   },
   getOne: function(req, res, next) {
