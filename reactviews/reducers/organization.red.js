@@ -6,6 +6,7 @@ import { handle } from 'redux-pack';
 const initialState = {
     organizations: [],
     contacts: [],
+    locations: [],
     findOrganizations: [],
     organization: null,
     error: null
@@ -28,7 +29,10 @@ function organizationReducer(state = initialState, action) {
         case LOAD_ORGANIZATION:
             return handle(state, action, {
                 failure: prevState => ({ ...prevState, error: action.payload }),
-                success: prevState => ({ ...prevState, organization: action.payload.organization, contacts: action.payload.contacts }),
+                success: prevState => ({ ...prevState, organization: action.payload.organization, 
+                    contacts: action.payload.contacts, 
+                    locations: action.payload.organization.locations 
+                }),
             });
         
         case SAVE_ORGANIZATION:

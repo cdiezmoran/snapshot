@@ -15,11 +15,6 @@ import { fetchContactsByLocation } from '../actions/contact.action';
 
 export class LocationsComponent extends React.Component{
 
-	constructor(props){
-		super(props);
-		this.props.dispatch(loadLocations());
-	}
-
 	addLocation(){
 		this.props.dispatch(addLocation());
 	}
@@ -32,13 +27,13 @@ export class LocationsComponent extends React.Component{
 
 		let rows, rowsPeople, rowsContacts, rowsInteractions;
 
-		if(this.props.locations){
-			rows = this.props.locations.map( (c, index) => {
+		if(this.props.organizationLocations){
+			rows = this.props.organizationLocations.map( (c, index) => {
 			
 				var row=
 				(<TableRow key={index} onTouchTap={this.loadLocation.bind(this,c._id)} >
-					<TableRowColumn>{c.name}</TableRowColumn>
-					<TableRowColumn>{c.givenName}</TableRowColumn>
+					<TableRowColumn>{c.called}</TableRowColumn>
+					<TableRowColumn>{c.address}</TableRowColumn>
 					<TableRowColumn>
 						<RaisedButton label="Edit" onTouchTap={this.loadLocation.bind(this,c._id)}  />
 						 <IconButton iconClassName="muidocs-icon-action-home"
@@ -82,7 +77,8 @@ export class LocationsComponent extends React.Component{
 let mapStateToProps = (state, props) => {
     return {
       location: state.locationReducer.location,
-      locations: state.locationReducer.locations
+	  locations: state.locationReducer.locations,
+	  organizationLocations: state.organizationReducer.organization.locations
     }
 };
 

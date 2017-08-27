@@ -24,6 +24,7 @@ module.exports = {
     let org;
     Organization.findById(req.params.organization)
       .populate('contacts')
+      .populate('locations')
       .then(organization=>{
         org=organization;
         return Contact.find({atOrganization: organization._id.toString()}).populate("forPerson");

@@ -73,27 +73,7 @@ export class OrganizationComponent extends React.Component{
             </TableRowColumn>
           </TableRow>);
       });
-    }
-
-    if(this.props.locations){
-      rowsLocations = this.props.locations.map( (c,index) =>{
-        let formattedAddress;
-        if(c.googleAddress) formattedAddress = c.googleAddress.formattedAddress;
-        return  (<TableRow key={index}>
-            <TableRowColumn>{c.name}</TableRowColumn>
-            <TableRowColumn>{formattedAddress}</TableRowColumn>
-            <TableRowColumn>
-
-              <FontIcon
-                  className="muidocs-icon-edit"
-                />
-            </TableRowColumn>
-          </TableRow>);
-      });
-    }
-
-
-    
+    }    
 
     if(!this.props.organization) return;
 
