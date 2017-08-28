@@ -29,7 +29,9 @@ function locationReducer(state = initialState, action) {
         case SAVE_LOCATION:
             return handle(state, action, {
                 failure: prevState => ({ ...prevState, error: action.payload }),
-                success: prevState => ({ ...prevState, location: null }),
+                success: prevState => {
+                    return { ...prevState, location: null }
+                },
             });
 
         case CHANGE_PERSON:
@@ -40,7 +42,9 @@ function locationReducer(state = initialState, action) {
         case CREATE_LOCATION:
             return handle(state, action, {
                 failure: prevState => ({ ...prevState, error: action.payload }),
-                success: prevState => ({ ...prevState, location: null }),
+                success: prevState => { 
+                    return { ...prevState, location: null }
+                },
             });
 
         case CHANGE_LOCATION:

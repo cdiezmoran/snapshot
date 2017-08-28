@@ -45,7 +45,7 @@ module.exports = {
     Location.findOneAndUpdate({ _id: req.params.id }, req.body)
     .then(function( location) {
       if (!location) return res.status(404).json();
-      res.sendStatus(200);
+      res.status(200).json({success: 'OK'});
     }).catch(e=>{
       if (e) return res.status(400).json(e);
     })

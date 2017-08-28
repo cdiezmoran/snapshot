@@ -28,6 +28,7 @@ var LocationSchema = new Schema({
   address: { 
     type: Object
   },
+  latLng: { type: [Number], index: '2dsphere'},
   officeLine: {
     type: String
   },
