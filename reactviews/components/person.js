@@ -218,6 +218,11 @@ export class PersonComponent extends React.Component{
 
             <Contacts  contacts={this.props.contacts}/>
           </Tab>
+
+          <Tab label="Interactions" value="interactions">
+           
+
+          </Tab>
         </Tabs>
       </div>
      )

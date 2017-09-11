@@ -26,7 +26,9 @@ var InteractionSchema = new Schema({
   }]
 });
 
-
+InteractionSchema.virtual('duration').get(function() {
+  return this.endTime - this.startTime;
+});
 
 var InteractionDataSchema = new Schema({
   note: {type: String}, //free text

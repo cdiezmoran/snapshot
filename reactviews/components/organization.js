@@ -138,23 +138,9 @@ export class OrganizationComponent extends React.Component{
           </Tab>
 
 
-          <Tab
-            label="Interactions"
-            onActive={this.handleActive.bind(this)}>
-            <div>
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHeaderColumn>Name</TableHeaderColumn>
-                    <TableHeaderColumn>Status</TableHeaderColumn>
-                    <TableHeaderColumn>Actions</TableHeaderColumn>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {rowsInteractions}
-                </TableBody>
-              </Table>
-            </div>
+          <Tab label="Interactions" value="interactions">
+          
+
           </Tab>
         </Tabs>
 
