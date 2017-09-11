@@ -6,6 +6,7 @@ import { SnapshotApp } from './components/app';
 import  WelcomeComponent  from './components/welcome';
 import  OrganizationsComponent  from './components/organizations';
 import  PersonsComponent  from './components/persons';
+import  InteractionsComponent  from './components/interactions';
 
 import store from "./store";
 
@@ -19,6 +20,9 @@ document.addEventListener('DOMContentLoaded', () => {
             <Route path=":id"></Route>
           </Route>
           <Route path="person" component={PersonsComponent}>
+            <Route path=":id"></Route>
+          </Route>
+          <Route path="interaction" component={InteractionsComponent}>
             <Route path=":id"></Route>
           </Route>
         </Route>

@@ -13,6 +13,29 @@ import LocationsComponent from './locations';
 
 export class InteractionComponent extends React.Component{
 
+  //validate there are no errors or debug
+  handleUpdateInputForPeople(value){
+    if(!value) return;
+    this.props.dispatch(findPeople(value));
+  }
+//validate their are no errors or debug
+  handleUpdateInputForInteractions(value){
+    if(!value) return;
+    this.props.dispatch(findInteractions(value));
+  }
+
+  onChangeFunction(key, component, value){
+    this.props.dispatch(changeInteraction(key,value));
+  }
+  //add getDateFromString to Helpers
+  getDateFromString(string) {
+    let year = parseInt(string.substring(0, 4));
+    let month = parseInt(string.substring(4, 6)) - 1;
+    let day = parseInt(string.substring(6, 8));
+
+    return new Date(year, month, day);
+  }
+
     render(){
 
         <div>
@@ -26,23 +49,34 @@ export class InteractionComponent extends React.Component{
                  hintText="People"
                  dataSource={this.props.findPerson}
                  dataSourceConfig={this.dataSourceConfig}
-                 onUpdateInput={this.handleUpdateInput.bind(this)}
+                 onUpdateInput={this.handleUpdateInputForPeople.bind(this)}
                  onNewRequest={this.addPersonfromInteraction.bind(this)}
                />
                <AutoComplete
                  hintText="Location"
                  dataSource={this.props.findLocation}
                  dataSourceConfig={this.dataSourceConfig}
-                 onUpdateInput={this.handleUpdateInput.bind(this)}
+                 onUpdateInput={this.handleUpdateInputForLocation.bind(this)}
                  onNewRequest={this.addLocationfromInteraction.bind(this)}
                />
                
-               <TextField
-                 onChange={this.onChangeFunction.bind(this, "interactionType")}
-                 value={this.props.interaction.interactionType}
-                 floatingLabelText="InteractionType"
-               />
+               <SelectField
+                floatingLabelText="InteractionType"
+                value={this.props.interaction.interactionType}
+                onChange={this.onChangeFunction.bind(this, "interactionType")}
+               >
+                <MenuItem value={"Email"} primaryText="Email" />
+                <MenuItem value={"Call"} primaryText="Call" /> 
+                <MenuItem value={"WebMeeting"} primaryText="WebMeeting" /> 
+                <MenuItem value={"RanInto"} primaryText="RanInto" />
+                <MenuItem value={"Meeting"} primaryText="Meeting" />
+                <MenuItem value={"Drinks"} primaryText="Drinks" />
+                <MenuItem value={"Meal"} primaryText="Meal" />       
+               </SelectField>
             
+            {
+              //dates still might not work correctly, debug
+            }
                <TextField
                value={this.startTime}
                onChange={this.onChangeFunction.bind(this, "startTime")}

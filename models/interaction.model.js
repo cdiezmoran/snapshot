@@ -12,7 +12,7 @@ var InteractionSchema = new Schema({
   },
   interactionType: {
     type: String,
-    enum: ['Call','Meeting','Ran Into','Meal']
+    enum: ['Email', 'Call', 'Meeting', 'Web Meeting', 'Ran Into','Meal']
   },
   startTime: {
     type: Date

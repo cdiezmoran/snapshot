@@ -54,7 +54,8 @@ export class PersonComponent extends React.Component{
   onChangeFunction(key, component, value){
     this.props.dispatch(changePerson(key,value));
   }
-
+  
+  //add getDateFromString to Helpers
   getDateFromString(string) {
     let year = parseInt(string.substring(0, 4));
     let month = parseInt(string.substring(4, 6)) - 1;

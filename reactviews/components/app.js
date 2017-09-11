@@ -14,6 +14,7 @@ export class SnapshotApp extends React.Component{
     this.handleToggle=this.handleToggle.bind(this);
     this.handleOrganization=this.handleOrganization.bind(this);
     this.handlePerson=this.handlePerson.bind(this);
+    this.handleInteraction=this.handleInteraction.bind(this);
   }
 
   handleToggle(){ 
@@ -26,7 +27,11 @@ export class SnapshotApp extends React.Component{
   handlePerson(){ 
       this.setState({open: !this.state.open});
       this.props.history.push('/person');
-    }
+  }
+  handleInteraction(){ 
+    this.setState({open: !this.state.open});
+    this.props.history.push('/interaction');
+  }
   
 
   render(){ 
@@ -40,8 +45,9 @@ export class SnapshotApp extends React.Component{
             iconClassNameRight="muidocs-icon-navigation-expand-more"
           />
           <Drawer open={this.state.open}>
-            <MenuItem onTouchTap={this.handleOrganization}>Organization</MenuItem>
+            <MenuItem onTouchTap={this.handleOrganization}>Organizations</MenuItem>
             <MenuItem onTouchTap={this.handlePerson}>People</MenuItem>
+            <MenuItem onTouchTap={this.handleInteraction}>Interactions</MenuItem>
             <MenuItem onTouchTap={this.handleToggle}>Close</MenuItem>
           </Drawer>
           <div className="container">

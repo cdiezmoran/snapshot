@@ -34,6 +34,30 @@ export class InteractionsComponent extends React.Component{
                 return row;
             });
           }
+          return(
+            <div>
+              <h1> Interaction
+                 <RaisedButton label="Add"
+                     onTouchTap={this.addInteraction.bind(this)} />
+              </h1>
+      
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHeaderColumn>Date</TableHeaderColumn>
+                    <TableHeaderColumn>Duration</TableHeaderColumn>
+                    <TableHeaderColumn>Type</TableHeaderColumn>
+                    <TableHeaderColumn>People</TableHeaderColumn>
+                    <TableHeaderColumn>Location</TableHeaderColumn>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {rows}
+                </TableBody>
+              </Table>
+              {tabs}
+            </div>
+          )
 
     }
 
