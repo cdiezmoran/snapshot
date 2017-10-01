@@ -14,9 +14,9 @@ import LocationsComponent from './locations';
 export class InteractionComponent extends React.Component{
 
   //validate there are no errors or debug
-  handleUpdateInputForPeople(value){
+  handleUpdateInputForContacts(value){
     if(!value) return;
-    this.props.dispatch(findPeople(value));
+    this.props.dispatch(findContacts(value));
   }
 //validate their are no errors or debug
   handleUpdateInputForInteractions(value){
@@ -46,8 +46,8 @@ export class InteractionComponent extends React.Component{
                  All the general info about the interaction
                </p>
                <AutoComplete
-                 hintText="People"
-                 dataSource={this.props.findPerson}
+                 hintText="Contacts"
+                 dataSource={this.props.findContacts}
                  dataSourceConfig={this.dataSourceConfig}
                  onUpdateInput={this.handleUpdateInputForPeople.bind(this)}
                  onNewRequest={this.addPersonfromInteraction.bind(this)}

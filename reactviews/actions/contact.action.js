@@ -9,6 +9,14 @@ export const fetchContactsByPerson = (id) => {
   }
 }
 
+export const FIND_CONTACTS = 'FIND_CONTACTS';
+export function findContacts(email="") {
+  return {
+    type: FIND_CONTACTS,
+    promise: fetch(`/contact/find?email=${email}`).then(response => { return  response.json() })
+  };
+}
+
 export const LOAD_CONTACT = 'LOAD_CONTACT';
 export function loadContact(id) {
   return {

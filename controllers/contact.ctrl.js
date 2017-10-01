@@ -37,6 +37,17 @@ module.exports = {
     });
   },
 
+  find: function(req, res, next) {
+    Contact.find({ email: req.params.email })
+    .populate('people')
+    .exec(function(err, contact) {
+      if (err) return res.status(400).json(err);
+      if (!contact) return res.status(404).json();
+
+      res.status(200).json(contact);
+    });
+  },
+
 
   updateOne: function(req, res, next) {
     Contact.findOneAndUpdate({ _id: req.params.id }, req.body, {new: true}, function(err, contact) {

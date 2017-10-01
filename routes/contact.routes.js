@@ -12,6 +12,8 @@ app.route('/')
 app.route('/person/:id')
 .get(contact.getAllByPerson)
 
+app.route('/find')
+.get(contact.find)
 app.route('/:id')
 .get(contact.getOne)
 .put(contact.updateOne)
