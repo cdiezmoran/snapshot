@@ -97,3 +97,13 @@ export class InteractionComponent extends React.Component{
     }
 
 }
+
+let mapStateToProps = (state, props) => {
+  return {
+    interaction: state.interactionReducer.interaction,
+    contacts: state.interactionReducer.contacts,
+    location: state.interactionReducer.location
+  }
+};
+
+export default connect(mapStateToProps)(InteractionComponent);

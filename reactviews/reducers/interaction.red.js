@@ -30,8 +30,8 @@ switch (action.type) {
         return handle(state, action, {
             failure: prevState => ({ ...prevState, error: action.payload }),
             success: prevState => ({ ...prevState, interaction: action.payload.interaction, 
-                contacts: action.payload.contacts, 
-                locations: action.payload.interaction.locations 
+                contacts: action.payload.interaction.contacts, 
+                location: action.payload.interaction.location 
             }),
         });
     

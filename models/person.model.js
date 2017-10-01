@@ -32,10 +32,6 @@ var PersonSchema = new Schema({
   gender: {
     type: String
   },
-  // currentContact: {
-  //   type: mongoose.Schema.Types.ObjectId,
-  //   ref: 'Contact'
-  // },
   hasUserAccount: {
     type: Boolean
   },
@@ -45,7 +41,21 @@ var PersonSchema = new Schema({
   currentOrganizations: [
     { type: mongoose.Schema.Types.ObjectId, 
       ref: 'Organization',
-      unique: true
+    }
+  ],
+  currentContacts: [
+    { type: mongoose.Schema.Types.ObjectId, 
+      ref: 'Contacts',
+    }
+  ],
+  priorContacts: [
+    { type: mongoose.Schema.Types.ObjectId, 
+      ref: 'Contacts',
+    }
+  ],
+  personalContacts: [
+    { type: mongoose.Schema.Types.ObjectId, 
+      ref: 'Contacts',
     }
   ],
 });

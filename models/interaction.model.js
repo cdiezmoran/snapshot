@@ -2,9 +2,9 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var InteractionSchema = new Schema({
-  includedPeople: [{
+  includedContacts: [{
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Persons'
+    ref: 'Contacts'
   }],
   location: {
     type: mongoose.Schema.Types.ObjectId,
