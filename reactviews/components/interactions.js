@@ -1,10 +1,11 @@
 import React from 'react';
 import {connect} from 'react-redux'
-import { } from '../actions/interaction.action';
+import { saveInteraction,loadInteractions,loadInteraction, addInteraction } from '../actions/interaction.action';
 import {Tabs, Tab} from 'material-ui/Tabs';
 import FontIcon from 'material-ui/FontIcon';
 import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn} from 'material-ui/Table';
 import Slider from 'material-ui/Slider';
+import IconButton from 'material-ui/IconButton';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
 import TextField from 'material-ui/TextField';
@@ -14,7 +15,24 @@ import InteractionComponent from './interaction';
 
 export class InteractionsComponent extends React.Component{
 
+    constructor(props){
+      super(props);
+      this.props.dispatch(loadInteractions());
+    }
+
+    addInteraction(){
+      this.props.dispatch(addInteraction());
+    }
+
+    
+    loadInteraction(id){
+      this.props.dispatch(loadInteraction(id));
+    }
+
     render(){
+
+      let rows;
+
         if(this.props.interactions){
             rows = this.props.interactions.map( (c,index) =>{
                 //need to create a function in the model to represent date and duration
@@ -33,11 +51,20 @@ export class InteractionsComponent extends React.Component{
                 return row;
             });
           }
+
+    let tabs;
+    if(this.props.interaction){
+      tabs=
+        (<InteractionComponent interaction={this.props.interaction} />)
+    }
+
           return(
             <div>
               <h1> Interaction
-                 <RaisedButton label="Add"
-                     onTouchTap={this.addInteraction.bind(this)} />
+                <FloatingActionButton
+                     onTouchTap={this.addInteraction.bind(this)}>
+                     <ContentAdd /> 
+                </FloatingActionButton>
               </h1>
       
               <Table>
@@ -60,3 +87,12 @@ export class InteractionsComponent extends React.Component{
     }
 
 }
+
+let mapStateToProps = (state, props) => {
+  return {
+    interactions: state.interactionReducer.interactions,
+    interaction: state.interactionReducer.interaction
+  }
+};
+
+export default connect(mapStateToProps)(InteractionsComponent);
