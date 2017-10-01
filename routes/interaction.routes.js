@@ -4,7 +4,6 @@ var passport = require('passport');
 var interactionCtrl = require('../controllers/interaction.ctrl');
 
 router.get('/getAll', interactionCtrl.getAll);
-router.get('/find', interactionCtrl.find);
 router.post('/new', interactionCtrl.createOne);
 router.get('/:interaction',interactionCtrl.getOne);
 router.put('/:interaction',interactionCtrl.updateOne);

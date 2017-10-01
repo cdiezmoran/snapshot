@@ -76,7 +76,7 @@ export class InteractionComponent extends React.Component{
             
             {
               //dates still might not work correctly, debug
-            }
+              /*
                <TextField
                value={this.startTime}
                onChange={this.onChangeFunction.bind(this, "startTime")}
@@ -86,7 +86,8 @@ export class InteractionComponent extends React.Component{
                value={this.endTime}
                onChange={this.onChangeFunction.bind(this, "endTime")}
                floatingLabelText="EndTime" />
-
+               */
+            }
                 <RaisedButton label="Save"
                 onTouchTap={this.saveInteraction.bind(this)} />
              </form>

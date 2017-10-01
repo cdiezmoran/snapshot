@@ -21,7 +21,6 @@ export class InteractionsComponent extends React.Component{
               var row= 
                 (<TableRow key={index}>
                   <TableRowColumn>{c.date}</TableRowColumn>
-                  <TableRowColumn>{c.duration}</TableRowColumn>
                   <TableRowColumn>{c.interactionType}</TableRowColumn>
                   <TableRowColumn>{c.people}</TableRowColumn>
                   <TableRowColumn>{c.location}</TableRowColumn>            
@@ -45,7 +44,6 @@ export class InteractionsComponent extends React.Component{
                 <TableHeader>
                   <TableRow>
                     <TableHeaderColumn>Date</TableHeaderColumn>
-                    <TableHeaderColumn>Duration</TableHeaderColumn>
                     <TableHeaderColumn>Type</TableHeaderColumn>
                     <TableHeaderColumn>People</TableHeaderColumn>
                     <TableHeaderColumn>Location</TableHeaderColumn>
