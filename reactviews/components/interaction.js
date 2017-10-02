@@ -6,6 +6,7 @@ import FontIcon from 'material-ui/FontIcon';
 import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn} from 'material-ui/Table';
 import Slider from 'material-ui/Slider';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
+import AutoComplete from 'material-ui/AutoComplete';
 import ContentAdd from 'material-ui/svg-icons/content/add';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
@@ -19,9 +20,9 @@ export class InteractionComponent extends React.Component{
     this.props.dispatch(findContacts(value));
   }
 //validate their are no errors or debug
-  handleUpdateInputForInteractions(value){
+  handleUpdateInputForLocation(value){
     if(!value) return;
-    this.props.dispatch(findInteractions(value));
+    this.props.dispatch(findLocation(value));
   }
 
   onChangeFunction(key, component, value){
@@ -49,17 +50,16 @@ export class InteractionComponent extends React.Component{
                  hintText="Contacts"
                  dataSource={this.props.findContacts}
                  dataSourceConfig={this.dataSourceConfig}
-                 onUpdateInput={this.handleUpdateInputForPeople.bind(this)}
-                 onNewRequest={this.addPersonfromInteraction.bind(this)}
+                 onUpdateInput={this.handleUpdateInputForContacts.bind(this)}
                />
+               {/*
                <AutoComplete
                  hintText="Location"
                  dataSource={this.props.findLocation}
                  dataSourceConfig={this.dataSourceConfig}
-                 onUpdateInput={this.handleUpdateInputForLocation.bind(this)}
                  onNewRequest={this.addLocationfromInteraction.bind(this)}
                />
-               
+               */}
                <SelectField
                 floatingLabelText="InteractionType"
                 value={this.props.interaction.interactionType}

@@ -3,7 +3,7 @@ var Interaction = require('../models/interaction.model');
 module.exports = {
 
     getAll: function(req, res, next) {
-        Interaction.find(function(err, contacts) {
+        Interaction.find(function(err, interactions) {
           if (err) return res.status(400).json(err);
     
           res.status(200).json(interactions);
@@ -12,7 +12,7 @@ module.exports = {
     getAllByPerson: function(req, res, next) {
         //need to figure out best way to query interactions through the Person component
         //may need to push created interactions into an interactions array in the Person model
-        Interaction.find({includedPeople: req.params.id},function(err, interactions) {
+        Interaction.find({includedContacts: req.params.id},function(err, interactions) {
           if (err) return res.status(400).json(err);
           res.status(200).json(interactions);
         });
@@ -20,7 +20,7 @@ module.exports = {
     getAllByOrganization: function(req, res, next) {
         //need to figure out best way to query interactions through the Organization component
         //may need to push created interactions into an interactions array in the Organization model
-        Interaction.find({includedPeople: req.params.id},function(err, interactions) {
+        Interaction.find({includedContacts: req.params.id},function(err, interactions) {
           if (err) return res.status(400).json(err);
           res.status(200).json(interactions);
         });
