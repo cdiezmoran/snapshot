@@ -12,63 +12,56 @@ import ContentAdd from 'material-ui/svg-icons/content/add';
 import TextField from 'material-ui/TextField';
 import LocationComponent from './location';
 import { fetchContactsByLocation } from '../actions/contact.action';
+import {makeTable} from '../helpers/table';
 
 export class LocationsComponent extends React.Component{
 
-	addLocation(){
+	addLocation() {
 		this.props.dispatch(addLocation());
 	}
 
-	loadLocation(id){
+	loadLocation(id) {
 		this.props.dispatch(loadLocation(id));
 	}
 
-	render (){
 
-		let rows, rowsPeople, rowsContacts, rowsInteractions;
+	// render() {
+	// 	var editButton = (
+	// 		<div>
+	// 			<RaisedButton label="Edit" onTouchTap={this.loadLocation.bind(this,c._id)}  />
+	// 			<IconButton iconClassName="muidocs-icon-action-home"
+	// 					 onTouchTap={this.loadLocation.bind(this,c._id)}  />
+	// 		</div>);
+	// }
 
-		if(this.props.organizationLocations){
-			rows = this.props.organizationLocations.map( (c, index) => {
-			
-				var row=
-				(<TableRow key={index} onTouchTap={this.loadLocation.bind(this,c._id)} >
-					<TableRowColumn>{c.called}</TableRowColumn>
-					<TableRowColumn>{c.address}</TableRowColumn>
-					<TableRowColumn>
-						<RaisedButton label="Edit" onTouchTap={this.loadLocation.bind(this,c._id)}  />
-						 <IconButton iconClassName="muidocs-icon-action-home"
-						 onTouchTap={this.loadLocation.bind(this,c._id)}  />
-					</TableRowColumn>
-				</TableRow>);
-				return row;
-			});
-		}
+	makeEditButton(organizationLocation) {
+		return (
+			<div>
+				<RaisedButton label="Edit" onTouchTap={this.loadLocation.bind(this,organizationLocation._id)}  />
+		 		<IconButton iconClassName="muidocs-icon-action-home"
+					 onTouchTap={this.loadLocation.bind(this,organizationLocation._id)}  />
+			</div>);
+	}
 
-		let tabs;
-		if(this.props.location){
-			tabs=
-			(<LocationComponent location={this.props.location}/>)
-		}
+	maybeRenderCurrentLocation() {
+		return this.props.location ?
+			(<LocationComponent location={this.props.location}/>) :
+			null;
+	}
 
+	render() {
+		console.log(this.props.organizationLocations);
 		return(
 			<div>
-				<h1> Location
-
-					 <RaisedButton label="Add"
-               onTouchTap={this.addLocation.bind(this)} />
-				</h1>
-                {tabs}
-				<Table>
-					<TableHeader>
-						<TableRow>
-							<TableHeaderColumn>Name</TableHeaderColumn>
-							<TableHeaderColumn>Address</TableHeaderColumn>
-						</TableRow>
-					</TableHeader>
-					<TableBody>
-						{rows}
-					</TableBody>
-				</Table>
+				<h1> Location </h1>
+				<RaisedButton label="Add"
+             onTouchTap={this.addLocation.bind(this)} />
+        {this.maybeRenderCurrentLocation()}
+				{makeTable(
+					this.props.organizationLocations, 
+					['called', 'address'], 
+					this.makeEditButton.bind(this),
+					(rowObj) => this.loadLocation.bind(this,rowObj._id))}
 			</div>
 		)
 	}
@@ -77,8 +70,8 @@ export class LocationsComponent extends React.Component{
 let mapStateToProps = (state, props) => {
     return {
       location: state.locationReducer.location,
-	  locations: state.locationReducer.locations,
-	  organizationLocations: state.organizationReducer.organization.locations
+		  locations: state.locationReducer.locations,
+		  organizationLocations: state.organizationReducer.organization.locations
     }
 };
 

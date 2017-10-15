@@ -1,8 +1,20 @@
 import React from 'react';
-import {connect} from 'react-redux'
-import {Tabs, Tab} from 'material-ui/Tabs';
+import {
+  connect
+} from 'react-redux'
+import {
+  Tabs,
+  Tab
+} from 'material-ui/Tabs';
 import FontIcon from 'material-ui/FontIcon';
-import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn} from 'material-ui/Table';
+import {
+  Table,
+  TableBody,
+  TableHeader,
+  TableHeaderColumn,
+  TableRow,
+  TableRowColumn
+} from 'material-ui/Table';
 import Slider from 'material-ui/Slider';
 import RaisedButton from 'material-ui/RaisedButton';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
@@ -10,57 +22,66 @@ import IconButton from 'material-ui/IconButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
 import TextField from 'material-ui/TextField';
 import PersonComponent from './person';
-import { saveContact, createContact, removeContact, 
-          addContact,fetchContactsByPerson, addOrganizationFromContact } from '../actions/contact.action.js';
+import {
+  saveContact,
+  createContact,
+  removeContact,
+  addContact,
+  fetchContactsByPerson,
+  addOrganizationFromContact
+} from '../actions/contact.action.js';
 import AutoComplete from 'material-ui/AutoComplete';
-import { findOrganizations } from '../actions/organization.action.js';
+import {
+  findOrganizations
+} from '../actions/organization.action.js';
 
-export class ContactComponent extends React.Component{
+export class ContactComponent extends React.Component {
 
-constructor(props){
+  constructor(props) {
     super(props);
     this.dataSourceConfig = {
       text: 'longName',
       value: '_id',
     };
-}
-  addContact(){
+  }
+  addContact() {
     this.props.dispatch(addContact(this.props.person._id));
   }
 
-  saveContact(){
-      if(this.props.contact._id){
-        this.props.dispatch(saveContact(this.props.contact));
-      }else{
-        this.props.dispatch(createContact(this.props.contact));
-      }
-      this.props.dispatch(fetchContactsByPerson(this.props.person._id));
+  saveContact() {
+    if (this.props.contact._id) {
+      this.props.dispatch(saveContact(this.props.contact));
+    } else {
+      this.props.dispatch(createContact(this.props.contact));
+    }
+    this.props.dispatch(fetchContactsByPerson(this.props.person._id));
   }
 
-  removeContact(){
+  removeContact() {
     this.props.dispatch(removeContact(this.props.contact._id));
   }
 
-   handleUpdateInput(value){
-    if(!value) return;
+  handleUpdateInput(value) {
+    if (!value) return;
     this.props.dispatch(findOrganizations(value));
   }
 
-  onChangeFunction(key, input){
-    this.props.contact[key]=input.target.value;
+  onChangeFunction(key, input) {
+    this.props.contact[key] = input.target.value;
   }
 
-  addOrganizationFromPerson(org){
-    this.props.contact.atOrganization=org;
+  addOrganizationFromPerson(org) {
+    this.props.contact.atOrganization = org;
   }
 
 
-render(){
+  render() {
 
     let contact;
 
-    if(this.props.contact){
-        contact=(<div>
+    if (this.props.contact) {
+      contact = (
+        <div>
         <TextField
                 onChange={this.onChangeFunction.bind(this, "title")}
                 value={this.props.contact.title}
@@ -114,11 +135,12 @@ render(){
             <RaisedButton label="Save" onTouchTap={this.saveContact.bind(this)} />
             <RaisedButton label="Remove" onTouchTap={this.removeContact.bind(this)} />
 
-        </div>);
+        </div>
+      );
     }
 
     return (
-        <div>
+      <div>
 
             <FloatingActionButton onTouchTap={this.addContact.bind(this)} >
              <ContentAdd />
@@ -126,17 +148,18 @@ render(){
              
              {contact}
            
-        </div>);
-    }
+        </div>
+    );
+  }
 }
 
 
 let mapStateToProps = (state, props) => {
-    return {
-      contact: state.contactReducer.contact,
-      contacts: state.contactReducer.contacts,
-      findOrganizations: state.organizationReducer.findOrganizations
-    }
+  return {
+    contact: state.contactReducer.contact,
+    contacts: state.contactReducer.contacts,
+    findOrganizations: state.organizationReducer.findOrganizations
+  }
 };
 
 export default connect(mapStateToProps)(ContactComponent);

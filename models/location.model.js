@@ -25,10 +25,16 @@ var LocationSchema = new Schema({
   "longitude": -43.943432100000002549,
   "administrativeLevels": { "level2long": "Belo Horizonte", "level1long": "Minas Gerais"}
   */
-  address: { 
+
+  // TODO: consider place id instead of all details. (alternatively, cache both?)
+  address: {
     type: Object
   },
-  latLng: { type: [Number], index: '2dsphere'},
+  latLng: {
+    type: [Number],
+    index: '2dsphere'
+  },
+  // Office phone number.
   officeLine: {
     type: String
   },

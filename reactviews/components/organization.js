@@ -1,10 +1,28 @@
 import React from 'react';
-import {connect} from 'react-redux'
-import { saveOrganization,createOrganization,changeOrganization,
-  loadOrganizations,loadOrganization, addOrganization } from '../actions/organization.action';
-import {Tabs, Tab} from 'material-ui/Tabs';
+import {
+  connect
+} from 'react-redux'
+import {
+  saveOrganization,
+  createOrganization,
+  changeOrganization,
+  loadOrganizations,
+  loadOrganization,
+  addOrganization
+} from '../actions/organization.action';
+import {
+  Tabs,
+  Tab
+} from 'material-ui/Tabs';
 import FontIcon from 'material-ui/FontIcon';
-import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn} from 'material-ui/Table';
+import {
+  Table,
+  TableBody,
+  TableHeader,
+  TableHeaderColumn,
+  TableRow,
+  TableRowColumn
+} from 'material-ui/Table';
 import Slider from 'material-ui/Slider';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
@@ -12,41 +30,53 @@ import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import LocationsComponent from './locations';
 
-export class OrganizationComponent extends React.Component{
-  
-  constructor(props){
+export class OrganizationComponent extends React.Component {
+  constructor(props) {
     super(props);
   }
 
-  handleActive(tab) {
-    if(tab.props.label=="People"){
-
-    }
+  onChangeFunction(key, component, value) {
+    this.props.dispatch(changeOrganization(key, value));
   }
 
-  onChangeFunction(key, component, value){
-    this.props.dispatch(changeOrganization(key,value));
-  }
-
-  saveOrganization(){
-    if(this.props.organization._id)
+  saveOrganization() {
+    if (this.props.organization._id)
       this.props.dispatch(saveOrganization(this.props.organization));
     else this.props.dispatch(createOrganization(this.props.organization));
 
     this.props.dispatch(loadOrganizations());
   }
 
+  renderTextFields(fields) {
+    const fieldNameMap = {
+      'called': 'Called',
+      'longName': 'Long name',
+      'emailSuffix': 'Email suffix',
+      'url': 'URL'
+    };
 
-  render(){
+    return fields.map(field => {
+      return (
+        <TextField
+          onChange={this.onChangeFunction.bind(this, field)}
+          value={this.props.organization[field]}
+          floatingLabelText={fieldNameMap[field]}
+        />
+      );
+    });
+  }
 
-    let rows,rowsPeople,rowsInteractions,rowsLocations;
+  render() {
 
-    if(this.props.contacts){
-      rowsPeople = this.props.contacts.map( (c,index) =>{
+    let rows, rowsPeople, rowsInteractions, rowsLocations;
+
+    if (this.props.contacts) {
+      rowsPeople = this.props.contacts.map((c, index) => {
         let givenName;
-        if(c.forPerson) givenName=c.forPerson.givenName;
+        if (c.forPerson) givenName = c.forPerson.givenName;
 
-        return  (<TableRow key={index}>
+        return (
+          <TableRow key={index}>
             <TableRowColumn>{givenName}</TableRowColumn>
             <TableRowColumn>{c.startDate}</TableRowColumn>
             <TableRowColumn>{c.endDate}</TableRowColumn>
@@ -56,13 +86,15 @@ export class OrganizationComponent extends React.Component{
                   className="muidocs-icon-edit"
                 />
             </TableRowColumn>
-          </TableRow>);
+          </TableRow>
+        );
       });
     }
 
-    if(this.props.peopleOrganization){
-      rowsInteractions = this.props.peopleOrganization.map( (c,index) =>{
-        return  (<TableRow key={index}>
+    if (this.props.peopleOrganization) {
+      rowsInteractions = this.props.peopleOrganization.map((c, index) => {
+        return (
+          <TableRow key={index}>
             <TableRowColumn>{c.called}</TableRowColumn>
             <TableRowColumn>{c.url}</TableRowColumn>
             <TableRowColumn>
@@ -71,15 +103,17 @@ export class OrganizationComponent extends React.Component{
                   className="muidocs-icon-edit"
                 />
             </TableRowColumn>
-          </TableRow>);
+          </TableRow>
+        );
       });
-    }    
+    }
 
-    if(!this.props.organization) return;
+    if (!this.props.organization) return;
 
-    return(
 
-      
+    return (
+
+
       <div>
        <Tabs>
           <Tab label="Info" >
@@ -87,28 +121,7 @@ export class OrganizationComponent extends React.Component{
               <p>
                 All the general info about the organization
               </p>
-              <TextField
-                onChange={this.onChangeFunction.bind(this, "called")}
-                value={this.props.organization.called}
-                floatingLabelText="Called"
-              />
-              <TextField
-                onChange={this.onChangeFunction.bind(this, "longName")}
-                value={this.props.organization.longName}
-                floatingLabelText="Long name"
-              />
-              <TextField
-                onChange={this.onChangeFunction.bind(this, "emailSuffix")}
-                value={this.props.organization.emailSuffix}
-                floatingLabelText="Email Suffix"
-              />
-
-              <TextField
-                onChange={this.onChangeFunction.bind(this, "url")}
-                value={this.props.organization.url}
-                floatingLabelText="URL"
-              />
-
+              {this.renderTextFields(['called', 'longName', 'emailSuffix', 'url'])}
                <RaisedButton label="Save" 
                onTouchTap={this.saveOrganization.bind(this)} />
             </div>
@@ -150,10 +163,10 @@ export class OrganizationComponent extends React.Component{
 }
 
 let mapStateToProps = (state, props) => {
-    return {
-      organization: state.organizationReducer.organization,
-      contacts: state.organizationReducer.contacts
-    }
+  return {
+    organization: state.organizationReducer.organization,
+    contacts: state.organizationReducer.contacts
+  }
 };
 
 export default connect(mapStateToProps)(OrganizationComponent);

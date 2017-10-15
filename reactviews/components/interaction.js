@@ -1,9 +1,23 @@
 import React from 'react';
-import {connect} from 'react-redux'
-import { } from '../actions/interaction.action';
-import {Tabs, Tab} from 'material-ui/Tabs';
+import {
+  connect
+} from 'react-redux'
+import {} from '../actions/interaction.action';
+import {
+  Tabs,
+  Tab
+} from 'material-ui/Tabs';
 import FontIcon from 'material-ui/FontIcon';
-import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn} from 'material-ui/Table';
+import {
+  Table,
+  TableBody,
+  TableHeader,
+  TableHeaderColumn,
+  TableRow,
+  TableRowColumn,
+  SelectField,
+  MenuItem
+} from 'material-ui/Table';
 import Slider from 'material-ui/Slider';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import AutoComplete from 'material-ui/AutoComplete';
@@ -12,23 +26,23 @@ import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import LocationsComponent from './locations';
 
-export class InteractionComponent extends React.Component{
+export class InteractionComponent extends React.Component {
 
   //validate there are no errors or debug
-  handleUpdateInputForContacts(value){
-    if(!value) return;
-    this.props.dispatch(findContacts(value));
-  }
-//validate their are no errors or debug
-  handleUpdateInputForLocation(value){
-    if(!value) return;
+  handleUpdateInputForContacts(value) {
+      if (!value) return;
+      this.props.dispatch(findContacts(value));
+    }
+    //validate their are no errors or debug
+  handleUpdateInputForLocation(value) {
+    if (!value) return;
     this.props.dispatch(findLocation(value));
   }
 
-  onChangeFunction(key, component, value){
-    this.props.dispatch(changeInteraction(key,value));
-  }
-  //add getDateFromString to Helpers
+  onChangeFunction(key, component, value) {
+      this.props.dispatch(changeInteraction(key, value));
+    }
+    //add getDateFromString to Helpers
   getDateFromString(string) {
     let year = parseInt(string.substring(0, 4));
     let month = parseInt(string.substring(4, 6)) - 1;
@@ -37,9 +51,10 @@ export class InteractionComponent extends React.Component{
     return new Date(year, month, day);
   }
 
-    render(){
+  render() {
 
-        <div>
+    return (
+      <div>
         <Tabs onChange={this.changeTab} value={this.props.tab}>
            <Tab label="Info" value="info" >
              <form ref="form" id="interactionForm">
@@ -86,15 +101,16 @@ export class InteractionComponent extends React.Component{
                value={this.endTime}
                onChange={this.onChangeFunction.bind(this, "endTime")}
                floatingLabelText="EndTime" />
-               */
-            }
                 <RaisedButton label="Save"
                 onTouchTap={this.saveInteraction.bind(this)} />
+               */  
+             }
              </form>
            </Tab>
         </Tabs>
         </div>
-    }
+    );
+  }
 
 }
 

@@ -23,13 +23,15 @@ export class LocationComponent extends React.Component{
 
   constructor(props){
     super(props);
-    this.state = { address: '' }
+    console.log("LOCATION PROPS: ", props);
+    this.state = { address: this.props.location.address }
     this.onChange = (address) => this.setState({address})
   }
 
   saveLocation() {
     // ES6 object destructuring on props
     let location = {...this.props.location, address: this.state.address, organization_id: this.props.organization._id}
+    console.log(location)
     
     geocodeByAddress(this.state.address)
       .then(results => getLatLng(results[0]))
@@ -62,6 +64,7 @@ export class LocationComponent extends React.Component{
     this.props.dispatch(changeLocation(key,input.target.value));
   }
 
+
   // componentDidReceiveProps(){
   //   if(this.props.location.address && 
   //     this.state.location.address != this.props.location) 
@@ -69,11 +72,11 @@ export class LocationComponent extends React.Component{
   // }
 
   render(){
-    if(!this.props.location) return;
+    if(!this.props.location) return (<div></div>);
 
     const inputProps = {
       value: this.state.address,
-      onChange: this.onChange,
+      onChange: this.onChange
     }
 
 
@@ -91,8 +94,8 @@ export class LocationComponent extends React.Component{
 
               <PlacesAutocomplete inputProps={inputProps} />
 
-               <RaisedButton label="Save"
-               onTouchTap={this.saveLocation.bind(this)} />
+              <RaisedButton label="Save"
+                onTouchTap={this.saveLocation.bind(this)} />
             </form>
       </div>
      )

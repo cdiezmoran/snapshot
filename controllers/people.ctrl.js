@@ -17,7 +17,7 @@ module.exports = {
     });
   },
   showCreatePersonForm: function(req, res, next) {
-    // res.render('new');
+    res.render('new');
     console.log('hit show form')
   },
   listPersonView: function(req, res, next) {
@@ -31,72 +31,85 @@ module.exports = {
     });
   },
   getOne: function(req, res, next) {
-    Person.findOne({ _id: req.params.id }).populate('currentOrganizations')
-    //leave this out for now: .populate('contacts')
-    .exec(function(err, person) {
-      if (err) return res.status(500).json({
-        message: 'Error getting the person'
-      });
-      if (!person) return res.status(404).json({
-        message: 'No such person in the database'
-      });
+    Person.findOne({
+        _id: req.params.id
+      }).populate('currentOrganizations')
+      //leave this out for now: .populate('contacts')
+      .exec(function(err, person) {
+        if (err) return res.status(500).json({
+          message: 'Error getting the person'
+        });
+        if (!person) return res.status(404).json({
+          message: 'No such person in the database'
+        });
 
-      res.status(200).json(person);
-    });
+        res.status(200).json(person);
+      });
   },
   updateOne: function(req, res, next) {
-    Person.findOneAndUpdate({ _id: req.params.id }, req.body)
-    .then(function( person) {
-      if (!person) return res.status(404).json();
-    
-      return Contact.find({forPerson: mongoose.Types.ObjectId(req.params.id)})
-    })
-    .then((contacts)=>{
-      if(!contacts) contacts=[];
-      console.log(contacts)
-      //Removing contacts
-      contacts.forEach(contactObj=>{
-        var found = req.body.currentOrganizations.find(currentOrg=>{ 
-          return currentOrg == contactObj.atOrganization.toString() 
-        });
-        if(!found){
-          contactObj.endDate = new Date();
-          contactObj.save();
-        }
-      });
+    Person.findOneAndUpdate({
+        _id: req.params.id
+      }, req.body)
+      .then(function(person) {
+        if (!person) return res.status(404).json();
 
-      //Adding new Orgs
-      req.body.currentOrganizations.forEach(currentOrg=>{
-        var found = contacts.find(contactObj=>{
-          return contactObj.atOrganization.toString() == currentOrg;
-        });
-        if(!found){
-          var newContact = {
-            forPerson: req.params.id,
-            atOrganization: currentOrg,
-            startDate: new Date()
-          }
-          Contact.create(newContact);
-        }
+        return Contact.find({
+          forPerson: mongoose.Types.ObjectId(req.params.id)
+        })
       })
-      res.sendStatus(200);
-    }).catch(e=>{
-      if (e) return res.status(400).json(e);
-    })
+      .then((contacts) => {
+        if (!contacts) contacts = [];
+        console.log(contacts)
+          //Removing contacts
+        contacts.forEach(contactObj => {
+          var found = req.body.currentOrganizations.find(currentOrg => {
+            return currentOrg == contactObj.atOrganization.toString()
+          });
+          if (!found) {
+            contactObj.endDate = new Date();
+            contactObj.save();
+          }
+        });
+
+        //Adding new Orgs
+        req.body.currentOrganizations.forEach(currentOrg => {
+          var found = contacts.find(contactObj => {
+            return contactObj.atOrganization.toString() ==
+              currentOrg;
+          });
+          if (!found) {
+            var newContact = {
+              forPerson: req.params.id,
+              atOrganization: currentOrg,
+              startDate: new Date()
+            }
+            Contact.create(newContact);
+          }
+        })
+        res.sendStatus(200);
+      }).catch(e => {
+        if (e) return res.status(400).json(e);
+      })
   },
   deleteOne: function(req, res, next) {
-    Person.findOneAndRemove({ _id: req.params.id }, function(err) {
+    Person.findOneAndRemove({
+      _id: req.params.id
+    }, function(err) {
       if (err) return res.status(400).json(err);
 
       res.status(204).json();
     });
   },
   addPerson: function(req, res, next) {
-    Person.findOne({ _id: req.params.id }, function(err, person) {
+    Person.findOne({
+      _id: req.params.id
+    }, function(err, person) {
       if (err) return res.status(400).json(err);
       if (!person) return res.status(404).json();
 
-      Contact.findOne({ _id: req.body.id }, function(err, contact) {
+      Contact.findOne({
+        _id: req.body.id
+      }, function(err, contact) {
         if (err) return res.status(400).json(err);
         if (!contact) return res.status(404).json();
 
@@ -113,16 +126,19 @@ module.exports = {
     //Below are possible ways of getting a text search to match a record
     //var givenName = req.query.givenName;
     //Person.find(
-      //{ $text : { $search : "text to look for" } },
-      //{ score : { $meta: "textScore" } }
+    //{ $text : { $search : "text to look for" } },
+    //{ score : { $meta: "textScore" } }
     //)
     //console.log('Searching for: ' + name);
     //res.send(name);
 
   },
   createFromOrganization: function(req, res, next) {
-    Organization.findById(req.body.organization).exec(function (err, organization) {
-      if (err) {return res.status(300)};
+    Organization.findById(req.body.organization).exec(function(err,
+      organization) {
+      if (err) {
+        return res.status(300)
+      };
       // function()
       var personInfo = newPerson
       var personRecord = new Person({
