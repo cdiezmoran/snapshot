@@ -9,7 +9,7 @@ import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColu
 import Slider from 'material-ui/Slider';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
-import TextField from 'material-ui/TextField';
+import {TextField, SelectField, MenuItem} from 'material-ui';
 import RaisedButton from 'material-ui/RaisedButton';
 import AutoComplete from 'material-ui/AutoComplete';
 import Chip from 'material-ui/Chip';
@@ -42,6 +42,10 @@ export class PersonComponent extends React.Component{
 
   onChangeFunction(key, component, value){
     this.props.dispatch(changePerson(key,value));
+  }
+
+  onSelectChangeFunction(key, payload, selectedIndex){
+    this.props.dispatch(changePerson(key,payload.target.textContent));
   }
   
   //add getDateFromString to Helpers
@@ -160,27 +164,40 @@ export class PersonComponent extends React.Component{
                 value={this.props.person.called}
                 floatingLabelText="Called"
               />
+              <br />
               <TextField
                 onChange={this.onChangeFunction.bind(this, "givenName")}
                 value={this.props.person.givenName}
                 floatingLabelText="Given Name"
               />
+              <br />
+
               <TextField
                 onChange={this.onChangeFunction.bind(this, "surName")}
                 value={this.props.person.surName}
                 floatingLabelText="Surname"
               />
-              <TextField
-                onChange={this.onChangeFunction.bind(this, "gender")}
-                value={this.props.person.gender}
-                floatingLabelText="Gender"
-              />
+              <br />
+
+
+              <SelectField
+               floatingLabelText="Gender"
+               value={this.props.person.gender}
+               onChange={this.onSelectChangeFunction.bind(this, "gender")}
+              >
+                <MenuItem value={"Male"} primaryText="Male" />
+                <MenuItem value={"Female"} primaryText="Female" /> 
+                <MenuItem value={"Other"} primaryText="Other" /> 
+              </SelectField>
+              <br />
+
            
               <TextField
               value={this.currentBirthDate}
               onChange={this.onChangeFunction.bind(this, "birthDate")}
               floatingLabelText="Birthday" />
-           
+              <br />
+
               <AutoComplete
                 hintText="Organization"
                 dataSource={this.props.findOrganizations}
@@ -188,6 +205,8 @@ export class PersonComponent extends React.Component{
                 onUpdateInput={this.handleUpdateInput.bind(this)}
                 onNewRequest={this.addOrganizationFromPerson.bind(this)}
               />
+              <br />
+
                <div >
                 {organizations}
                 </div>
