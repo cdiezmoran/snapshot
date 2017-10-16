@@ -15,7 +15,6 @@ import { fetchContactsByLocation } from '../actions/contact.action';
 import {makeTable} from '../helpers/table';
 
 export class LocationsComponent extends React.Component{
-
 	addLocation() {
 		this.props.dispatch(addLocation());
 	}
@@ -23,16 +22,6 @@ export class LocationsComponent extends React.Component{
 	loadLocation(id) {
 		this.props.dispatch(loadLocation(id));
 	}
-
-
-	// render() {
-	// 	var editButton = (
-	// 		<div>
-	// 			<RaisedButton label="Edit" onTouchTap={this.loadLocation.bind(this,c._id)}  />
-	// 			<IconButton iconClassName="muidocs-icon-action-home"
-	// 					 onTouchTap={this.loadLocation.bind(this,c._id)}  />
-	// 		</div>);
-	// }
 
 	makeEditButton(organizationLocation) {
 		return (
@@ -50,7 +39,6 @@ export class LocationsComponent extends React.Component{
 	}
 
 	render() {
-		console.log(this.props.organizationLocations);
 		return(
 			<div>
 				<h1> Location </h1>

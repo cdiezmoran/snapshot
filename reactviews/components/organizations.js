@@ -13,9 +13,7 @@ import TextField from 'material-ui/TextField';
 import OrganizationComponent from './organization';
 import {makeTable} from '../helpers/table';
 
-
 export class OrganizationsComponent extends React.Component{
-  
   constructor(props){
     super(props);
     this.props.dispatch(loadOrganizations());
@@ -39,31 +37,26 @@ export class OrganizationsComponent extends React.Component{
       </TableRowColumn>);
   }
 
+  maybeRenderCurrentOrganization() {
+    return this.props.organization ?
+      (<OrganizationComponent organization={this.props.organization} />) :
+      null;
+  }
+
   render(){
-
-    let tabs;
-    if(this.props.organization){
-      tabs=
-        (<OrganizationComponent organization={this.props.organization} />)
-    }
-
     return(
       <div>
-        <h1>Organization 
-
-          <FloatingActionButton onTouchTap={this.addOrganization.bind(this)}>
-            <ContentAdd />
-          </FloatingActionButton>
-
-        </h1>
+        <h1>Organization</h1>
+        <FloatingActionButton onTouchTap={this.addOrganization.bind(this)}>
+        <ContentAdd />
+        </FloatingActionButton>
 
         {makeTable(
           this.props.organizations, 
           ['called', 'longName', 'emailSuffix', 'url', 'action'], 
           this.makeEditButton.bind(this))}
-
-        {tabs}
-
+        
+        {this.maybeRenderCurrentOrganization()}
       </div>
     )
   }

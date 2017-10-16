@@ -10,11 +10,15 @@ module.exports = {
 
   getAll: function(req, res, next) {
     console.log("People called of null error");
-    Person.find(function(err, people) {
-      if (err) return res.status(400).json(err);
 
-      res.status(200).json(people);
-    });
+
+    Person.find().populate('currentOrganizations')
+      //leave this out for now: .populate('contacts')
+      .exec(function(err, people) {
+        if (err) return res.status(500).json(err);
+
+        res.status(200).json(people);
+      });
   },
   showCreatePersonForm: function(req, res, next) {
     res.render('new');
@@ -60,7 +64,7 @@ module.exports = {
       .then((contacts) => {
         if (!contacts) contacts = [];
         console.log(contacts)
-          //Removing contacts
+        // Remove contact if they aren't at the person's currentOrganization (when someone changes jobs?)
         contacts.forEach(contactObj => {
           var found = req.body.currentOrganizations.find(currentOrg => {
             return currentOrg == contactObj.atOrganization.toString()
@@ -71,7 +75,7 @@ module.exports = {
           }
         });
 
-        //Adding new Orgs
+        //Adding new 
         req.body.currentOrganizations.forEach(currentOrg => {
           var found = contacts.find(contactObj => {
             return contactObj.atOrganization.toString() ==

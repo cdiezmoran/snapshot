@@ -18,16 +18,12 @@ import Contact from './contact';
 import moment from 'moment';
 
 export class PersonComponent extends React.Component{
-
-
   constructor(props){
     super(props);
-    console.log(props);
     this.dataSourceConfig = {
       text: 'longName',
       value: '_id',
     };
-
     this.state = {
       currentBirthDate: null,
       tab: null
@@ -36,19 +32,12 @@ export class PersonComponent extends React.Component{
     this.changeTab=this.changeTab.bind(this);
   }
 
-
   componentWillUpdate() {
     console.log(this.props);
     if(this.props.person){
       if(!this.props.person.birthDate)this.props.person.birthDate='';
     }
     // document.querySelector('#personForm').reset();
-  }
-
-  handleActive(tab) {
-    if(tab.props.label=="People"){
-
-    }
   }
 
   onChangeFunction(key, component, value){
@@ -123,7 +112,6 @@ export class PersonComponent extends React.Component{
     // dispatch save contact
   }
 
-
   handleUpdateInput(value){
     if(!value) return;
     this.props.dispatch(findOrganizations(value));
@@ -154,12 +142,10 @@ export class PersonComponent extends React.Component{
       })
     }
 
-    
     if(this.props.person.birthDate && this.props.person.birthDate.length>10){
       let d = new Date(this.props.person.birthDate);
       this.currentBirthDate = moment(d).format('YYYY/MM/DD');
     }else this.currentBirthDate=this.props.person.birthDate;
-
 
     return(
       <div>

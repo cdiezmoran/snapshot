@@ -12,9 +12,9 @@ import ContentAdd from 'material-ui/svg-icons/content/add';
 import TextField from 'material-ui/TextField';
 import PersonComponent from './person';
 import { fetchContactsByPerson } from '../actions/contact.action';
+import {makeTable} from '../helpers/table';
 
 export class PersonsComponent extends React.Component{
-
 	constructor(props){
 		super(props);
 		this.props.dispatch(loadPersons());
@@ -25,68 +25,40 @@ export class PersonsComponent extends React.Component{
 	}
 
 	loadPerson(id){
-		console.log(id);
 		this.props.dispatch(loadPerson(id));
 		this.props.dispatch(fetchContactsByPerson(id));
 	}
 
+	makeEditButton(person) {
+		return (
+			<div>
+				<RaisedButton label="Edit" onTouchTap={this.loadPerson.bind(this, person._id)}  />
+		 		<IconButton iconClassName="muidocs-icon-action-home"
+					 onTouchTap={this.loadPerson.bind(this, person._id)}  />
+			</div>);
+	}
+
+	maybeRenderCurrentPerson() {
+		return this.props.person ? 
+			(<PersonComponent person={this.props.person}/>) :
+			null;
+	}
+
 	render (){
-
-		let rows, rowsPeople, rowsContacts, rowsInteractions;
-
-		if(this.props.people){
-			rows = this.props.people.map( (c, index) => {
-				var birthDate
-				if (c.birthDate) {
-					birthDate = c.birthDate.toString().substring(0, 10)
-				}
-				var row=
-				(<TableRow key={index} onTouchTap={this.loadPerson.bind(this,c._id)} >
-					<TableRowColumn>{c.called}</TableRowColumn>
-					<TableRowColumn>{c.givenName}</TableRowColumn>
-					<TableRowColumn>{c.surName}</TableRowColumn>
-					<TableRowColumn>{c.gender}</TableRowColumn>
-					<TableRowColumn>{birthDate}</TableRowColumn>
-					<TableRowColumn>
-						<RaisedButton label="Edit" onTouchTap={this.loadPerson.bind(this,c._id)}  />
-						 <IconButton iconClassName="muidocs-icon-action-home"
-						 onTouchTap={this.loadPerson.bind(this,c._id)}  />
-					</TableRowColumn>
-				</TableRow>);
-				return row;
-			});
-		}
-
-		let tabs;
-		if(this.props.person){
-			tabs=
-			(<PersonComponent person={this.props.person}/>)
-		}
-
+		console.log("PEOPLE: ", this.props.people);
+		
 		return(
 			<div>
-				<h1> Person
+				<h1> Person </h1>
+				<RaisedButton label="Add" 
+					onTouchTap={this.addPerson.bind(this)} />
 
-					 <RaisedButton label="Add"
-               onTouchTap={this.addPerson.bind(this)} />
-				</h1>
+				{makeTable(
+					this.props.people, 
+					['called', 'givenName', 'surName', 'gender', 'birthDate', 'currentOrganizations', 'action'], 
+					this.makeEditButton.bind(this))}
 
-				<Table>
-					<TableHeader>
-						<TableRow>
-							<TableHeaderColumn>Called</TableHeaderColumn>
-							<TableHeaderColumn>Given Name</TableHeaderColumn>
-							<TableHeaderColumn>Surname</TableHeaderColumn>
-							<TableHeaderColumn>Gender</TableHeaderColumn>
-							<TableHeaderColumn>Birthdate</TableHeaderColumn>
-							<TableHeaderColumn>Organization</TableHeaderColumn>
-						</TableRow>
-					</TableHeader>
-					<TableBody>
-						{rows}
-					</TableBody>
-				</Table>
-				{tabs}
+				{this.maybeRenderCurrentPerson()}
 			</div>
 		)
 	}
