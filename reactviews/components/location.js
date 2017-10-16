@@ -14,7 +14,6 @@ import RaisedButton from 'material-ui/RaisedButton';
 import Chip from 'material-ui/Chip';
 import Contacts from './contacts';
 import Contact from './contact';
-import moment from 'moment';
 // import Autocomplete from 'react-google-autocomplete';
 import PlacesAutocomplete, { geocodeByAddress, getLatLng } from 'react-places-autocomplete'
 
