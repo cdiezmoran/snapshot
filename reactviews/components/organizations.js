@@ -11,6 +11,8 @@ import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
 import TextField from 'material-ui/TextField';
 import OrganizationComponent from './organization';
+import {makeTable} from '../helpers/table';
+
 
 export class OrganizationsComponent extends React.Component{
   
@@ -28,27 +30,16 @@ export class OrganizationsComponent extends React.Component{
     this.props.dispatch(loadOrganization(id));
   }
 
+  makeEditButton(organization) {
+    return (
+      <TableRowColumn>
+        <RaisedButton label="Edit" onTouchTap={this.loadOrganization.bind(this,organization._id)}  />
+         <IconButton iconClassName="muidocs-icon-action-home"
+           onTouchTap={this.loadOrganization.bind(this,organization._id)}  />
+      </TableRowColumn>);
+  }
+
   render(){
-
-    let rows,rowsPeople,rowsInteractions;
-
-    if(this.props.organizations){
-      rows = this.props.organizations.map( (c,index) =>{
-        var row= 
-          (<TableRow key={index}>
-            <TableRowColumn>{c.called}</TableRowColumn>
-            <TableRowColumn>{c.longName}</TableRowColumn>
-            <TableRowColumn>{c.emailSuffix}</TableRowColumn>
-            <TableRowColumn>{c.url}</TableRowColumn>            
-            <TableRowColumn>
-              <RaisedButton label="Edit" onTouchTap={this.loadOrganization.bind(this,c._id)}  />
-              <IconButton iconClassName="material-icons-edit"
-						 onTouchTap={this.loadOrganization.bind(this,c._id)}  />
-            </TableRowColumn>
-          </TableRow>);
-          return row;
-      });
-    }
 
     let tabs;
     if(this.props.organization){
@@ -56,9 +47,6 @@ export class OrganizationsComponent extends React.Component{
         (<OrganizationComponent organization={this.props.organization} />)
     }
 
-
-
-    
     return(
       <div>
         <h1>Organization 
@@ -68,20 +56,11 @@ export class OrganizationsComponent extends React.Component{
           </FloatingActionButton>
 
         </h1>
-        <Table>
-          <TableHeader>
-            <TableRow>
-              <TableHeaderColumn>Called</TableHeaderColumn>
-              <TableHeaderColumn>Long Name</TableHeaderColumn>
-              <TableHeaderColumn>Email Suffix</TableHeaderColumn> 
-              <TableHeaderColumn>URL</TableHeaderColumn>
-              <TableHeaderColumn>Actions</TableHeaderColumn>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {rows}
-          </TableBody>
-        </Table>
+
+        {makeTable(
+          this.props.organizations, 
+          ['called', 'longName', 'emailSuffix', 'url', 'action'], 
+          this.makeEditButton.bind(this))}
 
         {tabs}
 
