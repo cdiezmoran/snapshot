@@ -75,10 +75,10 @@ export function removeContact(id) {
   };
 }
 
-export const ADD_ORGANIZATION_FROM_CONTACT = 'ADD_ORGANIZATION_FROM_CONTACT';
-export function addOrganizationFromContact(organization) {
-	return {
-		type: ADD_ORGANIZATION_FROM_CONTACT,
-		organization: organization
-	};
+export const CHANGE_CONTACT = 'CHANGE_CONTACT';
+export function changeContact(key,value) {
+  return {
+    type: CHANGE_CONTACT,
+    key, value
+  };
 }

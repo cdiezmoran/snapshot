@@ -5,14 +5,22 @@ var Person = require('../models/person.model');
 module.exports = {
 
   getAll: function(req, res, next) {
-    Contact.find(function(err, contacts) {
+    Contact
+    .find()
+    .populate('forPerson')
+    .populate('atOrganization')
+    .exec(function(err, contacts) {
       if (err) return res.status(400).json(err);
 
       res.status(200).json(contacts);
     });
   },
   getAllByPerson: function(req, res, next) {
-    Contact.find({forPerson: req.params.id},function(err, contacts) {
+    Contact
+    .find({forPerson: req.params.id})
+    .populate('forPerson')
+    .populate('atOrganization')
+    .exec(function(err, contacts) {
       if (err) return res.status(400).json(err);
       res.status(200).json(contacts);
     });
@@ -28,7 +36,8 @@ module.exports = {
 
   getOne: function(req, res, next) {
     Contact.findOne({ _id: req.params.id })
-    .populate('people')
+    .populate('forPerson')
+    .populate('atOrganization')
     .exec(function(err, contact) {
       if (err) return res.status(400).json(err);
       if (!contact) return res.status(404).json();
@@ -39,7 +48,8 @@ module.exports = {
 
   find: function(req, res, next) {
     Contact.find({ email: req.params.email })
-    .populate('people')
+    .populate('forPerson')
+    .populate('atOrganization')
     .exec(function(err, contact) {
       if (err) return res.status(400).json(err);
       if (!contact) return res.status(404).json();

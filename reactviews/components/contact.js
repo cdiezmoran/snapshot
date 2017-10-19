@@ -67,13 +67,17 @@ export class ContactComponent extends React.Component {
   }
 
   onChangeFunction(key, input) {
-    this.props.contact[key] = input.target.value;
+    this.props.dispatch(changeContact(key, input.target.value));
   }
 
-  addOrganizationFromPerson(org) {
-    this.props.contact.atOrganization = org;
+  addOrganizationToContact(org) {
+    this.props.dispatch(changeContact("atOrganization", org));
   }
 
+  currentOrganization(contact){
+    if(contact.atOrganization)
+    return contact.atOrganization.called;
+  }
 
   render() {
 
@@ -126,10 +130,11 @@ export class ContactComponent extends React.Component {
             
             <AutoComplete
                 hintText="Organization"
+                searchText={this.currentOrganization(this.props.contact)}
                 dataSource={this.props.findOrganizations}
                 dataSourceConfig={this.dataSourceConfig}
                 onUpdateInput={this.handleUpdateInput.bind(this)}
-                onNewRequest={this.addOrganizationFromContact.bind(this)}
+                onNewRequest={this.addOrganizationToContact.bind(this)}
             />
             
             <RaisedButton label="Save" onTouchTap={this.saveContact.bind(this)} />
