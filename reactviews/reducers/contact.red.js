@@ -38,7 +38,7 @@ function contactReducer(state = initialState, action) {
                 success: prevState => ({ ...prevState, contact: null }),
             });
 
-        case CHANGE_CONTACT:
+        case contactAction.CHANGE_CONTACT:
             let contact = state.contact;
             contact[action.key]=action.value
             return {...state, contact: {...contact}}
