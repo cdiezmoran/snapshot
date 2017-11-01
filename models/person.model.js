@@ -68,4 +68,6 @@ PersonSchema.virtual('fullName').get(function() {
     this.surName = parts[1];
 });
 
+PersonSchema.set('toObject', { virtuals: true });
+
 module.exports = mongoose.model('Person', PersonSchema);

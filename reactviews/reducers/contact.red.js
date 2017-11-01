@@ -20,6 +20,12 @@ function contactReducer(state = initialState, action) {
                 success: prevState => ({ ...prevState, contacts: action.payload, contact: null }),
             });
 
+        case contactAction.FIND_CONTACTS:
+            return handle(state, action, {
+                failure: prevState => ({ ...prevState, error: action.payload }),
+                success: prevState => ({ ...prevState, findContacts: action.payload }),
+            });
+
         case contactAction.ADD_CONTACT:
             return {...state, contact: {
                 forPerson: action.person

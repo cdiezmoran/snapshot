@@ -28,6 +28,14 @@ import LocationsComponent from './locations';
 
 export class InteractionComponent extends React.Component {
 
+  constructor(props) {
+    super(props);
+    this.dataSourceConfig = {
+      text: "forPerson.longName",
+      value: '_id',
+    };
+  }
+
   //validate there are no errors or debug
   handleUpdateInputForContacts(value) {
       if (!value) return;
@@ -74,7 +82,7 @@ export class InteractionComponent extends React.Component {
                  dataSourceConfig={this.dataSourceConfig}
                  onNewRequest={this.addLocationfromInteraction.bind(this)}
                />
-               */}
+               
                <SelectField
                 floatingLabelText="InteractionType"
                 value={this.props.interaction.interactionType}
@@ -88,6 +96,7 @@ export class InteractionComponent extends React.Component {
                 <MenuItem value={"Drinks"} primaryText="Drinks" />
                 <MenuItem value={"Meal"} primaryText="Meal" />       
                </SelectField>
+            */}
             
             {
               //dates still might not work correctly, debug
@@ -118,7 +127,8 @@ let mapStateToProps = (state, props) => {
   return {
     interaction: state.interactionReducer.interaction,
     contacts: state.interactionReducer.contacts,
-    location: state.interactionReducer.location
+    location: state.interactionReducer.location,
+    findContacts: state.contactReducer.findContacts
   }
 };
 

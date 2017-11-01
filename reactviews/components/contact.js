@@ -28,6 +28,7 @@ import {
   removeContact,
   addContact,
   fetchContactsByPerson,
+  changeContact,
   addOrganizationFromContact
 } from '../actions/contact.action.js';
 import AutoComplete from 'material-ui/AutoComplete';
@@ -40,7 +41,7 @@ export class ContactComponent extends React.Component {
   constructor(props) {
     super(props);
     this.dataSourceConfig = {
-      text: 'longName',
+      text: 'fullName',
       value: '_id',
     };
   }
@@ -49,6 +50,10 @@ export class ContactComponent extends React.Component {
   }
 
   saveContact() {
+    if (!this.props.contact.atOrganization) {
+      alert("You need an oarganization to save a contact.") 
+      return
+    }
     if (this.props.contact._id) {
       this.props.dispatch(saveContact(this.props.contact));
     } else {
