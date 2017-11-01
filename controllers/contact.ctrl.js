@@ -22,6 +22,7 @@ module.exports = {
     .populate('atOrganization')
     .exec(function(err, contacts) {
       if (err) return res.status(400).json(err);
+     
       res.status(200).json(contacts);
     });
   },
@@ -50,11 +51,13 @@ module.exports = {
     Contact.find({ email: req.params.email })
     .populate('forPerson')
     .populate('atOrganization')
-    .exec(function(err, contact) {
+    .exec(function(err, contacts) {
       if (err) return res.status(400).json(err);
-      if (!contact) return res.status(404).json();
-
-      res.status(200).json(contact);
+      if (!contacts) return res.status(404).json();
+      contacts = contacts.map(c=>{
+        return c.toObject();
+      });
+      res.status(200).json(contacts);
     });
   },
 

@@ -39,4 +39,5 @@ var ContactSchema = new Schema({
     type: String
   }
 });
+ContactSchema.set('toObject', { virtuals: true });
 module.exports = mongoose.model('Contact', ContactSchema);
