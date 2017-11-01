@@ -8,7 +8,7 @@ interactions: [],
 contacts: [],
 locations: [],
 findInteractions: [],
-interaction: null,
+interaction: {},
 error: null
 }
 

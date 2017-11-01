@@ -2,7 +2,8 @@ import * as contactAction from '../actions/contact.action'
 import { handle } from 'redux-pack';
 const initialState = {
     contacts: [],
-    contact: null
+    contact: null,
+    findContacts: [],
 }
 
 function contactReducer(state = initialState, action) {

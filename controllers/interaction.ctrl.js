@@ -1,4 +1,4 @@
-var Interaction = require('../models/interaction.model');
+var Interaction = require('../models/interaction.model').Interaction;
 
 module.exports = {
 

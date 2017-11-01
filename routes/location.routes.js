@@ -7,6 +7,7 @@ var locationCtrl = require('../controllers/location.ctrl');
 
 router.get('/getAll', locationCtrl.getAll);
 router.get('/:id', locationCtrl.getOne)
+router.get('/find', locationCtrl.find)
 router.post('/new',locationCtrl.createOne);
 router.put('/:id',locationCtrl.updateOne);
 router.delete('/:id',locationCtrl.deleteOne);

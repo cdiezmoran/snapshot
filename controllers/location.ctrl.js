@@ -57,5 +57,16 @@ module.exports = {
       res.status(204).json();
     });
   },
-  
+  find: function(req, res, next) {
+    Location.find({ called: req.params.called })
+
+    .exec(function(err, contacts) {
+      if (err) return res.status(400).json(err);
+      if (!contacts) return res.status(404).json();
+      contacts = contacts.map(c=>{
+        return c.toObject();
+      });
+      res.status(200).json(contacts);
+    });
+  }
 }

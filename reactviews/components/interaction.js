@@ -2,7 +2,8 @@ import React from 'react';
 import {
   connect
 } from 'react-redux'
-import {} from '../actions/interaction.action';
+import {findContacts} from '../actions/contact.action';
+import {findLocation} from '../actions/location.action';
 import {
   Tabs,
   Tab
@@ -27,11 +28,17 @@ import RaisedButton from 'material-ui/RaisedButton';
 import LocationsComponent from './locations';
 
 export class InteractionComponent extends React.Component {
+  
 
   constructor(props) {
     super(props);
-    this.dataSourceConfig = {
-      text: "forPerson.longName",
+    this.dataSourceContactConfig = {
+      text: "forPersonFullName",
+      value: '_id',
+    };
+
+    this.dataSourceLocationConfig = {
+      text: "called",
       value: '_id',
     };
   }
@@ -59,7 +66,20 @@ export class InteractionComponent extends React.Component {
     return new Date(year, month, day);
   }
 
+  addContactToInteraction(contact) {
+    // this.props.dispatch(onChangeFunction("atOrganization", contact));
+  }
+  
+  addLocationToInteraction(location) {
+    this.props.dispatch(onChangeFunction("atLocation", location));
+  }
+
   render() {
+
+    const contactsFound = this.props.findContacts.map(c=>{
+      c.forPersonFullName = c.forPerson.fullName;
+      return c;
+    });
 
     return (
       <div>
@@ -71,18 +91,19 @@ export class InteractionComponent extends React.Component {
                </p>
                <AutoComplete
                  hintText="Contacts"
-                 dataSource={this.props.findContacts}
-                 dataSourceConfig={this.dataSourceConfig}
+                 dataSource={contactsFound}
+                 dataSourceConfig={this.dataSourceContactConfig}
                  onUpdateInput={this.handleUpdateInputForContacts.bind(this)}
-               />
-               {/*
-               <AutoComplete
-                 hintText="Location"
-                 dataSource={this.props.findLocation}
-                 dataSourceConfig={this.dataSourceConfig}
-                 onNewRequest={this.addLocationfromInteraction.bind(this)}
+                 onNewRequest={this.addContactToInteraction.bind(this)}
                />
                
+             {/*  <AutoComplete
+                 hintText="Location"
+                 dataSource={this.props.findLocation}
+                 dataSourceConfig={this.dataSourceLocationConfig}
+                 onNewRequest={this.addLocationToInteraction.bind(this)}
+               />
+             
                <SelectField
                 floatingLabelText="InteractionType"
                 value={this.props.interaction.interactionType}
@@ -96,7 +117,7 @@ export class InteractionComponent extends React.Component {
                 <MenuItem value={"Drinks"} primaryText="Drinks" />
                 <MenuItem value={"Meal"} primaryText="Meal" />       
                </SelectField>
-            */}
+           */}
             
             {
               //dates still might not work correctly, debug
@@ -128,7 +149,8 @@ let mapStateToProps = (state, props) => {
     interaction: state.interactionReducer.interaction,
     contacts: state.interactionReducer.contacts,
     location: state.interactionReducer.location,
-    findContacts: state.contactReducer.findContacts
+    findContacts: state.contactReducer.findContacts,
+    findLocations: state.locationReducer.findLocations
   }
 };
 

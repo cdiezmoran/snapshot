@@ -61,3 +61,11 @@ export function addLocation() {
   };
 }
 
+export const FIND_LOCATIONS = 'FIND_LOCATIONS';
+export function findLocations(called="") {
+  return {
+    type: FIND_LOCATIONS,
+    promise: fetch(`/location/find?called=${called}`).then(response => { return  response.json() })
+  };
+}
+
