@@ -1,26 +1,19 @@
-Tasks on June 25, 2017
-Relate checkboxes in People view to the contact/info on display in bottom dynamically
-Handle start and end date for contacts with the date handler
-Debug birthdate for Create Person
-Load Organization into Contact view component via the OrganizationID
+Tasks on November 6, 2017
+1. Move the date handler function to a helper. 
+2. Debug birthdate for Create Person
+3. Implement the Location data model so that the new location document stores
+basic Google Maps API information, such as Lat, Long, and mailing address.  
 
 
 Goals for June 7, Pair Programming with Carlos Diez:
 1. Load People associated with an Organization in the People Tab.
 2. Add People associate with an Organization from the People Tab.
 
-3. Load a Contacts tab assocaited with a Person from the People Page
-
 
 Refactoring:
-
-Implement the API using the Node filesystem rather than a database.  
-
-Use the Object Prototype to create objects consistently.  
-
-Create an API app and seperate it from the React app.  
-
-Implement a testing system and get to 100% test coverage on the API.
+1. Implement the refactor "makeTable" as completed for components/organizations.js 
+2. Create an API app and seperate it from the React app.  
+3. Implement a testing system and get to 100% test coverage on the API.
 
 
 

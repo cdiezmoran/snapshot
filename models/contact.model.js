@@ -1,6 +1,12 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
+/* Contacts can be thought of as "ContactCards" or business cards, 
+a data model for contact information that belongs to a Person. 
+A contact can be current or not current, based on whether or not there is an 
+endDate. 
+*/
+
 var ContactSchema = new Schema({
   forPerson: {
       type: mongoose.Schema.Types.ObjectId,

@@ -1,6 +1,11 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
+/* Locations serve as the place where interactions occur, as well as 
+the address of the contact. Organizations can have many locations, representing 
+the fact that many organizations have multiple offices beyond a headquarters.  
+*/
+
 /* Sample code from Complete NodeJS course on Udemy:
 const request = require('request');
 
