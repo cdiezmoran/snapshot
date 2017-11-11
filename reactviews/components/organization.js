@@ -131,21 +131,14 @@ export class OrganizationComponent extends React.Component {
               </Table>
             </div>
           </Tab>
-
-
           <Tab label="Locations" >
             <div>
               <LocationsComponent />
             </div>
           </Tab>
-
-
           <Tab label="Interactions" value="interactions">
-
-
           </Tab>
         </Tabs>
-
       </div>
     )
   }

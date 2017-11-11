@@ -12,83 +12,58 @@ import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import LocationsComponent from './locations';
 import InteractionComponent from './interaction';
+import {makeTable} from '../helpers/table';
 
 export class InteractionsComponent extends React.Component{
+  constructor(props){
+    super(props);
+    this.props.dispatch(loadInteractions());
+  }
 
-    constructor(props){
-      super(props);
-      this.props.dispatch(loadInteractions());
-    }
+  addInteraction(){
+    this.props.dispatch(addInteraction());
+  }
 
-    addInteraction(){
-      this.props.dispatch(addInteraction());
-    }
+  loadInteraction(id){
+    this.props.dispatch(loadInteraction(id));
+  }
 
-    
-    loadInteraction(id){
-      this.props.dispatch(loadInteraction(id));
-    }
+  makeEditButton(interaction) {
+    return (
+      <TableRowColumn>
+        <RaisedButton className="edit-button" label="Edit" onTouchTap={this.loadInteraction.bind(this, interaction._id)}  />
+         <IconButton iconClassName="muidocs-icon-action-home"
+           onTouchTap={this.loadInteraction.bind(this, interaction._id)}  />
+      </TableRowColumn>);
+  }
 
-    render(){
+  renderTable() {
+    return makeTable(
+      this.props.interactions,
+      ['date', 'interactionType', 'people', 'location'],
+      this.makeEditButton.bind(this)
+    );
+  }
 
-      let rows;
+  render(){
+    const tabs = this.props.interaction ?
+      <InteractionComponent interaction={this.props.interaction} /> : null;
 
-        if(this.props.interactions){
-            rows = this.props.interactions.map( (c,index) =>{
-                //need to create a function in the model to represent date and duration
-              var row= 
-                (<TableRow key={index}>
-                  <TableRowColumn>{c.date}</TableRowColumn>
-                  <TableRowColumn>{c.interactionType}</TableRowColumn>
-                  <TableRowColumn>{c.people}</TableRowColumn>
-                  <TableRowColumn>{c.location}</TableRowColumn>            
-                  <TableRowColumn>
-                    <RaisedButton label="Edit" onTouchTap={this.loadInteraction.bind(this,c._id)}  />
-                    <IconButton iconClassName="material-icons-edit"
-                               onTouchTap={this.loadInteraction.bind(this,c._id)}  />
-                  </TableRowColumn>
-                </TableRow>);
-                return row;
-            });
-          }
-
-    let tabs;
-    if(this.props.interaction){
-      tabs=
-        (<InteractionComponent interaction={this.props.interaction} />)
-    }
-
-          return(
-            <div>
-              <h1> Interaction
-                <FloatingActionButton
-                     onTouchTap={this.addInteraction.bind(this)}>
-                     <ContentAdd /> 
-                </FloatingActionButton>
-              </h1>
-      
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHeaderColumn>Date</TableHeaderColumn>
-                    <TableHeaderColumn>Type</TableHeaderColumn>
-                    <TableHeaderColumn>People</TableHeaderColumn>
-                    <TableHeaderColumn>Location</TableHeaderColumn>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {rows}
-                </TableBody>
-              </Table>
-              {tabs}
-            </div>
-          )
-
-    }
-
+    return(
+      <div>
+        <h1>Interaction test</h1>
+        <RaisedButton
+          className="raised-button"
+          label="Add"
+          onTouchTap={this.addInteraction.bind(this)} />
+        {this.renderTable()}
+        {tabs}
+      </div>
+    )
+  }
 }
 
-let mapStateToProps = (state, props) => {
+const mapStateToProps = (state, props) => {
   return {
     interactions: state.interactionReducer.interactions,
     interaction: state.interactionReducer.interaction

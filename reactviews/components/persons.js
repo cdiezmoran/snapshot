@@ -5,7 +5,6 @@ import {Tabs, Tab} from 'material-ui/Tabs';
 import FontIcon from 'material-ui/FontIcon';
 import Slider from 'material-ui/Slider';
 import RaisedButton from 'material-ui/RaisedButton';
-import FloatingActionButton from 'material-ui/FloatingActionButton';
 import IconButton from 'material-ui/IconButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
 import TextField from 'material-ui/TextField';
@@ -44,27 +43,30 @@ export class PersonsComponent extends React.Component{
 		) : null;
 	}
 
-	render() {
-		console.log("PEOPLE: ", this.props.people);
+	renderTable() {
+		return makeTable(
+			this.props.people,
+			['called', 'givenName', 'surName', 'gender', 'birthDate', 'currentOrganizations', 'action'],
+			this.makeEditButton.bind(this)
+		);
+	}
 
+	render() {
 		return(
 			<div>
-				<h1> Person </h1>
-				<RaisedButton label="Add"
+				<h1>Person</h1>
+				<RaisedButton
+					className="raised-button"
+					label="Add"
 					onTouchTap={this.addPerson.bind(this)} />
-
-				{makeTable(
-					this.props.people,
-					['called', 'givenName', 'surName', 'gender', 'birthDate', 'currentOrganizations', 'action'],
-					this.makeEditButton.bind(this))}
-
+				{this.renderTable()}
 				{this.maybeRenderCurrentPerson()}
 			</div>
 		)
 	}
 }
 
-let mapStateToProps = (state, props) => {
+const mapStateToProps = (state, props) => {
   return {
     people: state.personReducer.people,
     person: state.personReducer.person

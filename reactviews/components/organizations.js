@@ -7,7 +7,6 @@ import RaisedButton from 'material-ui/RaisedButton';
 import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn} from 'material-ui/Table';
 import Slider from 'material-ui/Slider';
 import IconButton from 'material-ui/IconButton';
-import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
 import TextField from 'material-ui/TextField';
 import OrganizationComponent from './organization';
@@ -31,7 +30,7 @@ export class OrganizationsComponent extends React.Component{
   makeEditButton(organization) {
     return (
       <TableRowColumn>
-        <RaisedButton className="edit-button" label="Edit" onTouchTap={this.loadOrganization.bind(this,organization._id)}  />
+        <RaisedButton className="edit-button" label="Edit" onTouchTap={this.loadOrganization.bind(this, organization._id)}  />
          <IconButton iconClassName="muidocs-icon-action-home"
            onTouchTap={this.loadOrganization.bind(this,organization._id)}  />
       </TableRowColumn>);
@@ -43,26 +42,30 @@ export class OrganizationsComponent extends React.Component{
       null;
   }
 
+  renderTable() {
+    return makeTable(
+      this.props.organizations,
+      ['called', 'longName', 'emailSuffix', 'url', 'action'],
+      this.makeEditButton.bind(this)
+    );
+  }
+
   render(){
     return(
       <div>
         <h1>Organization</h1>
-        <FloatingActionButton onTouchTap={this.addOrganization.bind(this)}>
-        <ContentAdd />
-        </FloatingActionButton>
-
-        {makeTable(
-          this.props.organizations,
-          ['called', 'longName', 'emailSuffix', 'url', 'action'],
-          this.makeEditButton.bind(this))}
-
+        <RaisedButton
+          className="raised-button"
+          label="Add"
+          onTouchTap={this.addOrganization.bind(this)} />
+        {this.renderTable()}
         {this.maybeRenderCurrentOrganization()}
       </div>
     )
   }
 }
 
-let mapStateToProps = (state, props) => {
+const mapStateToProps = (state, props) => {
     return {
       organizations: state.organizationReducer.organizations,
       organization: state.organizationReducer.organization
