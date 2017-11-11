@@ -10,3 +10,7 @@ a {
 h1 {
 	color: red;
 }
+
+#app {
+	background: red;
+}

@@ -1,7 +1,5 @@
-import React from 'react';
-import {
-  connect
-} from 'react-redux'
+this.addOrganizationFromPerson.bind(this)import React from 'react';
+import { connect } from 'react-redux'
 import {findContacts} from '../actions/contact.action';
 import {findLocation} from '../actions/location.action';
 import {
@@ -28,8 +26,6 @@ import RaisedButton from 'material-ui/RaisedButton';
 import LocationsComponent from './locations';
 
 export class InteractionComponent extends React.Component {
-  
-
   constructor(props) {
     super(props);
     this.dataSourceContactConfig = {
@@ -69,13 +65,12 @@ export class InteractionComponent extends React.Component {
   addContactToInteraction(contact) {
     // this.props.dispatch(onChangeFunction("atOrganization", contact));
   }
-  
+
   addLocationToInteraction(location) {
     this.props.dispatch(onChangeFunction("atLocation", location));
   }
 
   render() {
-
     const contactsFound = this.props.findContacts.map(c=>{
       c.forPersonFullName = c.forPerson.fullName;
       return c;
@@ -96,29 +91,29 @@ export class InteractionComponent extends React.Component {
                  onUpdateInput={this.handleUpdateInputForContacts.bind(this)}
                  onNewRequest={this.addContactToInteraction.bind(this)}
                />
-               
+
              {/*  <AutoComplete
                  hintText="Location"
                  dataSource={this.props.findLocation}
                  dataSourceConfig={this.dataSourceLocationConfig}
                  onNewRequest={this.addLocationToInteraction.bind(this)}
                />
-             
+
                <SelectField
                 floatingLabelText="InteractionType"
                 value={this.props.interaction.interactionType}
                 onChange={this.onChangeFunction.bind(this, "interactionType")}
                >
                 <MenuItem value={"Email"} primaryText="Email" />
-                <MenuItem value={"Call"} primaryText="Call" /> 
-                <MenuItem value={"WebMeeting"} primaryText="WebMeeting" /> 
+                <MenuItem value={"Call"} primaryText="Call" />
+                <MenuItem value={"WebMeeting"} primaryText="WebMeeting" />
                 <MenuItem value={"RanInto"} primaryText="RanInto" />
                 <MenuItem value={"Meeting"} primaryText="Meeting" />
                 <MenuItem value={"Drinks"} primaryText="Drinks" />
-                <MenuItem value={"Meal"} primaryText="Meal" />       
+                <MenuItem value={"Meal"} primaryText="Meal" />
                </SelectField>
            */}
-            
+
             {
               //dates still might not work correctly, debug
               /*
@@ -126,14 +121,14 @@ export class InteractionComponent extends React.Component {
                value={this.startTime}
                onChange={this.onChangeFunction.bind(this, "startTime")}
                floatingLabelText="StartTime" />
-               
+
                <TextField
                value={this.endTime}
                onChange={this.onChangeFunction.bind(this, "endTime")}
                floatingLabelText="EndTime" />
                 <RaisedButton label="Save"
                 onTouchTap={this.saveInteraction.bind(this)} />
-               */  
+               */
              }
              </form>
            </Tab>

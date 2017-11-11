@@ -21,7 +21,7 @@ export class Contacts extends Component{
         let rows;
         if(this.props.contacts){
             rows = this.props.contacts.map( (c,index) =>{
-                var row= 
+                var row=
                 (<TableRow key={index}>
                 <TableRowColumn>{c.forPerson.givenName}</TableRowColumn>
                 <TableRowColumn>{c.title}</TableRowColumn>
@@ -29,9 +29,9 @@ export class Contacts extends Component{
                 <TableRowColumn>{c.email}</TableRowColumn>
                 <TableRowColumn>{c.startDate}</TableRowColumn>
                 <TableRowColumn>{c.mobile}</TableRowColumn>
-                <TableRowColumn>{c.endDate}</TableRowColumn>      
+                <TableRowColumn>{c.endDate}</TableRowColumn>
                     <TableRowColumn>
-                    <RaisedButton label="Edit" onTouchTap={this.loadContact.bind(this,c._id)}  />
+                    <RaisedButton className="edit-button" label="Edit" onTouchTap={this.loadContact.bind(this,c._id)}  />
                     <IconButton iconClassName="material-icons-edit"
                                 onTouchTap={this.loadContact.bind(this,c._id)}  />
                     </TableRowColumn>

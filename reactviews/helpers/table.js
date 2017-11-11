@@ -1,23 +1,6 @@
 import React from 'react';
+import { headerMap } from './headerMap';
 import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn} from 'material-ui/Table';
-
-
-// Mapping key to value
-const headerMap = {
-  // organizationLocations
-  'called': 'Name',
-  'longName': 'Long Name',
-  'givenName': 'Given Name',
-  'surName': 'Surname',
-  'gender': 'Gender',
-  'birthDate': 'Birthdate',
-  'organization': 'Organization',
-  'currentOrganizations': 'Current Organizations',
-  'emailSuffix': 'Email Suffix',
-  'action': 'Action',
-  'url': 'URL',
-  'address': 'Address'
-}
 
 const makeTable = (rowObjs, headerWhitelist, editButtonCreationFunction, rowTapFunction) => {
   // rowObjs is something like an organizationLocations
@@ -35,7 +18,8 @@ const makeTable = (rowObjs, headerWhitelist, editButtonCreationFunction, rowTapF
 
       let cellContents = row[header];
 
-      if(Array.isArray(row[header])) {
+      if(Array.isArray(row[header]) && row[header][0]) {
+        console.log(row[header]);
         cellContents = row[header].map(obj=>obj.called).join(', ');
       } else if (row[header].called) {
         cellContents = row[header].called;
@@ -43,7 +27,7 @@ const makeTable = (rowObjs, headerWhitelist, editButtonCreationFunction, rowTapF
 
       return (<TableRowColumn key={headerIndex}>{cellContents}</TableRowColumn>)
     });
-    
+
     return (
       <TableRow key={rowIndex} onTouchTap={rowTapFunction ? rowTapFunction(row):null}>
         {renderedColumns}
@@ -52,18 +36,19 @@ const makeTable = (rowObjs, headerWhitelist, editButtonCreationFunction, rowTapF
     );
   }) : null;
 
-  return (<Table>
-    <TableHeader>
-      <TableRow>
-        {renderedHeaders}
-      </TableRow>
-    </TableHeader>
-    <TableBody>
-      {renderedRows}
-    </TableBody>
-  </Table>);
+  return (
+    <Table>
+      <TableHeader>
+        <TableRow>
+          testing
+          {renderedHeaders}
+        </TableRow>
+      </TableHeader>
+      <TableBody>
+        {renderedRows}
+      </TableBody>
+    </Table>
+  );
 }
 
-export {
-  makeTable
-};
+export { makeTable };

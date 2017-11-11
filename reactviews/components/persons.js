@@ -3,7 +3,6 @@ import {connect} from 'react-redux'
 import { savePerson,loadPersons, loadPerson, addPerson } from '../actions/person.action';
 import {Tabs, Tab} from 'material-ui/Tabs';
 import FontIcon from 'material-ui/FontIcon';
-import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn} from 'material-ui/Table';
 import Slider from 'material-ui/Slider';
 import RaisedButton from 'material-ui/RaisedButton';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
@@ -34,28 +33,29 @@ export class PersonsComponent extends React.Component{
 			<div>
 				<RaisedButton label="Edit" onTouchTap={this.loadPerson.bind(this, person._id)}  />
 		 		<IconButton iconClassName="muidocs-icon-action-home"
-					 onTouchTap={this.loadPerson.bind(this, person._id)}  />
-			</div>);
+					 onTouchTap={this.loadPerson.bind(this, person._id)} />
+			</div>
+		);
 	}
 
 	maybeRenderCurrentPerson() {
-		return this.props.person ? 
-			(<PersonComponent person={this.props.person}/>) :
-			null;
+		return this.props.person ? (
+			<PersonComponent person={this.props.person}/>
+		) : null;
 	}
 
-	render (){
+	render() {
 		console.log("PEOPLE: ", this.props.people);
-		
+
 		return(
 			<div>
 				<h1> Person </h1>
-				<RaisedButton label="Add" 
+				<RaisedButton label="Add"
 					onTouchTap={this.addPerson.bind(this)} />
 
 				{makeTable(
-					this.props.people, 
-					['called', 'givenName', 'surName', 'gender', 'birthDate', 'currentOrganizations', 'action'], 
+					this.props.people,
+					['called', 'givenName', 'surName', 'gender', 'birthDate', 'currentOrganizations', 'action'],
 					this.makeEditButton.bind(this))}
 
 				{this.maybeRenderCurrentPerson()}
@@ -65,10 +65,10 @@ export class PersonsComponent extends React.Component{
 }
 
 let mapStateToProps = (state, props) => {
-    return {
-      people: state.personReducer.people,
-      person: state.personReducer.person
-    }
+  return {
+    people: state.personReducer.people,
+    person: state.personReducer.person
+  }
 };
 
 export default connect(mapStateToProps)(PersonsComponent);

@@ -1,11 +1,6 @@
 import React from 'react';
-import {
-  connect
-} from 'react-redux'
-import {
-  Tabs,
-  Tab
-} from 'material-ui/Tabs';
+import { connect } from 'react-redux'
+import { Tabs, Tab } from 'material-ui/Tabs';
 import FontIcon from 'material-ui/FontIcon';
 import {
   Table,
@@ -32,12 +27,9 @@ import {
   addOrganizationFromContact
 } from '../actions/contact.action.js';
 import AutoComplete from 'material-ui/AutoComplete';
-import {
-  findOrganizations
-} from '../actions/organization.action.js';
+import { findOrganization } from '../actions/organization.action.js';
 
 export class ContactComponent extends React.Component {
-
   constructor(props) {
     super(props);
     this.dataSourceConfig = {
@@ -45,13 +37,14 @@ export class ContactComponent extends React.Component {
       value: '_id',
     };
   }
+
   addContact() {
     this.props.dispatch(addContact(this.props.person._id));
   }
 
   saveContact() {
     if (!this.props.contact.atOrganization) {
-      alert("You need an oarganization to save a contact.") 
+      alert("You need an oarganization to save a contact.")
       return
     }
     if (this.props.contact._id) {
@@ -85,9 +78,7 @@ export class ContactComponent extends React.Component {
   }
 
   render() {
-
     let contact;
-
     if (this.props.contact) {
       contact = (
         <div>
@@ -96,8 +87,6 @@ export class ContactComponent extends React.Component {
                 value={this.props.contact.title}
                 floatingLabelText="Title"
               />
-
-
             <TextField
                 onChange={this.onChangeFunction.bind(this, "email")}
                 value={this.props.contact.email}
@@ -114,25 +103,25 @@ export class ContactComponent extends React.Component {
                 value={this.props.contact.startDate}
                 floatingLabelText="Start Date"
               />
-           
+
             <TextField
                 onChange={this.onChangeFunction.bind(this, "endDate")}
                 value={this.props.contact.endDate}
                 floatingLabelText="End Date"
               />
-            
+
             <TextField
                 onChange={this.onChangeFunction.bind(this, "directLine")}
                 value={this.props.contact.directLine}
                 floatingLabelText="Direct Line"
               />
-            
+
             <TextField
                 onChange={this.onChangeFunction.bind(this, "officeLine")}
                 value={this.props.contact.officeLine}
                 floatingLabelText="Office Line"
               />
-            
+
             <AutoComplete
                 hintText="Organization"
                 searchText={this.currentOrganization(this.props.contact)}
@@ -141,24 +130,20 @@ export class ContactComponent extends React.Component {
                 onUpdateInput={this.handleUpdateInput.bind(this)}
                 onNewRequest={this.addOrganizationToContact.bind(this)}
             />
-            
+
             <RaisedButton label="Save" onTouchTap={this.saveContact.bind(this)} />
             <RaisedButton label="Remove" onTouchTap={this.removeContact.bind(this)} />
-
         </div>
       );
     }
 
     return (
       <div>
-
-            <FloatingActionButton onTouchTap={this.addContact.bind(this)} >
-             <ContentAdd />
-             </FloatingActionButton>
-             
-             {contact}
-           
-        </div>
+        <FloatingActionButton onTouchTap={this.addContact.bind(this)} >
+           <ContentAdd />
+        </FloatingActionButton>
+        {contact}
+      </div>
     );
   }
 }
