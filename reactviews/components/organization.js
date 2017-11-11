@@ -55,9 +55,10 @@ export class OrganizationComponent extends React.Component {
       'url': 'URL'
     };
 
-    return fields.map(field => {
+    return fields.map((field, idx) => {
       return (
         <TextField
+          key={idx}
           onChange={this.onChangeFunction.bind(this, field)}
           value={this.props.organization[field]}
           floatingLabelText={fieldNameMap[field]}
@@ -67,7 +68,6 @@ export class OrganizationComponent extends React.Component {
   }
 
   render() {
-
     let rows, rowsPeople, rowsInteractions, rowsLocations;
 
     if (this.props.contacts) {
@@ -81,10 +81,7 @@ export class OrganizationComponent extends React.Component {
             <TableRowColumn>{c.startDate}</TableRowColumn>
             <TableRowColumn>{c.endDate}</TableRowColumn>
             <TableRowColumn>
-
-              <FontIcon
-                  className="muidocs-icon-edit"
-                />
+              <FontIcon className="muidocs-icon-edit" />
             </TableRowColumn>
           </TableRow>
         );
@@ -98,10 +95,7 @@ export class OrganizationComponent extends React.Component {
             <TableRowColumn>{c.called}</TableRowColumn>
             <TableRowColumn>{c.url}</TableRowColumn>
             <TableRowColumn>
-
-              <FontIcon
-                  className="muidocs-icon-edit"
-                />
+              <FontIcon className="muidocs-icon-edit" />
             </TableRowColumn>
           </TableRow>
         );
@@ -110,19 +104,14 @@ export class OrganizationComponent extends React.Component {
 
     if (!this.props.organization) return;
 
-
     return (
-
-
       <div>
        <Tabs>
           <Tab label="Info" >
             <div>
-              <p>
-                All the general info about the organization
-              </p>
+              <p>All the general info about the organization</p>
               {this.renderTextFields(['called', 'longName', 'emailSuffix', 'url'])}
-               <RaisedButton label="Save" 
+              <RaisedButton label="Save"
                onTouchTap={this.saveOrganization.bind(this)} />
             </div>
           </Tab>
@@ -152,7 +141,7 @@ export class OrganizationComponent extends React.Component {
 
 
           <Tab label="Interactions" value="interactions">
-          
+
 
           </Tab>
         </Tabs>

@@ -23,7 +23,7 @@ export class OrganizationsComponent extends React.Component{
     this.props.dispatch(addOrganization());
   }
 
-  
+
   loadOrganization(id){
     this.props.dispatch(loadOrganization(id));
   }
@@ -52,10 +52,10 @@ export class OrganizationsComponent extends React.Component{
         </FloatingActionButton>
 
         {makeTable(
-          this.props.organizations, 
-          ['called', 'longName', 'emailSuffix', 'url', 'action'], 
+          this.props.organizations,
+          ['called', 'longName', 'emailSuffix', 'url', 'action'],
           this.makeEditButton.bind(this))}
-        
+
         {this.maybeRenderCurrentOrganization()}
       </div>
     )

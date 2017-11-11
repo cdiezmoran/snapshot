@@ -1,12 +1,16 @@
 export const FETCH_CONTACTS_BY_PERSON = 'FETCH_CONTACTS_BY_PERSON'
+export const CREATE_CONTACT = 'CREATE_CONTACT';
+export const LOAD_INTERACTIONS = 'LOAD_INTERACTIONS';
+export const REMOVE_CONTACT = 'REMOVE_CONTACT';
+
+
 export const FIND_CONTACTS = 'FIND_CONTACTS';
 export const LOAD_CONTACT = 'LOAD_CONTACT';
-export const ADD_CONTACT = 'ADD_CONTACT';
-export const CREATE_CONTACT = 'CREATE_CONTACT';
 export const SAVE_CONTACT = 'SAVE_CONTACT';
-export const REMOVE_CONTACT = 'REMOVE_CONTACT';
+export const ADD_CONTACT = 'ADD_CONTACT';
 export const CHANGE_CONTACT = 'CHANGE_CONTACT';
-export const LOAD_INTERACTIONS = 'LOAD_INTERACTIONS';
+
+export const FIND_INTERACTIONS = 'FIND_INTERACTIONS';
 export const LOAD_INTERACTION = 'LOAD_INTERACTION';
 export const SAVE_INTERACTION = 'SAVE_INTERACTION';
 export const ADD_INTERACTION = 'ADD_INTERACTION';
@@ -14,8 +18,12 @@ export const CHANGE_INTERACTION = 'CHANGE_INTERACTION';
 
 const data_types = ['CONTACT', 'INTERACTION'];
 const action_types = ['FIND', 'LOAD', 'ADD', 'CREATE', 'SAVE', 'REMOVE', 'CHANGE']
-
-
+const actions = {};
+data_types.forEach(data_type => {
+  action_types.forEach(action_type => {
+    actions[data_type][action_type] = ''
+  });
+});
 
 export function loadInteractions() {
   return {

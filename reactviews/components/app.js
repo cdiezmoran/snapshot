@@ -11,44 +11,27 @@ export class SnapshotApp extends React.Component{
     super(props);
     injectTapEventPlugin();
     this.state = {open: false};
-    this.handleToggle=this.handleToggle.bind(this);
-    this.handleOrganization=this.handleOrganization.bind(this);
-    this.handlePerson=this.handlePerson.bind(this);
-    this.handleInteraction=this.handleInteraction.bind(this);
   }
 
-  handleToggle(){ 
-    this.setState({open: !this.state.open});
+  handleChange(type, e) {
+    this.setState({ open: !this.state.open });
+    if (type) this.props.history.push(`/${type}`)
   }
-  handleOrganization(){ 
-      this.setState({open: !this.state.open}); 
-      this.props.history.push('/organization');
-  }
-  handlePerson(){ 
-      this.setState({open: !this.state.open});
-      this.props.history.push('/person');
-  }
-  handleInteraction(){ 
-    this.setState({open: !this.state.open});
-    this.props.history.push('/interaction');
-  }
-  
 
-  render(){ 
-    
+  render(){
     return(
       <MuiThemeProvider>
         <div>
           <AppBar
             title="Snapshot App"
-            onLeftIconButtonTouchTap={this.handleToggle}
+            onLeftIconButtonTouchTap={this.handleChange.bind(this, '')}
             iconClassNameRight="muidocs-icon-navigation-expand-more"
           />
           <Drawer open={this.state.open}>
-            <MenuItem onTouchTap={this.handleOrganization}>Organizations</MenuItem>
-            <MenuItem onTouchTap={this.handlePerson}>People</MenuItem>
-            <MenuItem onTouchTap={this.handleInteraction}>Interactions</MenuItem>
-            <MenuItem onTouchTap={this.handleToggle}>Close</MenuItem>
+            <MenuItem onTouchTap={this.handleChange.bind(this, 'organization')}>Organizations</MenuItem>
+            <MenuItem onTouchTap={this.handleChange.bind(this, 'person')}>People</MenuItem>
+            <MenuItem onTouchTap={this.handleChange.bind(this, 'interaction')}>Interactions</MenuItem>
+            <MenuItem onTouchTap={this.handleChange.bind(this, '')}>Close</MenuItem>
           </Drawer>
           <div className="container">
             {this.props.children}

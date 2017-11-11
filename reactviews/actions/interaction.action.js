@@ -27,7 +27,7 @@ export function saveInteraction(data) {
   return {
     type: SAVE_INTERACTION,
     promise: fetch(`/interaction/${data._id}`,{
-      method: 'PUT', 
+      method: 'PUT',
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
@@ -47,7 +47,7 @@ export function createInteraction(data) {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
       },
-      method: 'POST', 
+      method: 'POST',
       body: JSON.stringify( data )
     })
     .then(response => { return  response.json() })
