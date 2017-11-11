@@ -47,7 +47,7 @@ export class PersonComponent extends React.Component{
   onSelectChangeFunction(key, payload, selectedIndex){
     this.props.dispatch(changePerson(key,payload.target.textContent));
   }
-  
+
   //add getDateFromString to Helpers
   getDateFromString(string) {
     let year = parseInt(string.substring(0, 4));
@@ -186,12 +186,12 @@ export class PersonComponent extends React.Component{
                onChange={this.onSelectChangeFunction.bind(this, "gender")}
               >
                 <MenuItem value={"Male"} primaryText="Male" />
-                <MenuItem value={"Female"} primaryText="Female" /> 
-                <MenuItem value={"Other"} primaryText="Other" /> 
+                <MenuItem value={"Female"} primaryText="Female" />
+                <MenuItem value={"Other"} primaryText="Other" />
               </SelectField>
               <br />
 
-           
+
               <TextField
               value={this.currentBirthDate}
               onChange={this.onChangeFunction.bind(this, "birthDate")}
@@ -219,14 +219,14 @@ export class PersonComponent extends React.Component{
 
 
           <Tab label="Contacts" value="contact">
-           
+
             <Contact person={this.props.person} />
 
             <Contacts  contacts={this.props.contacts}/>
           </Tab>
 
           <Tab label="Interactions" value="interactions">
-           
+
 
           </Tab>
         </Tabs>

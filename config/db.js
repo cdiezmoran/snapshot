@@ -5,7 +5,7 @@ var mongoUrl = process.env.MONGO_URL || 'mongodb://localhost/snapshotTest';
 module.exports = function(app) {
   mongoose.connect(mongoUrl, {
     mongoose: {
-      safe: true
+      safe: true,
     }
   }, function(err) {
     if (err) {
