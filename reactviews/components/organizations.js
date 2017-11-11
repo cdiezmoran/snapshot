@@ -31,7 +31,7 @@ export class OrganizationsComponent extends React.Component{
   makeEditButton(organization) {
     return (
       <TableRowColumn>
-        <RaisedButton label="Edit" onTouchTap={this.loadOrganization.bind(this,organization._id)}  />
+        <RaisedButton className="edit-button" label="Edit" onTouchTap={this.loadOrganization.bind(this,organization._id)}  />
          <IconButton iconClassName="muidocs-icon-action-home"
            onTouchTap={this.loadOrganization.bind(this,organization._id)}  />
       </TableRowColumn>);

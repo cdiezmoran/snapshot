@@ -1,4 +1,4 @@
-this.addOrganizationFromPerson.bind(this)import React from 'react';
+import React from 'react';
 import { connect } from 'react-redux'
 import {findContacts} from '../actions/contact.action';
 import {findLocation} from '../actions/location.action';

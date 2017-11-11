@@ -31,7 +31,7 @@ export class Contacts extends Component{
                 <TableRowColumn>{c.mobile}</TableRowColumn>
                 <TableRowColumn>{c.endDate}</TableRowColumn>
                     <TableRowColumn>
-                    <RaisedButton className="edit-button" label="Edit" onTouchTap={this.loadContact.bind(this,c._id)}  />
+                    <RaisedButton label="Edit" onTouchTap={this.loadContact.bind(this,c._id)}  />
                     <IconButton iconClassName="material-icons-edit"
                                 onTouchTap={this.loadContact.bind(this,c._id)}  />
                     </TableRowColumn>

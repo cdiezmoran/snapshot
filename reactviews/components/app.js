@@ -6,6 +6,7 @@ import AppBar from 'material-ui/AppBar';
 import Drawer from 'material-ui/Drawer';
 import MenuItem from 'material-ui/MenuItem';
 import RaisedButton from 'material-ui/RaisedButton';
+import './styles.css';
 
 export class SnapshotApp extends React.Component{
   constructor(props){
