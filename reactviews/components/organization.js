@@ -1,7 +1,5 @@
 import React from 'react';
-import {
-  connect
-} from 'react-redux'
+import { connect } from 'react-redux'
 import {
   saveOrganization,
   createOrganization,
@@ -10,10 +8,7 @@ import {
   loadOrganization,
   addOrganization
 } from '../actions/organization.action';
-import {
-  Tabs,
-  Tab
-} from 'material-ui/Tabs';
+import { Tabs, Tab } from 'material-ui/Tabs';
 import FontIcon from 'material-ui/FontIcon';
 import {
   Table,
@@ -23,12 +18,10 @@ import {
   TableRow,
   TableRowColumn
 } from 'material-ui/Table';
-import Slider from 'material-ui/Slider';
-import FloatingActionButton from 'material-ui/FloatingActionButton';
-import ContentAdd from 'material-ui/svg-icons/content/add';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import LocationsComponent from './locations';
+import { headerMap } from '../helpers/headerMap';
 
 export class OrganizationComponent extends React.Component {
   constructor(props) {
@@ -40,83 +33,74 @@ export class OrganizationComponent extends React.Component {
   }
 
   saveOrganization() {
-    if (this.props.organization._id)
+    if (this.props.organization._id) {
       this.props.dispatch(saveOrganization(this.props.organization));
-    else this.props.dispatch(createOrganization(this.props.organization));
-
+    } else {
+      this.props.dispatch(createOrganization(this.props.organization));
+    }
     this.props.dispatch(loadOrganizations());
   }
 
   renderTextFields(fields) {
-    const fieldNameMap = {
-      'called': 'Called',
-      'longName': 'Long name',
-      'emailSuffix': 'Email suffix',
-      'url': 'URL'
-    };
-
     return fields.map((field, idx) => {
       return (
-        <TextField
-          key={idx}
-          onChange={this.onChangeFunction.bind(this, field)}
-          value={this.props.organization[field]}
-          floatingLabelText={fieldNameMap[field]}
-        />
+        <span>
+          <TextField
+            key={idx}
+            onChange={this.onChangeFunction.bind(this, field)}
+            value={this.props.organization[field]}
+            floatingLabelText={headerMap[field]}
+          />
+          <br />
+        </span>
       );
     });
   }
 
-  render() {
-    let rows, rowsPeople, rowsInteractions, rowsLocations;
-
-    if (this.props.contacts) {
-      rowsPeople = this.props.contacts.map((c, index) => {
-        let givenName;
-        if (c.forPerson) givenName = c.forPerson.givenName;
-
+  maybeRenderPeopleRows() {
+    return this.props.contacts ?
+      this.props.contacts.map((c, idx) => {
+        const givenName = c.forPerson ? c.forPerson.givenName : '';
         return (
-          <TableRow key={index}>
+          <TableRow key={idx}>
             <TableRowColumn>{givenName}</TableRowColumn>
             <TableRowColumn>{c.startDate}</TableRowColumn>
             <TableRowColumn>{c.endDate}</TableRowColumn>
-            <TableRowColumn>
-              <FontIcon className="muidocs-icon-edit" />
-            </TableRowColumn>
+            {/*TODO: Create edit button*/}
           </TableRow>
         );
-      });
-    }
+      }) : null;
+  }
 
-    if (this.props.peopleOrganization) {
-      rowsInteractions = this.props.peopleOrganization.map((c, index) => {
+  maybeRenderInteractionRows() {
+    return this.props.peopleOrganization ?
+      this.props.peopleOrganization.map((c, idx) => {
         return (
-          <TableRow key={index}>
+          <TableRow key={idx}>
             <TableRowColumn>{c.called}</TableRowColumn>
             <TableRowColumn>{c.url}</TableRowColumn>
-            <TableRowColumn>
-              <FontIcon className="muidocs-icon-edit" />
-            </TableRowColumn>
+            {/*TODO: Create edit button*/}
           </TableRow>
         );
-      });
-    }
+      }) : null;
+  }
 
-    if (!this.props.organization) return;
-
-    return (
+  render() {
+    return this.props.organization ? (
       <div>
        <Tabs>
-          <Tab label="Info" >
-            <div>
+          <Tab label="Info">
+            <div className="tab-content">
               <p>All the general info about the organization</p>
               {this.renderTextFields(['called', 'longName', 'emailSuffix', 'url'])}
-              <RaisedButton label="Save"
-               onTouchTap={this.saveOrganization.bind(this)} />
+              <RaisedButton
+                primary={true}
+                label="Save"
+                onTouchTap={this.saveOrganization.bind(this)} />
             </div>
           </Tab>
-          <Tab label="People" >
-            <div>
+          <Tab label="People">
+            <div className="tab-content">
               <Table>
                 <TableHeader>
                   <TableRow>
@@ -126,21 +110,23 @@ export class OrganizationComponent extends React.Component {
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  {rowsPeople}
+                  {this.maybeRenderPeopleRows()}
+                  {this.maybeRenderInteractionRows()}
                 </TableBody>
               </Table>
             </div>
           </Tab>
           <Tab label="Locations" >
-            <div>
+            <div className="tab-content">
               <LocationsComponent />
             </div>
           </Tab>
           <Tab label="Interactions" value="interactions">
+            <div className="tab-content" />
           </Tab>
         </Tabs>
       </div>
-    )
+    ) : null;
   }
 }
 

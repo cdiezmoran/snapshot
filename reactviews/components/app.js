@@ -5,7 +5,6 @@ import injectTapEventPlugin from 'react-tap-event-plugin';
 import AppBar from 'material-ui/AppBar';
 import Drawer from 'material-ui/Drawer';
 import MenuItem from 'material-ui/MenuItem';
-import RaisedButton from 'material-ui/RaisedButton';
 import './styles.css';
 
 export class SnapshotApp extends React.Component{
@@ -26,9 +25,7 @@ export class SnapshotApp extends React.Component{
         <div>
           <AppBar
             title="Snapshot App"
-            onLeftIconButtonTouchTap={this.handleChange.bind(this, '')}
-            iconClassNameRight="muidocs-icon-navigation-expand-more"
-          />
+            onLeftIconButtonTouchTap={this.handleChange.bind(this, '')} />
           <Drawer open={this.state.open}>
             <MenuItem onTouchTap={this.handleChange.bind(this, 'organization')}>Organizations</MenuItem>
             <MenuItem onTouchTap={this.handleChange.bind(this, 'person')}>People</MenuItem>

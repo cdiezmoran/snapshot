@@ -3,12 +3,18 @@
 	top: 4px;
 }
 
+.edit-button-persons {
+	position: relative;
+	top: 23px;
+}
+
 body {
 	margin: 0px;
+	padding-bottom: 50px;
 }
 
 .container {
-	padding: 15px;
+	padding: 20px;
 }
 
 * {
@@ -24,4 +30,14 @@ body {
 h1 {
 	margin: 5px;
 	font-weight: 500;
+	font-size: 26px;
+}
+
+.table-buffer {
+	height: 30px;
+}
+
+.tab-content {
+	margin-left: 5px;
+	margin-right: 5px;
 }

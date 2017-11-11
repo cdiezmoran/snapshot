@@ -51,9 +51,10 @@ export class InteractionsComponent extends React.Component{
 
     return(
       <div>
-        <h1>Interaction test</h1>
+        <h1>Interaction</h1>
         <RaisedButton
           className="raised-button"
+          primary={true}
           label="Add"
           onTouchTap={this.addInteraction.bind(this)} />
         {this.renderTable()}

@@ -1,15 +1,10 @@
 import React from 'react';
 import {connect} from 'react-redux'
-import { savePerson,createPerson, setTabForPerson, changePerson,loadPersons
-        ,loadPerson, addPerson, addOrganizationFromPerson, removeOrganizationFromPerson } from '../actions/person.action';
+import { savePerson,createPerson, setTabForPerson, changePerson, loadPersons,
+  loadPerson, addPerson, addOrganizationFromPerson, removeOrganizationFromPerson } from '../actions/person.action';
 import { findOrganizations } from '../actions/organization.action.js';
-import {Tabs, Tab} from 'material-ui/Tabs';
-import FontIcon from 'material-ui/FontIcon';
-import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn} from 'material-ui/Table';
-import Slider from 'material-ui/Slider';
-import FloatingActionButton from 'material-ui/FloatingActionButton';
-import ContentAdd from 'material-ui/svg-icons/content/add';
-import {TextField, SelectField, MenuItem} from 'material-ui';
+import { Tabs, Tab } from 'material-ui/Tabs';
+import { TextField, SelectField, MenuItem } from 'material-ui';
 import RaisedButton from 'material-ui/RaisedButton';
 import AutoComplete from 'material-ui/AutoComplete';
 import Chip from 'material-ui/Chip';
@@ -75,8 +70,8 @@ export class PersonComponent extends React.Component{
 
   savePerson(){
     if (this.props.person.currentOrganizations) {
-      this.props.person.currentOrganizations = this.props.person.currentOrganizations.map(c=>{
-        return c._id
+      this.props.person.currentOrganizations = this.props.person.currentOrganizations.map(c => {
+        return c ? c._id : null;
       })
     }
     if(this.props.person._id)
@@ -215,6 +210,7 @@ export class PersonComponent extends React.Component{
               </div>
               <RaisedButton
                 label="Save"
+                primary={true}
                 onTouchTap={this.savePerson.bind(this)} />
             </form>
           </Tab>

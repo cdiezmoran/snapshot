@@ -1,28 +1,24 @@
 import React from 'react';
-import {connect} from 'react-redux'
-import { savePerson,loadPersons, loadPerson, addPerson } from '../actions/person.action';
-import {Tabs, Tab} from 'material-ui/Tabs';
-import FontIcon from 'material-ui/FontIcon';
+import { connect } from 'react-redux'
+import { loadPersons, loadPerson, addPerson } from '../actions/person.action';
 import Slider from 'material-ui/Slider';
 import RaisedButton from 'material-ui/RaisedButton';
 import IconButton from 'material-ui/IconButton';
-import ContentAdd from 'material-ui/svg-icons/content/add';
-import TextField from 'material-ui/TextField';
 import PersonComponent from './person';
 import { fetchContactsByPerson } from '../actions/contact.action';
-import {makeTable} from '../helpers/table';
+import { makeTable } from '../helpers/table';
 
 export class PersonsComponent extends React.Component{
-	constructor(props){
+	constructor(props) {
 		super(props);
 		this.props.dispatch(loadPersons());
 	}
 
-	addPerson(){
+	addPerson() {
 		this.props.dispatch(addPerson());
 	}
 
-	loadPerson(id){
+	loadPerson(id) {
 		this.props.dispatch(loadPerson(id));
 		this.props.dispatch(fetchContactsByPerson(id));
 	}
@@ -30,7 +26,11 @@ export class PersonsComponent extends React.Component{
 	makeEditButton(person) {
 		return (
 			<div>
-				<RaisedButton label="Edit" onTouchTap={this.loadPerson.bind(this, person._id)}  />
+				<RaisedButton
+          className="edit-button-persons"
+					label="Edit"
+          secondary={true}
+					onTouchTap={this.loadPerson.bind(this, person._id)} />
 		 		<IconButton iconClassName="muidocs-icon-action-home"
 					 onTouchTap={this.loadPerson.bind(this, person._id)} />
 			</div>
@@ -54,12 +54,14 @@ export class PersonsComponent extends React.Component{
 	render() {
 		return(
 			<div>
-				<h1>Person</h1>
+				<h1>People</h1>
 				<RaisedButton
 					className="raised-button"
+          primary={true}
 					label="Add"
 					onTouchTap={this.addPerson.bind(this)} />
 				{this.renderTable()}
+        <div className="table-buffer"></div>
 				{this.maybeRenderCurrentPerson()}
 			</div>
 		)

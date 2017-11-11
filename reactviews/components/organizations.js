@@ -1,16 +1,13 @@
 import React from 'react';
-import {connect} from 'react-redux'
-import { saveOrganization,loadOrganizations,loadOrganization, addOrganization } from '../actions/organization.action';
-import {Tabs, Tab} from 'material-ui/Tabs';
-import FontIcon from 'material-ui/FontIcon';
+import { connect } from 'react-redux'
+import { saveOrganization,loadOrganizations,loadOrganization,
+    addOrganization } from '../actions/organization.action';
 import RaisedButton from 'material-ui/RaisedButton';
-import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn} from 'material-ui/Table';
-import Slider from 'material-ui/Slider';
+import { Table, TableBody, TableHeader, TableHeaderColumn,
+    TableRow, TableRowColumn } from 'material-ui/Table';
 import IconButton from 'material-ui/IconButton';
-import ContentAdd from 'material-ui/svg-icons/content/add';
-import TextField from 'material-ui/TextField';
 import OrganizationComponent from './organization';
-import {makeTable} from '../helpers/table';
+import { makeTable } from '../helpers/table';
 
 export class OrganizationsComponent extends React.Component{
   constructor(props){
@@ -22,7 +19,6 @@ export class OrganizationsComponent extends React.Component{
     this.props.dispatch(addOrganization());
   }
 
-
   loadOrganization(id){
     this.props.dispatch(loadOrganization(id));
   }
@@ -30,9 +26,14 @@ export class OrganizationsComponent extends React.Component{
   makeEditButton(organization) {
     return (
       <TableRowColumn>
-        <RaisedButton className="edit-button" label="Edit" onTouchTap={this.loadOrganization.bind(this, organization._id)}  />
-         <IconButton iconClassName="muidocs-icon-action-home"
-           onTouchTap={this.loadOrganization.bind(this,organization._id)}  />
+        <RaisedButton
+          className="edit-button"
+          secondary={true}
+          label="Edit"
+          onTouchTap={this.loadOrganization.bind(this, organization._id)}  />
+        <IconButton
+          iconClassName="muidocs-icon-action-home"
+          onTouchTap={this.loadOrganization.bind(this,organization._id)}  />
       </TableRowColumn>);
   }
 
@@ -53,12 +54,14 @@ export class OrganizationsComponent extends React.Component{
   render(){
     return(
       <div>
-        <h1>Organization</h1>
+        <h1>Organizations</h1>
         <RaisedButton
           className="raised-button"
+          primary={true}
           label="Add"
           onTouchTap={this.addOrganization.bind(this)} />
         {this.renderTable()}
+        <div className="table-buffer"></div>
         {this.maybeRenderCurrentOrganization()}
       </div>
     )
