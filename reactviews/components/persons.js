@@ -1,30 +1,24 @@
 import React from 'react';
-import {connect} from 'react-redux'
-import { savePerson,loadPersons, loadPerson, addPerson } from '../actions/person.action';
-import {Tabs, Tab} from 'material-ui/Tabs';
-import FontIcon from 'material-ui/FontIcon';
-import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn} from 'material-ui/Table';
+import { connect } from 'react-redux'
+import { loadPersons, loadPerson, addPerson } from '../actions/person.action';
 import Slider from 'material-ui/Slider';
 import RaisedButton from 'material-ui/RaisedButton';
-import FloatingActionButton from 'material-ui/FloatingActionButton';
 import IconButton from 'material-ui/IconButton';
-import ContentAdd from 'material-ui/svg-icons/content/add';
-import TextField from 'material-ui/TextField';
 import PersonComponent from './person';
 import { fetchContactsByPerson } from '../actions/contact.action';
-import {makeTable} from '../helpers/table';
+import { makeTable } from '../helpers/table';
 
 export class PersonsComponent extends React.Component{
-	constructor(props){
+	constructor(props) {
 		super(props);
 		this.props.dispatch(loadPersons());
 	}
 
-	addPerson(){
+	addPerson() {
 		this.props.dispatch(addPerson());
 	}
 
-	loadPerson(id){
+	loadPerson(id) {
 		this.props.dispatch(loadPerson(id));
 		this.props.dispatch(fetchContactsByPerson(id));
 	}
@@ -32,43 +26,53 @@ export class PersonsComponent extends React.Component{
 	makeEditButton(person) {
 		return (
 			<div>
-				<RaisedButton label="Edit" onTouchTap={this.loadPerson.bind(this, person._id)}  />
+				<RaisedButton
+          className="edit-button-persons"
+					label="Edit"
+          secondary={true}
+					onTouchTap={this.loadPerson.bind(this, person._id)} />
 		 		<IconButton iconClassName="muidocs-icon-action-home"
-					 onTouchTap={this.loadPerson.bind(this, person._id)}  />
-			</div>);
+					 onTouchTap={this.loadPerson.bind(this, person._id)} />
+			</div>
+		);
 	}
 
 	maybeRenderCurrentPerson() {
-		return this.props.person ? 
-			(<PersonComponent person={this.props.person}/>) :
-			null;
+		return this.props.person ? (
+			<PersonComponent person={this.props.person}/>
+		) : null;
 	}
 
-	render (){
-		console.log("PEOPLE: ", this.props.people);
-		
+	renderTable() {
+		return makeTable(
+			this.props.people,
+			['called', 'givenName', 'surName', 'gender', 'birthDate', 'currentOrganizations', 'action'],
+			this.makeEditButton.bind(this)
+		);
+	}
+
+	render() {
 		return(
 			<div>
-				<h1> Person </h1>
-				<RaisedButton label="Add" 
+				<h1>People</h1>
+				<RaisedButton
+					className="raised-button"
+          primary={true}
+					label="Add"
 					onTouchTap={this.addPerson.bind(this)} />
-
-				{makeTable(
-					this.props.people, 
-					['called', 'givenName', 'surName', 'gender', 'birthDate', 'currentOrganizations', 'action'], 
-					this.makeEditButton.bind(this))}
-
+				{this.renderTable()}
+        <div className="table-buffer"></div>
 				{this.maybeRenderCurrentPerson()}
 			</div>
 		)
 	}
 }
 
-let mapStateToProps = (state, props) => {
-    return {
-      people: state.personReducer.people,
-      person: state.personReducer.person
-    }
+const mapStateToProps = (state, props) => {
+  return {
+    people: state.personReducer.people,
+    person: state.personReducer.person
+  }
 };
 
 export default connect(mapStateToProps)(PersonsComponent);

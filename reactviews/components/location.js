@@ -18,8 +18,6 @@ import Contact from './contact';
 import PlacesAutocomplete, { geocodeByAddress, getLatLng } from 'react-places-autocomplete'
 
 export class LocationComponent extends React.Component{
-
-
   constructor(props){
     super(props);
     console.log("LOCATION PROPS: ", props);
@@ -31,7 +29,7 @@ export class LocationComponent extends React.Component{
     // ES6 object destructuring on props
     let location = {...this.props.location, address: this.state.address, organization_id: this.props.organization._id}
     console.log(location)
-    
+
     geocodeByAddress(this.state.address)
       .then(results => getLatLng(results[0]))
       .then(latLng => {
@@ -39,7 +37,7 @@ export class LocationComponent extends React.Component{
         location.latLng = [latLng.lng, latLng.lat];
         this.saveOrUpdateLocation(location);
       })
-      .catch(error => { 
+      .catch(error => {
         console.error('Error', error)
         this.saveOrUpdateLocation(location);
       })
@@ -49,12 +47,12 @@ export class LocationComponent extends React.Component{
     if (location._id) {
       this.props.dispatch(saveLocation(location))
       .then(c=>{
-          this.props.dispatch(loadOrganization(this.props.organization._id)); 
+          this.props.dispatch(loadOrganization(this.props.organization._id));
       });
     } else {
       this.props.dispatch(createLocation(location))
       .then(c=>{
-        this.props.dispatch(loadOrganization(this.props.organization._id)); 
+        this.props.dispatch(loadOrganization(this.props.organization._id));
       });
     }
   }
@@ -63,10 +61,9 @@ export class LocationComponent extends React.Component{
     this.props.dispatch(changeLocation(key,input.target.value));
   }
 
-
   // componentDidReceiveProps(){
-  //   if(this.props.location.address && 
-  //     this.state.location.address != this.props.location) 
+  //   if(this.props.location.address &&
+  //     this.state.location.address != this.props.location)
   //     this.setState({address: this.props.location.address });
   // }
 
@@ -78,24 +75,19 @@ export class LocationComponent extends React.Component{
       onChange: this.onChange
     }
 
-
     return(
       <div>
-           <form ref="form" id="locationForm">
-              <p>
-                All the general info about the location
-              </p>
-              <TextField
-                onChange={this.onChangeFunction.bind(this, "called")}
-                value={this.props.location.called}
-                floatingLabelText="Name"
-              />
-
-              <PlacesAutocomplete inputProps={inputProps} />
-
-              <RaisedButton label="Save"
-                onTouchTap={this.saveLocation.bind(this)} />
-            </form>
+        <form ref="form" id="locationForm">
+          <p>All the general info about the location</p>
+          <TextField
+            onChange={this.onChangeFunction.bind(this, "called")}
+            value={this.props.location.called}
+            floatingLabelText="Name"
+          />
+          <PlacesAutocomplete inputProps={inputProps} />
+          <RaisedButton label="Save"
+            onTouchTap={this.saveLocation.bind(this)} />
+        </form>
       </div>
      )
    }

@@ -26,12 +26,19 @@ module.exports = {
         {
           test: /\.js$/,
           exclude: /(node_modules)/,
-          loader: 'babel',
+          loader: 'babel-loader',
           query: {
             presets: ['es2015', 'react']
           }
         },
-        {test: /.(png|jpg)$/, loader: 'url-loader?limit=8192' }
+        {
+          test: /.(png|jpg)$/,
+          loader: 'url-loader?limit=8192'
+        },
+        {
+          test: /\.css$/,
+          loader: "style-loader!css-loader"
+        }
       ]
     },
     plugins: plugins,

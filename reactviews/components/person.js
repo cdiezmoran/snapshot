@@ -1,21 +1,17 @@
 import React from 'react';
 import {connect} from 'react-redux'
-import { savePerson,createPerson, setTabForPerson, changePerson,loadPersons
-        ,loadPerson, addPerson, addOrganizationFromPerson, removeOrganizationFromPerson } from '../actions/person.action';
+import { savePerson,createPerson, setTabForPerson, changePerson, loadPersons,
+  loadPerson, addPerson, addOrganizationFromPerson, removeOrganizationFromPerson } from '../actions/person.action';
 import { findOrganizations } from '../actions/organization.action.js';
-import {Tabs, Tab} from 'material-ui/Tabs';
-import FontIcon from 'material-ui/FontIcon';
-import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn} from 'material-ui/Table';
-import Slider from 'material-ui/Slider';
-import FloatingActionButton from 'material-ui/FloatingActionButton';
-import ContentAdd from 'material-ui/svg-icons/content/add';
-import {TextField, SelectField, MenuItem} from 'material-ui';
+import { Tabs, Tab } from 'material-ui/Tabs';
+import { TextField, SelectField, MenuItem } from 'material-ui';
 import RaisedButton from 'material-ui/RaisedButton';
 import AutoComplete from 'material-ui/AutoComplete';
 import Chip from 'material-ui/Chip';
 import Contacts from './contacts';
 import Contact from './contact';
 import moment from 'moment';
+import { headerMap } from '../helpers/headerMap';
 
 export class PersonComponent extends React.Component{
   constructor(props){
@@ -47,7 +43,7 @@ export class PersonComponent extends React.Component{
   onSelectChangeFunction(key, payload, selectedIndex){
     this.props.dispatch(changePerson(key,payload.target.textContent));
   }
-  
+
   //add getDateFromString to Helpers
   getDateFromString(string) {
     let year = parseInt(string.substring(0, 4));
@@ -73,9 +69,11 @@ export class PersonComponent extends React.Component{
   }
 
   savePerson(){
-    this.props.person.currentOrganizations = this.props.person.currentOrganizations.map(c=>{
-      return c._id
-    })
+    if (this.props.person.currentOrganizations) {
+      this.props.person.currentOrganizations = this.props.person.currentOrganizations.map(c => {
+        return c ? c._id : null;
+      })
+    }
     if(this.props.person._id)
       this.props.dispatch(savePerson(this.props.person));
     else this.props.dispatch(createPerson(this.props.person));
@@ -135,113 +133,106 @@ export class PersonComponent extends React.Component{
     this.props.dispatch(setTabForPerson(tab));
   }
 
+  renderFields() {
+    const properties = ['called', 'givenName', 'surName', 'gender', 'birthDate', 'organization'];
+    const specialProperties = {
+      gender: (
+        <span>
+          <SelectField
+           floatingLabelText="Gender"
+           value={this.props.person.gender}
+           onChange={this.onSelectChangeFunction.bind(this, 'gender')}
+          >
+            <MenuItem value={"Male"} primaryText="Male" />
+            <MenuItem value={"Female"} primaryText="Female" />
+            <MenuItem value={"Other"} primaryText="Other" />
+          </SelectField>
+          <br />
+        </span>
+      ),
+      organization: (
+        <span>
+          <AutoComplete
+            hintText="Organization"
+            dataSource={this.props.findOrganizations}
+            dataSourceConfig={this.dataSourceConfig}
+            onUpdateInput={this.handleUpdateInput.bind(this)}
+            onNewRequest={this.addOrganizationFromPerson.bind(this)}
+          />
+          <br />
+        </span>
+      )
+    };
+    return properties.map(property => {
+      if (property in specialProperties) {
+        return specialProperties[property];
+      }
+      return (
+        <span>
+          <TextField
+            onChange={this.onChangeFunction.bind(this, property)}
+            value={this.props.person[property] || ''}
+            floatingLabelText={headerMap[property]}
+          />
+          <br />
+        </span>
+      );
+    })
+  }
+
   render(){
     let organizations;
-    if(this.props.person.currentOrganizations){
-      organizations= this.props.person.currentOrganizations.map((org,i)=>{
+    if (this.props.person.currentOrganizations) {
+      organizations = this.props.person.currentOrganizations.map((org, i) => {
         if(!org) return;
-        return (<Chip key={i} onRequestDelete={this.removeOrganization.bind(this, org)}>
+        return (
+          <Chip key={i} onRequestDelete={this.removeOrganization.bind(this, org)}>
             {org.longName}
-          </Chip>);
-      })
+          </Chip>
+        );
+      });
     }
 
-    if(this.props.person.birthDate && this.props.person.birthDate.length>10){
+    if (this.props.person.birthDate && this.props.person.birthDate.length>10) {
       let d = new Date(this.props.person.birthDate);
       this.currentBirthDate = moment(d).format('YYYY/MM/DD');
-    }else this.currentBirthDate=this.props.person.birthDate;
+    } else this.currentBirthDate=this.props.person.birthDate;
 
-    return(
+    return (
       <div>
        <Tabs onChange={this.changeTab} value={this.props.tab}>
           <Tab label="Info" value="info" >
             <form ref="form" id="personForm">
-              <p>
-                All the general info about the person
-              </p>
-              <TextField
-                onChange={this.onChangeFunction.bind(this, "called")}
-                value={this.props.person.called}
-                floatingLabelText="Called"
-              />
-              <br />
-              <TextField
-                onChange={this.onChangeFunction.bind(this, "givenName")}
-                value={this.props.person.givenName}
-                floatingLabelText="Given Name"
-              />
-              <br />
-
-              <TextField
-                onChange={this.onChangeFunction.bind(this, "surName")}
-                value={this.props.person.surName}
-                floatingLabelText="Surname"
-              />
-              <br />
-
-
-              <SelectField
-               floatingLabelText="Gender"
-               value={this.props.person.gender}
-               onChange={this.onSelectChangeFunction.bind(this, "gender")}
-              >
-                <MenuItem value={"Male"} primaryText="Male" />
-                <MenuItem value={"Female"} primaryText="Female" /> 
-                <MenuItem value={"Other"} primaryText="Other" /> 
-              </SelectField>
-              <br />
-
-           
-              <TextField
-              value={this.currentBirthDate}
-              onChange={this.onChangeFunction.bind(this, "birthDate")}
-              floatingLabelText="Birthday" />
-              <br />
-
-              <AutoComplete
-                hintText="Organization"
-                dataSource={this.props.findOrganizations}
-                dataSourceConfig={this.dataSourceConfig}
-                onUpdateInput={this.handleUpdateInput.bind(this)}
-                onNewRequest={this.addOrganizationFromPerson.bind(this)}
-              />
-              <br />
-
-               <div >
+              <p>All the general info about the person</p>
+              {this.renderFields()}
+              <div >
                 {organizations}
-                </div>
-
-               <RaisedButton label="Save"
-               onTouchTap={this.savePerson.bind(this)} />
+              </div>
+              <RaisedButton
+                label="Save"
+                primary={true}
+                onTouchTap={this.savePerson.bind(this)} />
             </form>
           </Tab>
-
-
-
           <Tab label="Contacts" value="contact">
-           
             <Contact person={this.props.person} />
-
             <Contacts  contacts={this.props.contacts}/>
           </Tab>
-
           <Tab label="Interactions" value="interactions">
-           
-
           </Tab>
         </Tabs>
       </div>
      )
-   }
+  }
 }
 
 let mapStateToProps = (state, props) => {
-    return {
-      person: state.personReducer.person,
-      contacts: state.contactReducer.contacts,
-      tab: state.personReducer.tab,
-      findOrganizations: state.organizationReducer.findOrganizations
-    }
+  return {
+    person: state.personReducer.person,
+    contacts: state.contactReducer.contacts,
+    tab: state.personReducer.tab,
+    findOrganizations: state.organizationReducer.findOrganizations
+  }
 };
 
 export default connect(mapStateToProps)(PersonComponent);

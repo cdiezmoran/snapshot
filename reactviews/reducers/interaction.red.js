@@ -19,7 +19,7 @@ switch (action.type) {
             failure: prevState => ({ ...prevState, error: action.payload }),
             success: prevState => ({ ...prevState, interaction: null, interactions: action.payload }),
         });
-    
+
     case FIND_INTERACTIONS:
         return handle(state, action, {
             failure: prevState => ({ ...prevState, error: action.payload }),
@@ -29,12 +29,12 @@ switch (action.type) {
     case LOAD_INTERACTION:
         return handle(state, action, {
             failure: prevState => ({ ...prevState, error: action.payload }),
-            success: prevState => ({ ...prevState, interaction: action.payload.interaction, 
-                contacts: action.payload.interaction.contacts, 
-                location: action.payload.interaction.location 
+            success: prevState => ({ ...prevState, interaction: action.payload.interaction,
+                contacts: action.payload.interaction.contacts,
+                location: action.payload.interaction.location
             }),
         });
-    
+
     case SAVE_INTERACTION:
         return handle(state, action, {
             failure: prevState => ({ ...prevState, error: action.payload }),
@@ -47,9 +47,9 @@ switch (action.type) {
         });
     case ADD_INTERACTION:
         let neworg={};
-        return {...state, 
-                interaction: neworg, 
-                interactions: state.interactions.concat(neworg) 
+        return {...state,
+                interaction: neworg,
+                interactions: state.interactions.concat(neworg)
             };
     case CHANGE_INTERACTION:
         let org = state.interaction;
