@@ -4,16 +4,48 @@ import RaisedButton from 'material-ui/RaisedButton';
 import { TableRow, TableRowColumn} from 'material-ui/Table';
 import IconButton from 'material-ui/IconButton';
 import { loadContact } from '../actions/contact.action';
+import { makeTable } from '../helpers/table';
 
 export class Contacts extends Component {
   loadContact(id){
     this.props.dispatch(loadContact(id));
   }
 
+	makeEditButton(contact) {
+		return (
+			<div>
+				<RaisedButton
+          className="edit-button-contacts"
+					label="Edit"
+          secondary={true}
+					onTouchTap={this.loadContact.bind(this, contact._id)} />
+		 		<IconButton iconClassName="muidocs-icon-action-home"
+					 onTouchTap={this.loadContact.bind(this, contact._id)} />
+			</div>
+		);
+  }
+  
+  renderTable() {
+		return makeTable(
+			this.props.contacts,
+			[ 'forPerson.givenName', 'title', 'email', 'startDate', 'endDate', 'mobile', 'action'],
+			this.makeEditButton.bind(this)
+		);
+	}
+
   render() {
-    if (!this.props.contacts.lenght) {
+    if (!this.props.contacts.length) {
       return null;
     }
+    return (
+        <div>
+          <h1>Contacts</h1>
+          
+          {this.renderTable()}
+          <div className="table-buffer"></div>
+        </div>
+    )
+    /*
     return this.props.contacts.map((c, idx) => {
       return (
         <TableRow key={idx}>
@@ -35,6 +67,7 @@ export class Contacts extends Component {
         </TableRow>
       );
     });
+    */
   }
 }
 
