@@ -27,13 +27,13 @@ import {
   addOrganizationFromContact
 } from '../actions/contact.action.js';
 import AutoComplete from 'material-ui/AutoComplete';
-import { findOrganization } from '../actions/organization.action.js';
+import { findOrganizations } from '../actions/organization.action.js';
 
 export class ContactComponent extends React.Component {
   constructor(props) {
     super(props);
     this.dataSourceConfig = {
-      text: 'fullName',
+      text: 'called',
       value: '_id',
     };
   }

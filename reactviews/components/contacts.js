@@ -28,7 +28,7 @@ export class Contacts extends Component {
   renderTable() {
 		return makeTable(
 			this.props.contacts,
-			[ 'forPerson.givenName', 'title', 'email', 'startDate', 'endDate', 'mobile', 'action'],
+			[ 'forPerson.givenName', 'title', 'atOrganization', 'email', 'startDate', 'endDate', 'mobile', 'action'],
 			this.makeEditButton.bind(this)
 		);
 	}
