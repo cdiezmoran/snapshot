@@ -14,14 +14,16 @@ const makeTable = (rowObjs, headerWhitelist, editButtonCreationFunction, rowTapF
 
   const renderedRows = rowObjs ? rowObjs.map((row, rowIndex) => {
     const renderedColumns = headerWhitelist.map((header, headerIndex) => {
-      if (!row[header]) return null;
+    //  if (!row[header]) return null;
 
       let cellContents = row[header];
-
+      if(!cellContents) {
+        cellContents = "-"
+      }
       if(Array.isArray(row[header]) && row[header][0]) {
         console.log(row[header]);
         cellContents = row[header].map(obj=>obj.called).join(', ');
-      } else if (row[header].called) {
+      } else if (row[header] && row[header].called) {
         cellContents = row[header].called;
       }
 
