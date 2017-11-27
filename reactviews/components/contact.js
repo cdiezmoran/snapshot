@@ -124,7 +124,7 @@ export class ContactComponent extends React.Component {
 
             <AutoComplete
                 hintText="Organization"
-                searchText={this.currentOrganization(this.props.contact)}
+                /*searchText={this.currentOrganization(this.props.contact)} */
                 dataSource={this.props.findOrganizations}
                 dataSourceConfig={this.dataSourceConfig}
                 onUpdateInput={this.handleUpdateInput.bind(this)}

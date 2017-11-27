@@ -31,7 +31,7 @@ var sessionOpts = {
 */
 
 // view engine setup
-app.set('view engine', 'pug');
+// app.set('view engine', 'pug');
 app.set('views', 'views');
 app.locals.pretty = true
 app.use(express.static(path.join(__dirname, 'build')));

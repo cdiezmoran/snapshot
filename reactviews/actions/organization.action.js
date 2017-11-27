@@ -7,10 +7,10 @@ export function loadOrganizations() {
 }
 
 export const FIND_ORGANIZATIONS = 'FIND_ORGANIZATIONS';
-export function findOrganizations(name="") {
+export function findOrganizations(called="") {
   return {
     type: FIND_ORGANIZATIONS,
-    promise: fetch(`/organization/find?name=${name}`).then(response => { return  response.json() })
+    promise: fetch(`/organization/find?called=${called}`).then(response => { return  response.json() })
   };
 }
 
