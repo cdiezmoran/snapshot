@@ -17,7 +17,7 @@ export class PersonComponent extends React.Component{
   constructor(props){
     super(props);
     this.dataSourceConfig = {
-      text: 'longName',
+      text: 'called',
       value: '_id',
     };
     this.state = {
