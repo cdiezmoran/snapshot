@@ -10,7 +10,7 @@ import AutoComplete from 'material-ui/AutoComplete';
 import Chip from 'material-ui/Chip';
 import Contacts from './contacts';
 import Contact from './contact';
-import moment from 'moment';
+import DateInput from './dateInput';
 import { headerMap } from '../helpers/headerMap';
 
 export class PersonComponent extends React.Component{
@@ -21,19 +21,35 @@ export class PersonComponent extends React.Component{
       value: '_id',
     };
     this.state = {
-      currentBirthDate: null,
+      dateString: '',
       tab: null
     }
-    this.getDateFromString=this.getDateFromString.bind(this);
+    this.handleDateChange = this.handleDateChange.bind(this)
     this.changeTab=this.changeTab.bind(this);
   }
 
-  componentWillUpdate() {
-    console.log(this.props);
-    if(this.props.person){
-      if(!this.props.person.birthDate)this.props.person.birthDate='';
+  componentDidMount() {
+    const { person } = this.props;
+    if (person.birthDate) {
+      const dateString = person.birthDate;
+      this.setState({ dateString });
     }
+  }
+
+  componentWillUpdate() {
     // document.querySelector('#personForm').reset();
+  }
+
+  handleDateChange(key, value) {
+    const { dispatch } = this.props;
+    if (key === 'birthDate') {
+      // this means the user has completed typing the date so we update it in redux
+      dispatch(changePerson(key, value));
+      return;
+    }
+
+    // here we are setting the state for whatever key / value is given
+    this.setState({ [key]: value });
   }
 
   onChangeFunction(key, component, value){
@@ -42,30 +58,6 @@ export class PersonComponent extends React.Component{
 
   onSelectChangeFunction(key, payload, selectedIndex){
     this.props.dispatch(changePerson(key,payload.target.textContent));
-  }
-
-  //add getDateFromString to Helpers
-  getDateFromString(string) {
-    let year = parseInt(string.substring(0, 4));
-    let month = parseInt(string.substring(4, 6)) - 1;
-    let day = parseInt(string.substring(6, 8));
-
-    return new Date(year, month, day);
-  }
-
-  /*
-   * When a user presses backspace on birthDate field and date is set we remove
-   * the date from state and reset the text field's value
-   * @param {Object} e - Event object for onKeyDown.
-   */
-  onDateKeyDown(e) {
-    if (this.state.currentBirthDate != null) {
-      // Check if keycode is backspace (Code 8) or delete (Code 46)
-      if (e.keyCode === 8 || e.keyCode === 46) {
-        e.target.value = "";
-        this.setState({ currentBirthDate: null });
-      }
-    }
   }
 
   savePerson(){
@@ -161,6 +153,12 @@ export class PersonComponent extends React.Component{
           />
           <br />
         </span>
+      ),
+      birthDate: (
+        <DateInput
+          dateString={this.state.dateString}
+          handleChange={this.handleDateChange.bind(this)}
+        />
       )
     };
     return properties.map(property => {
@@ -192,11 +190,6 @@ export class PersonComponent extends React.Component{
         );
       });
     }
-
-    if (this.props.person.birthDate && this.props.person.birthDate.length>10) {
-      let d = new Date(this.props.person.birthDate);
-      this.currentBirthDate = moment(d).format('YYYY/MM/DD');
-    } else this.currentBirthDate=this.props.person.birthDate;
 
     return (
       <div>
