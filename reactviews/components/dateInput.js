@@ -7,7 +7,8 @@ const DateInput = ({ dateString, handleChange }) => {
    * Here we are using ES6 destructuring to get the property target from the event argument
    */
   const onChange = ({ target }) => {
-    const { value } = target;
+    let { value } = target;
+
     // First we want to format the string and add - after each set of numbers to get 1995-08-21
     if (value.length === 4) value += '-'; // i.e if it is 1995 its length is 4 so add a - at the end
     if (value.length === 7) value += '-'; // i.e if it is 1995-08 its length is 7 so add a - at the end
@@ -30,6 +31,7 @@ const DateInput = ({ dateString, handleChange }) => {
 
   return (
     <TextField
+      style={{ display: 'block' }}
       hintText="YYYY-MM-DD"
       value={dateString}
       onChange={onChange}
